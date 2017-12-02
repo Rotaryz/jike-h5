@@ -37,6 +37,6 @@
   .recommend
     position: fixed
     width: 100%
-    top: 88px
+    top: 0
     bottom: 0
 </style>

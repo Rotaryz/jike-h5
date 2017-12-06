@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Recommend = () => import('components/recommend/recommend')
+const Recommend = () => import('pages/recommend/recommend')
 
 export default new Router({
   routes: [

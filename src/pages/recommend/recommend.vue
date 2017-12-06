@@ -1,6 +1,8 @@
 <template>
   <div class="recommend" ref="recommend">
-    推荐
+    <div class="slider-wrapper">
+      <slider></slider>
+    </div>
   </div>
 </template>
 
@@ -8,13 +10,12 @@
   import Slider from 'base/slider/slider'
   import Loading from 'base/loading/loading'
   import Scroll from 'base/scroll/scroll'
-//  import {ERR_OK} from 'api/config'
+  //  import {ERR_OK} from 'api/config'
   import {mapMutations} from 'vuex'
 
   export default {
     data() {
-      return {
-      }
+      return {}
     },
     created() {
     },
@@ -35,8 +36,5 @@
   @import "~common/stylus/variable"
 
   .recommend
-    position: fixed
-    width: 100%
-    top: 0
-    bottom: 0
+    background: $color-background
 </style>

@@ -65,6 +65,9 @@
       })
     },
     activated() {
+      if (!this.slider) {
+        return
+      }
       this.slider.enable()
       let pageIndex = this.slider.getCurrentPage().pageX
       if (pageIndex > this.dots.length) {
@@ -185,21 +188,19 @@
           width: 100%
     .dots
       position: absolute
-      right: 0
-      left: 0
+      right: 18px
       bottom: 12px
       transform: translateZ(1px)
-      text-align: center
       font-size: 0
       .dot
         display: inline-block
-        margin: 0 4px
-        width: 8px
-        height: 8px
+        margin: 0 2.5px
+        width: 5px
+        height: 5px
         border-radius: 50%
-        background: $color-text-l
+        background: $color-white
         &.active
-          width: 20px
+          width: 12.5px
           border-radius: 5px
-          background: $color-text-ll
+          background: $color-white
 </style>

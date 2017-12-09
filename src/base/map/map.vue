@@ -66,7 +66,8 @@
           'api/merchants/overlap-merchants', {
           params: {
             longitude: longitude,
-            latitude: latitude
+            latitude: latitude,
+            merchant_id:100000
           }
         }).then((data) => {
           if(typeof(that.peo) !== 'string'){
@@ -82,6 +83,7 @@
           var res =data.data.data
 
           Object.assign(this.msg,{status:1},{data:res})
+          console.log(data.data)
 
 
           this.$store.dispatch('isshow', this.msg)
@@ -91,7 +93,11 @@
         var geolocation
         var that = this
         this.$AJAX.get(this.$store.state.baseUrl +
-          'api/merchants/plaza-merchants').then((data) => {
+          'api/merchants/plaza-merchants',{
+          params: {
+            merchant_id:100000
+          }
+        }).then((data) => {
           console.log(data)
           var res = data.data.data
 //          去除重复范围内的图标

@@ -1,7 +1,8 @@
 <template>
-  <div >
-    <ShopInformation ></ShopInformation>
+  <div class="square">
+    <ShopInformation></ShopInformation>
     <Map></Map>
+    <Shade></Shade>
   </div>
 
 </template>
@@ -9,7 +10,8 @@
 <script type="text/ecmascript-6">
   import ShopInformation from 'base/shopInformation/shopInformation'
   import Map from 'base/map/map'
-//  import {ERR_OK} from 'api/config'
+  import Shade from 'base/shade/shade'
+  //  import {ERR_OK} from 'api/config'
   import {mapMutations} from 'vuex'
 
   export default {
@@ -22,18 +24,18 @@
     activated() {
     },
     methods: {
-      ...mapMutations({})
-
+      ...mapMutations({}),
     },
     components: {
       ShopInformation,
-      Map
+      Map,
+      Shade
     },
     mounted(){
-      this.$on('click'),function(a){
-        console.log(a,id)
-
-      }
+//      this.$on('set-phone'), function (a) {
+//        console.log(a)
+//
+//      }
       // console.log(this.$store.state)
     }
   }
@@ -41,5 +43,4 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
-
 </style>

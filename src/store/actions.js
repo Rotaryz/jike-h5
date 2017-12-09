@@ -11,3 +11,8 @@ export const showDetail = function ({
                                 }, state) {
   commit(types.SHOWDETAIL, state)
 }
+export const setPhone = function ({
+                                      commit
+                                    }, state) {
+  commit(types.SETPHONE, state)
+}

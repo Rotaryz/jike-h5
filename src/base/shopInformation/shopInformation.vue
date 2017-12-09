@@ -5,7 +5,7 @@
       <!-- 地址 -->
       <div class="add">
         <img class="nav_ico" src="./image/Group9.png"></img>
-        <p class="add_msg" >广东省广州市白云区黄石街道国际单位A3白云科技...</p>
+        <p class="add_msg">广东省广州市白云区黄石街道国际单位A3白云科技...</p>
       </div>
       <!-- 店铺详情 -->
       <div class="shop_all">
@@ -29,7 +29,8 @@
               <div class="shop_eva">
                 <p class="shop_dis">5454人已收藏</p>
                 <p class="shop_start"><img src="./image/icon-Star.png"
-                                           class="icos">评分4.8</p>
+                                           class="icos">评分{{shop.star_level}}
+                </p>
               </div>
 
             </div>
@@ -48,7 +49,7 @@
                 <p><img class="icos" src="./image/icon-navigation_1.png"/>开始导航
                 </p>
               </div>
-              <div class="shop_nav_ti" :data-mobile="shop.mobile">
+              <div class="shop_nav_ti" @click="getPhone(shop.mobile)">
                 <p><img class="icos"
                         src="./image/icon-call_1.png"
                 />打电话
@@ -81,10 +82,10 @@
             </swiper>
           </div>
           <p class="mclient" v-show="num !== 1"
-            ></p>
+          ></p>
           <img src="./image/icon-open.png"
                :class="{open:num !==0,opencl:shop.conShow2}"
-               @touchstart="showDetail(index,shop)"  v-show="num !== 1">
+               @touchstart="showDetail(index,shop)" v-show="num !== 1">
 
         </div>
         <!-- 优惠券 -->
@@ -97,16 +98,16 @@
 <script>
   import {mapMutations} from 'vuex'
   import Coupon from '../conpon/conpon.vue'
-  import { swiper, swiperSlide } from 'vue-awesome-swiper';
+  import {swiper, swiperSlide} from 'vue-awesome-swiper';
   export default {
     data() {
       return {
         po: 0,
         mb: '10px',
-        showNum:0,
-        conShow1:true,
-        conShow2:false,
-        changeMsg:[]
+        showNum: 0,
+        conShow1: true,
+        conShow2: false,
+        changeMsg: []
       }
     },
     computed: {
@@ -128,23 +129,21 @@
       swiperSlide
     },
     methods: {
-      showDetail(index,shop){
+      showDetail(index, shop){
         this.changeMsg = JSON.parse(JSON.stringify(this.shopMsg))
         this.showNum = index
         shop.conShow2 = !shop.conShow2
-        this.changeMsg.splice(index,1,shop)
+        this.changeMsg.splice(index, 1, shop)
         this.$store.dispatch('showDetail', this.changeMsg)
+      },
+      getPhone(phone){
+        var phoneObj = {phone:phone,showCall:true}
+        this.$store.dispatch('setPhone', phoneObj)
+
       }
     },
     mounted(){
 
-//      if(this.$store.state.shopMsg.length == 1){
-//        console.log('45')
-//      }else{
-//        console.log('666')
-//      }
-//      console.log(this.$store.state.isShowShop)
-      // console.log(this.$store.state)
     }
   }
 </script>
@@ -192,7 +191,7 @@
   .shop_con, .shop_con_b
 
     position: relative
-    .open,.opencl
+    .open, .opencl
       width: 7px
       position: absolute
       right: 14.3px
@@ -202,7 +201,10 @@
       transform: translateY(-64%) rotate(180deg)
 
   .shop_con_b
-    margin-bottom: 10px
+    margin-top: 10px
+    &:first-child
+      margin-top: 0
+
   .shop_head
     display: flex
     padding: 17px 12px

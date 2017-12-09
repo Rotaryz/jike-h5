@@ -5,10 +5,16 @@ const mutations = {
     state.isShowShop = res.status
     state.shopMsg = res.data
     state.showShop = res.data.length
+    console.log(state)
   },
 
   [types.SHOWDETAIL](state, res) {
     state.shopMsg = res
+
+  },
+  [types.SETPHONE](state, res) {
+    state.phone = res.phone
+    state.showCall = res.showCall
 
   }
 }

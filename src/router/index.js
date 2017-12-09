@@ -3,19 +3,33 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-const Recommend = () =>
-  import ('components/recommend/recommend')
-const Square = () =>
-  import ('components/square/square')
+
+const Recommend = () => import('pages/recommend/recommend')
+const CouponDetail = () => import('pages/coupon-detail/coupon-detail')
+const PostOrder = () => import('pages/post-order/post-order')
+const Square = () => import('pages/square/square')
+
 export default new Router({
-  routes: [{
-    path: '/',
-    redirect: '/recommend'
-  }, {
-    path: '/recommend',
-    component: Recommend
-  }, {
-    path: '/square',
-    component: Square
-  }]
+  routes: [
+    {
+      path: '/',
+      redirect: '/recommend'
+    },
+    {
+      path: '/recommend',
+      component: Recommend
+    },
+    {
+      path: '/coupon/:id',
+      component: CouponDetail
+    },
+    {
+      path: '/post-order',
+      component: PostOrder
+    },
+    {
+      path: '/square',
+      component: Square
+    }
+  ]
 })

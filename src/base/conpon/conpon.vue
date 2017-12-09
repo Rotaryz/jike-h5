@@ -18,40 +18,6 @@
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div class="con_ri">
-          <div class="con_title">20<span>元</span></div>
-          <p class="cou_subhead">满200元使用</p>
-          <p class="client client_b"></p>
-          <p class="client client_t"></p>
-        </div>
-        <div class="con_le">
-          <p class="con_title">养发项目优惠券</p>
-          <p class="cou_subhead">限国颐堂（天河店）使用</p>
-          <p class="cou_subhead">有效期：2017.11.11-2018.01.20</p>
-          <div class="con_side">
-            <p class="con_title con_t1">抢</p>
-            <p class="con_title">购</p>
-          </div>
-        </div>
-      </swiper-slide>
-      <swiper-slide>
-        <div class="con_ri">
-          <div class="con_title">20<span>元</span></div>
-          <p class="cou_subhead">满200元使用</p>
-          <p class="client client_b"></p>
-          <p class="client client_t"></p>
-        </div>
-        <div class="con_le">
-          <p class="con_title">养发项目优惠券</p>
-          <p class="cou_subhead">限国颐堂（天河店）使用</p>
-          <p class="cou_subhead">有效期：2017.11.11-2018.01.20</p>
-          <div class="con_side">
-            <p class="con_title con_t1">抢</p>
-            <p class="con_title">购</p>
-          </div>
-        </div>
-      </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
@@ -90,7 +56,7 @@ export default {
 		font-size:$font-size-small-s
 		color:$color-theme-title
 		no-wrap()
-	.con_ri 
+	.con_ri
 		padding:17px 18px
 		border-left:4px solid $color-theme-s
 		border-top-left-radius: 3px
@@ -128,7 +94,7 @@ export default {
 				font-size:$font-size-medium
 				font-family:PingFangSC-Light
 	.con_le
-		padding:14px 9px	
+		padding:14px 9px
 		width:210px
 		border:1px solid $color-border-s
 		border-left:none

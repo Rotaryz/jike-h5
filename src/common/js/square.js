@@ -3,64 +3,33 @@
  */
 export default class squareMethod {
   constructor(item) {
+    this.current_merchant = item.current_merchant
+    this.name = item.name
+    this.describe = item.describe
     this.address = item.address
     this.id = item.id
-    this.name = item.name
+    this.mobile = item.mobile
+    this.open_time = item.open_time
+    this.close_time = item.close_time
+    this.week_day = item.week_day
     this.longitude = item.longitude
     this.latitude = item.latitude
+    this['logo_image'] = item['logo_image']
     var iconPath = ''
-    if (item.open_status === 0) {
-      iconPath = ''
+    if (item.open_status === 0 || item.open_status === 3) {
+      iconPath = './src/common/image/icon/icon-shop_close.png'
     } else if (item.open_status === 1) {
-      iconPath = ''
-    } else if (item.open_status === 2) {
-      iconPath = ''
-    } else if (item.open_status === 3) {
-      iconPath = ''
+      iconPath = './src/common/image/icon/icon-shop_money.png'
+    } else if (item.open_status === 2 ) {
+      iconPath = './src/common/image/icon/icon-shop_Renovation.png'
+    }
+    if(item.current_merchant){
+      this.width = '48px'
+      this.height = '43px'
+    }else {
+      this.width = '32px'
+      this.height = '28px'
     }
     this.iconPath = iconPath
-  }
-
-  /**
-   * @Author   Rotary
-   * @DateTime 2017-11-21
-   * @param    {[num]}   d [角度]
-   * @return   {[num]}     [弧度]
-   */
-  getRad(d) {
-    return d * Math.PI / 180.0;
-  }
-
-  /**
-   * @Author    Rotary
-   * @DateTime  2017-11-21
-   * @summarize {{计算两个经纬度之间的距离}}
-   * @param     {[num]}   lat1 [纬度1]
-   * @param     {[num]}   lng1 [经度1]
-   * @param     {[num]}   lat2 [纬度2]
-   * @param     {[num]}   lng2 [经度2]
-   * @return    {[num]}        [距离]
-   */
-  getFlatternDistance(lat1, lng1, lat2, lng2) {
-    var f = this.getRad((lat1 + lat2) / 2);
-    var g = this.getRad((lat1 - lat2) / 2);
-    var l = this.getRad((lng1 - lng2) / 2);
-    var sg = Math.sin(g);
-    var sl = Math.sin(l);
-    var sf = Math.sin(f);
-    var s, c, w, r, d, h1, h2;
-    var a = this.EARTH_RADIUS;
-    var fl = 1 / 298.257;
-    sg = sg * sg;
-    sl = sl * sl;
-    sf = sf * sf;
-    s = sg * (1 - sl) + (1 - sf) * sl;
-    c = (1 - sg) * (1 - sl) + sf * sl;
-    w = Math.atan(Math.sqrt(s / c));
-    r = Math.sqrt(s * c) / w;
-    d = 2 * w * a;
-    h1 = (3 * r - 1) / 2 / c;
-    h2 = (3 * r + 1) / 2 / s;
-    return d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
   }
 }

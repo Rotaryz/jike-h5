@@ -4,7 +4,6 @@
       <span class="peo" v-show="isshwocen" @click="newCenter(peo)"></span>
       <span class="hou" v-show="isshwocen" @click="newCenter(house)"></span>
     </div>
-
   </div>
 </template>
 <script type="text/ecmascript-6">
@@ -34,9 +33,8 @@
       ...mapMutations({}),
       showIcon(arr) {
         this.isshwocen = 1
-        var that = this
-        for (var item of arr) {
-          console.log(item)
+        let that = this
+        for (let item of arr) {
           // console.log(item)
           this.marker = new AMap.Marker({ //添加自定义点标记
             map: this.map,
@@ -45,15 +43,15 @@
             draggable: false, //是否可拖动
             content: `<img src="${item.iconPath}" data-type="${item.id}" data-longitude="${item.longitude}"data-latitude="${item.latitude}"
               style="width: ${item.width};
-              height: ${item.height}"></img>`
+              height: ${item.height}">`
             //自定义点标记覆盖物内容
           })
           this.marker.on('click', function () {
-            var id = this.th.contentDom.children[0].getAttribute("data-type")
-            var longitude = this.th.contentDom.children[0].getAttribute("data-longitude")
-            var latitude = this.th.contentDom.children[0].getAttribute("data-latitude")
+            let id = this.th.contentDom.children[0].getAttribute("data-type")
+            let longitude = this.th.contentDom.children[0].getAttribute("data-longitude")
+            let latitude = this.th.contentDom.children[0].getAttribute("data-latitude")
             if (id !== 0) {
-              that.getShopMsg(id,latitude,longitude)
+              that.getShopMsg(id, latitude, longitude)
             }
 
           })
@@ -61,48 +59,75 @@
 
       },
       getShopMsg(id, latitude, longitude){
-        var that = this
+        let that = this
         this.$AJAX.get(this.$store.state.baseUrl +
           'api/merchants/overlap-merchants', {
           params: {
             longitude: longitude,
             latitude: latitude,
-            merchant_id:100000
+            merchant_id: 100000
           }
         }).then((data) => {
-          if(typeof(that.peo) !== 'string'){
-           data.data.data.forEach(function (item,idx) {
 
-              var lnglat = new AMap.LngLat(item.longitude, item.latitude)
-              var distance = lnglat.distance(that.house)
-              Object.assign(item,{distance:distance.toFixed(2)})
+          if (typeof(that.peo) !== 'string') {
+            data.data.data.forEach((item, idx) => {
+              let origin = this.peo.join(',')
+              let destination = item.longitude + ',' + item.latitude
+              this.$AJAX.get('http://restapi.amap.com/v3/direction/walking?key=ac0a6fd529c354c210281d98f04bb1cf', {
+                params: {
+                  origin: origin,
+                  destination: destination
+                }
+              }).then((data) => {
+//                距离
+                let distance = data.data.route.paths[0].distance
+                let timeSec = data.data.route.paths[0].duration
+                let way, times
+                if (timeSec / 60 >= 45) {
+                  way = 1
+                  this.$AJAX.get('http://restapi.amap.com/v3/direction/driving?key=ac0a6fd529c354c210281d98f04bb1cf', {
+                    params: {
+                      origin: origin,
+                      destination: destination
+                    }
+                  }).then((data) => {
+                    times = data.data.route.paths[0].duration / 60
+                    Object.assign(item,
+                      {distance: distance, way: way, times: times.toFixed(2),peo:origin})
+                  })
+                } else {
+                  way = 0
+                  times = timeSec / 60
 
+                  Object.assign(item,
+                    {distance: distance, way: way, times: times.toFixed(2),peo:origin})
+                }
+
+              })
             })
-
           }
-          var res =data.data.data
+          let res = data.data.data
 
-          Object.assign(this.msg,{status:1},{data:res})
-          console.log(data.data)
-
-
+          Object.assign(this.msg, {status: 1}, {data: res})
+          console.log(this.msg)
           this.$store.dispatch('isshow', this.msg)
+
         })
       },
       getShopLoc(){
-        var geolocation
-        var that = this
+        let geolocation
+        let that = this
         this.$AJAX.get(this.$store.state.baseUrl +
-          'api/merchants/plaza-merchants',{
+          'api/merchants/plaza-merchants', {
           params: {
-            merchant_id:100000
+            merchant_id: 100000
           }
         }).then((data) => {
           console.log(data)
-          var res = data.data.data
+          let res = data.data.data
 //          去除重复范围内的图标
-          for (var i = 0; i < res.length; i++) {
-            for (var j = i + 1; j < res.length - i; j++) {
+          for (let i = 0; i < res.length; i++) {
+            for (let j = i + 1; j < res.length - i; j++) {
               if ((res[i].longitude >= res[j].longitude - 0.000200 &&
                 res[i].longitude <= res[j].longitude + 0.000200) &&
                 (res[i].latitude >= res[j].latitude - 0.000150 &&
@@ -112,8 +137,8 @@
             }
           }
 //         整理生成地图展示所需数据
-          for (var item of res) {
-            var its = new squareMethod(item)
+          for (let item of res) {
+            let its = new squareMethod(item)
             if (its['current_merchant']) {
               this.house = [its.longitude, its.latitude]
               this.center = this.house
@@ -152,7 +177,7 @@
               {latitude: data.position.lat}, {height: '32px'}, {
                 width: '10px'
               },
-              {iconPath: './src/common/image/icon/icon-me.png'},{id:0})
+              {iconPath: './src/common/image/icon/icon-me.png'}, {id: 0})
             that.peo = [data.position.lng, data.position.lat]
             that.locList.push(that.personal)
             that.showIcon(that.locList)

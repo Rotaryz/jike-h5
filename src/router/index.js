@@ -8,6 +8,7 @@ const Recommend = () => import('pages/recommend/recommend')
 const CouponDetail = () => import('pages/coupon-detail/coupon-detail')
 const PostOrder = () => import('pages/post-order/post-order')
 const Square = () => import('pages/square/square')
+const Navigation = () => import('pages/navigation/navigation')
 
 export default new Router({
   routes: [
@@ -30,6 +31,10 @@ export default new Router({
     {
       path: '/square',
       component: Square
+    },
+    {
+      path: '/navigation/:origin/:destination/:way',
+      component: Navigation
     }
   ]
 })

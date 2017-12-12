@@ -21,13 +21,12 @@
               </div>
               <div class="shop_logo">
                 <img src="./image/icon-shop_bg.png" class="house"/>
-                <img class="shop_ico" :src="shop.logo_image ?
-                shop.logo_image :
-                './src/base/shopInformation/image/logo.png'"/>
+                <img class="shop_ico" :src="shop.logo_image ? shop.logo_image
+                 : './image/logo.png'"/>
 
               </div>
               <div class="shop_eva">
-                <p class="shop_dis">5454人已收藏</p>
+                <p class="shop_dis">{{shop.favorite_count}}人已收藏</p>
                 <p class="shop_start"><img src="./image/icon-Star.png"
                                            class="icos">评分{{shop.star_level}}
                 </p>
@@ -41,13 +40,25 @@
                   class="nav_ti">{{shop.distance ? shop.distance : '0'}}</span>米
                 </p>
               </div>
-              <div class="shop_nav_ti" style="flex:1.14">
+              <div class="shop_nav_ti" style="flex:1.14" v-show="shop.way ===
+               0 || !shop.way">
                 <p><img class="icos" src="./image/icon-walk.png"/>步行<span
-                  class="nav_ti">10</span>分钟</p>
+                  class="nav_ti">{{shop.times ? shop.times : '0'}}</span>m
+                </p>
+              </div>
+              <div class="shop_nav_ti" style="flex:1.14" v-show="shop.way ===
+               1">
+                <p><img class="icos" src="./image/icon-car.png"/>驾车<span
+                  class="nav_ti">{{shop.times ? shop.times : '0'}}</span>m
+                </p>
               </div>
               <div class="shop_nav_ti" style="flex:1.03">
-                <p><img class="icos" src="./image/icon-navigation_1.png"/>开始导航
-                </p>
+                <a
+                  :href="'#/navigation/'+shop.peo+'/'+shop.longitude +','+shop.latitude+'/'+shop.way"><p><img
+                  class="icos"
+                                   src="./image/icon-navigation_1.png"/>开始导航
+                </p></a>
+
               </div>
               <div class="shop_nav_ti" @click="getPhone(shop.mobile)">
                 <p><img class="icos"
@@ -58,10 +69,11 @@
             </div>
 
           </div>
-          <div class="sws" v-show="num === 1 || shop.conShow2">
-            <swiper ref="mySwiper">
-              <swiper-slide v-for="(detail,index) in shop.promotions"
-                            :key="index">
+          <div class="sws" v-show="(num === 1 && shop.promotions.length !==0)||
+          shop.conShow2">
+            <ul>
+              <li class="scool-item" v-for="(detail,index) in shop.promotions"
+                  :key="index" v-shift="index">
                 <div class="con_ri">
                   <div class="con_title">20<span>元</span></div>
                   <p class="cou_subhead">满200元使用</p>
@@ -77,10 +89,10 @@
                     <p class="con_title">购</p>
                   </div>
                 </div>
-              </swiper-slide>
-
-            </swiper>
+              </li>
+            </ul>
           </div>
+
           <p class="mclient" v-show="num !== 1"
           ></p>
           <img src="./image/icon-open.png"
@@ -96,9 +108,6 @@
 </template>
 
 <script>
-  import {mapMutations} from 'vuex'
-  import Coupon from '../conpon/conpon.vue'
-  import {swiper, swiperSlide} from 'vue-awesome-swiper';
   export default {
     data() {
       return {
@@ -107,7 +116,8 @@
         showNum: 0,
         conShow1: true,
         conShow2: false,
-        changeMsg: []
+        changeMsg: [],
+        nav:'javaScript:;'
       }
     },
     computed: {
@@ -123,11 +133,6 @@
       }
 
     },
-    components: {
-      Coupon,
-      swiper,
-      swiperSlide
-    },
     methods: {
       showDetail(index, shop){
         this.changeMsg = JSON.parse(JSON.stringify(this.shopMsg))
@@ -137,14 +142,75 @@
         this.$store.dispatch('showDetail', this.changeMsg)
       },
       getPhone(phone){
-        var phoneObj = {phone:phone,showCall:true}
+        let phoneObj = {phone: phone, showCall: true}
         this.$store.dispatch('setPhone', phoneObj)
 
       }
+
     },
     mounted(){
 
+    },
+    directives: {
+      shift: {
+        bind(el, binding){
+          let timer
+          let bodyWidth = document.body.offsetWidth
+          let target = 0
+          let speed = 0
+
+          el.ontouchstart = (data1, eve) => {
+            clearInterval(el.timer)
+            let elWidth = el.offsetWidth + 11
+            let length = el.parentElement.children.length
+            let parents = el.parentElement
+            parents.style.width = bodyWidth * length + 'px'
+            let start = data1.changedTouches['0'].pageX
+            if (length !== 1) {
+              el.ontouchend = (data2) => {
+                clearInterval(el.timer)
+                let end = data2.changedTouches['0'].pageX
+                let move = end - start
+                if (move > 0) {
+                  if (binding.value === 0) {
+                    target = -(elWidth * binding.value)
+                  } else {
+                    target = -(elWidth * (binding.value - 1) )
+                  }
+                } else if ((move < 0)) {
+                  if (binding.value + 1 === length) {
+                    target = -(elWidth * binding.value)
+                  } else {
+                    target = -(elWidth * (binding.value + 1))
+                  }
+                }
+                let begin = 0
+                if (parents.style.transform === '') {
+                  begin = 0
+                } else {
+                  begin = parseInt(parents.style.transform.slice(11))
+                }
+
+                el.timer = setInterval(() => {
+                  speed = (target - begin) / 10
+                  speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed)
+                  begin += speed
+                  if (Math.abs(speed) === 1) {
+                    begin = target
+                    clearInterval(el.timer)
+                  }
+                  parents.style.transform = `translateX(${begin}px)`
+
+                }, 30)
+
+              }
+            }
+
+          }
+        }
+      }
     }
+
   }
 </script>
 
@@ -275,11 +341,13 @@
       flex: 1
       font-size: $font-size-small-s
       line-height: ($font-size-small-s * 4)
-      color: $color-font1
       border-right: 1px solid #F1EFF5
       text-indent: 2em
       text-align: center
+      color: $color-text
       no-wrap()
+      a
+        color: $color-text
 
       .nav_ti
         font-size: $font-size-small
@@ -288,8 +356,8 @@
 
   .icos
     position: absolute
-    width ($font-size-large / 2)
-    height ($font-size-large / 2)
+    width: 10px
+    height: 10px
     left: -14px
     top: 50%
     transform: translateY(-50%)
@@ -318,18 +386,20 @@
   //  优惠券
   .sws
     background-color: #fff
+    height: 104px
+    overflow-x: hidden
+    &::-webkit-scrollbar
+      display: none
+    ul
+      width: 200%
+      height: 100%
+      overflow-y: hidden
 
-  .swiper-container
-    background-color: #fff
-    width: 85% !important
-    overflow: visible
-
-  .swiper-slide
-    width: 90% !important
-    height: 90px !important
+  .scool-item
+    float: left
     display: flex
     background-color: #fff
-    margin: 10px -1px 10px 24px
+    margin: 10px -20px 10px 36px
 
   .con_title
     color: $color-theme-s
@@ -342,7 +412,7 @@
     no-wrap()
 
   .con_ri
-    padding: 17px 18px
+    padding: 17px 9px
     border-left: 4px solid $color-theme-s
     border-top-left-radius: 3px
     border-bottom-left-radius: 3px
@@ -380,8 +450,7 @@
         font-family: PingFangSC-Light
 
   .con_le
-    padding: 7px 5px
-    width: 210px
+    padding: 7px 30px 7px 5px
     border: 1px solid $color-border-s
     border-left: none
     border-right: none
@@ -401,7 +470,7 @@
       position: absolute
       background-color: $color-theme-s
       height: 101%
-      right: -5px
+      right: -2px
       bottom: 0px
       width: 30px
       line-height: 45px

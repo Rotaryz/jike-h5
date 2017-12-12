@@ -32,7 +32,7 @@
     methods:{
       hidePhone(){
         setTimeout(()=>{
-          var phoneObj = {phone:'',showCall:false}
+          let phoneObj = {phone:'',showCall:false}
           this.$store.dispatch('setPhone', phoneObj)
         },500)
 

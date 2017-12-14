@@ -50,7 +50,8 @@
         //自定义点标记覆盖物内容
       })
 //      请求规划路劲
-      this.$AJAX.get('http://restapi.amap.com/v3/direction/' + goWay + '?key=ac0a6fd529c354c210281d98f04bb1cf', {
+      this.$AJAX.get('https://restapi.amap.com/v3/direction/' + goWay +
+        '?key=ac0a6fd529c354c210281d98f04bb1cf', {
         params: {
           origin: this.$route.params.origin,
           destination: this.$route.params.destination

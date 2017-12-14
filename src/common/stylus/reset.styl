@@ -30,6 +30,7 @@ footer, header, menu, nav, section
 body
   line-height: 1
 
+
 blockquote, q
   quotes: none
 
@@ -54,3 +55,53 @@ li
 body
   -webkit-text-size-adjust: none
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+
+input, button
+  margin: 0
+  padding: 0
+  list-style-type: none
+
+button
+  background-repeat: no-repeat
+  background: none
+  border-top-style: none
+  border-right-style: none
+  border-bottom-style: none
+  border-left-style: none
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  -webkit-tap-highlight-color: transparent
+
+html, body
+  height: 100%
+  overflow-y: hidden
+
+#app::-webkit-scrollbar
+  display: none
+
+#app
+  height: 100%
+  overflow-y: scroll
+
+.cancle
+  position: absolute
+  left: 50%
+  bottom: -34px
+  .cancleCh
+    position: absolute
+    height: 32px
+    width: 1px
+    background: #fff
+    font-weight: 100
+    -webkit-transform: rotate(45deg)
+    -moz-transform: rotate(45deg)
+    -ms-transform: rotate(45deg)
+    -o-transform: rotate(45deg)
+    transform: rotate(45deg)
+  .cancleCh2
+    -webkit-transform: rotate(-45deg)
+    -moz-transform: rotate(-45deg)
+    -ms-transform: rotate(-45deg)
+    -o-transform: rotate(-45deg)
+    transform: rotate(-45deg)
+
+

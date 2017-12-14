@@ -31,6 +31,7 @@
     },
     methods: {
       ...mapMutations({}),
+//添加icon标记
       showIcon(arr) {
         this.isshwocen = 1
         let that = this
@@ -73,7 +74,7 @@
             data.data.data.forEach((item, idx) => {
               let origin = this.peo.join(',')
               let destination = item.longitude + ',' + item.latitude
-              this.$AJAX.get('http://restapi.amap.com/v3/direction/walking?key=ac0a6fd529c354c210281d98f04bb1cf', {
+              this.$AJAX.get('https://restapi.amap.com/v3/direction/walking?key=ac0a6fd529c354c210281d98f04bb1cf', {
                 params: {
                   origin: origin,
                   destination: destination
@@ -85,7 +86,7 @@
                 let way, times
                 if (timeSec / 60 >= 45) {
                   way = 1
-                  this.$AJAX.get('http://restapi.amap.com/v3/direction/driving?key=ac0a6fd529c354c210281d98f04bb1cf', {
+                  this.$AJAX.get('https://restapi.amap.com/v3/direction/driving?key=ac0a6fd529c354c210281d98f04bb1cf', {
                     params: {
                       origin: origin,
                       destination: destination
@@ -187,6 +188,7 @@
           //解析定位错误信息
           function onError(data) {
             console.log('no')
+//            location.reload()
             that.showIcon(that.locList)
           }
 

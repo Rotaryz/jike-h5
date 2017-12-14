@@ -1,5 +1,5 @@
 const state = {
-  baseUrl: 'http://jike-wap-api.majy999.com/',
+  baseUrl: 'https://img.majy999.com/',
   isShowShop: 0,
   shopMsg: null,
   showShop: 0,

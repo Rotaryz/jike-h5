@@ -12,7 +12,7 @@
         <div :class="{shop_con: num === 1,shop_con_b: num !== 1}"
              v-for="(shop,index) in
         shopMsg"
-             :key="index">
+             :key="index"  @click.stop="showDetail(index,shop)">
           <div class="shop-item">
             <div class="shop_head">
               <div class="shop_title">
@@ -60,7 +60,7 @@
                 </p></a>
 
               </div>
-              <div class="shop_nav_ti" @click="getPhone(shop.mobile)">
+              <div class="shop_nav_ti" @touchstart.stop="getPhone(shop.mobile)">
                 <p><img class="icos"
                         src="./image/icon-call_1.png"
                 />打电话
@@ -97,7 +97,7 @@
           ></p>
           <img src="./image/icon-open.png"
                :class="{open:num !==0,opencl:shop.conShow2}"
-               @touchstart="showDetail(index,shop)" v-show="num !== 1">
+               v-show="num !== 1">
 
         </div>
         <!-- 优惠券 -->

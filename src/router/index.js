@@ -9,6 +9,8 @@ const CouponDetail = () => import('pages/coupon-detail/coupon-detail')
 const PostOrder = () => import('pages/post-order/post-order')
 const Square = () => import('pages/square/square')
 const Navigation = () => import('pages/navigation/navigation')
+const Registration = () => import('pages/registration/registration')
+const Live = () => import('pages/live/live')
 
 export default new Router({
   routes: [
@@ -35,6 +37,14 @@ export default new Router({
     {
       path: '/navigation/:origin/:destination/:way',
       component: Navigation
+    },
+    {
+      path: '/registration',
+      component: Registration
+    },
+    {
+      path: '/live',
+      component:Live
     }
   ]
 })

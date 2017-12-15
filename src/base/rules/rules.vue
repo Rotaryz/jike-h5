@@ -1,32 +1,73 @@
 <template>
-  <div class="ruleDetail ruleDetailSow">
-    <h3>活动规则</h3>
-    <ul>
-      <li>
-        <p class="title">活动规则</p>
-        <p class="contents"><span class="conShow">圣诞现金活动大抽奖</span></p>
-      </li>
-      <li>
-        <p class="title">活动时间</p>
-        <p class="contents"><span class="conShow">2017-11-28</span></p>
-      </li>
-      <li>
-        <p class="title">签到说明</p>
-        <p class="contents">活动说明活动期间仅限加“”商品享受5折封顶优
-          惠活动时间:2018年4月24日-27日,共4天活动规
-          则:活动期间内,通过当当购物手机客户端成功购
-          买图书的用户,均视为成功.</p>
-      </li>
-    </ul>
-    <div class="cancle">
-      <span class="cancleCh"></span>
-      <span class="cancleCh cancleCh2"></span>
+  <transition name="fade">
+    <div class="ruleDetail" v-show="state === 1">
+      <h3>活动规则</h3>
+      <ul>
+        <li>
+          <p class="title">活动规则</p>
+          <p class="contents"><span class="conShow">{{name}}</span></p>
+        </li>
+        <li>
+          <p class="title">活动时间</p>
+          <p class="contents"><span class="conShow">{{date}}</span></p>
+        </li>
+        <li>
+          <p class="title">签到说明</p>
+          <p class="contents">{{desc}}</p>
+        </li>
+      </ul>
+      <div class="close" @click="close">
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script type="text/ecmascript-6">
+  const STATE_HIDE = 0
+  const STATE_SHOW = 1
+
+  const COMPONENT_NAME = 'rules'
+
   export default {
+    name: COMPONENT_NAME,
+    props: {
+      name: {
+        type: String,
+        default: ''
+      },
+      date: {
+        type: String,
+        default: ''
+      },
+      desc: {
+        type: String,
+        default: ''
+      }
+    },
+    data() {
+      return {
+        state: STATE_HIDE,
+      }
+    },
+    methods: {
+      cancel() {
+        this.hide()
+        this.$emit('cancel')
+      },
+      close() {
+        this.hide()
+        this.$emit('close')
+      },
+      show() {
+        if (this.state === STATE_SHOW) {
+          return
+        }
+        this.state = STATE_SHOW
+      },
+      hide() {
+        this.state = STATE_HIDE
+      },
+    }
 
   }
 </script>
@@ -35,23 +76,19 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
   .ruleDetail
-    display: none
     position: fixed
     top: 0
     bottom: 0
     height: 100%
     width: 100%
-    background-color: $color-background-s
+    background-color: $color-white
     z-index: 1900
     color: $color-text-d
     font-size: $font-size-medium
-    background-color: #fff
-    opacity: 0
-    /*display: none*/
-    transition: opacity .8s
-
-  .ruleDetailSow
-    opacity : 1
+    &.fade-enter, &.fade-leave-to
+      opacity: 0
+    &.fade-enter-to, &.fade-leave-to
+      transition: all .5s ease-in-out
     h3
       color:$color-text
       text-align :center
@@ -76,27 +113,14 @@
           color:$color-assist-tr
       .title
         padding-top :20px
-  .cancle
+  .close
     position: absolute
-    bottom: 67px
-    right: 20px
     left: 50%
-    .cancleCh
-      position: absolute
-      height: 32px
-      width: 1px
-      background: #000
-      font-weight: 100
-      -webkit-transform: rotate(45deg)
-      -moz-transform: rotate(45deg)
-      -ms-transform: rotate(45deg)
-      -o-transform: rotate(45deg)
-      transform: rotate(45deg)
-    .cancleCh2
-      -webkit-transform: rotate(-45deg)
-      -moz-transform: rotate(-45deg)
-      -ms-transform: rotate(-45deg)
-      -o-transform: rotate(-45deg)
-      transform: rotate(-45deg)
-
+    bottom: 35px
+    display: block
+    width: 23px
+    height: 23px
+    transform: translateX(-50%)
+    bg-image('./icon-close_black')
+    background-size: 23px 23px
 </style>

@@ -1,5 +1,5 @@
 /**
- *
+ *地图数据整理
  */
 export default class squareMethod {
   constructor(item) {
@@ -33,3 +33,4 @@ export default class squareMethod {
     this.iconPath = iconPath
   }
 }
+

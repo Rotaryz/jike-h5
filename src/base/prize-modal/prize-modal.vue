@@ -62,7 +62,7 @@
   @import "~common/stylus/mixin"
 
   .prize-modal
-    /*display:none*/
+    display:none
     position: fixed
     top: 0
     left: 0

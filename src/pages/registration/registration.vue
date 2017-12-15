@@ -1,9 +1,7 @@
 <template>
   <div>
     <RegMap></RegMap>
-    <RegList></RegList>
     <RedPacket></RedPacket>
-    <Rules></Rules>
     <PrizeModal>
       <div class="redFa">
         <span class="page">3/3</span>
@@ -21,18 +19,14 @@
 
 <script type="text/ecmascript-6">
   import RegMap from 'base/reg_map/reg_map'
-  import RegList from 'base/reg_list/reg_list'
   import RedPacket from 'base/red-packet/red-packet'
-  import Rules from 'base/rules/rules'
   import PrizeModal from 'base/prize-modal/prize-modal'
   export default {
     components: {
       RegMap,
-      RegList,
       RedPacket,
-      Rules,
       PrizeModal
-    }
+    },
   }
 </script>
 

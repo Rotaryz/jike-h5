@@ -2,50 +2,37 @@
   <div class="map_all">
     <div class="add">
       <img class="nav_ico" src="./image/Group9.png"/>
-      <p class="add_msg">广东省广州市白云区黄石街道国际单位A3白云科技...</p>
+      <p class="add_msg">{{allRedMsg ?
+        allRedMsg.merchant_data.address : '正在定位...'}}</p>
     </div>
     <div id="container">
       <div class="convers">
-        <p>正在计算距离…</p>
+        <img src="./image/pic-people_right.png" class="farPeo">
+        <p>{{distance}}</p>
         <div class="rule">
-          <p>规则</p>
+          <p @click="showRules">规则</p>
         </div>
       </div>
     </div>
+    <Rules :name="name,date,desc" ref="rules"></Rules>
     <div>
       <ul class="reg_red">
-        <li>
-          <p>奖励</p>
-          <img src="./image/Rectangle 5.png" alt="" class="award">
-          <img src="./image/icon-1_money.png">
+        <li v-for="(red,index) in redPac" :key="index">
+          <p :class="{award:red.showTitle ===1}">{{red.title}}</p>
+          <img src="./image/Rectangle 5.png" alt="" class="award"
+               v-show="red.showTitle ===1">
+          <img :src="red.image">
         </li>
-        <li>
-          <p>第2天</p>
-          <img src="./image/icon_yeschecked.png">
-        </li>
-        <li>
-          <p>第3天</p>
-          <img src="./image/icon_notchecked.png">
-        </li>
-        <li>
-          <p>第4天</p>
-          <img src="./image/icon-2_money.png">
-        </li>
-        <li>
-          <p>第5天</p>
-          <img src="./image/icon_notchecked.png">
-        </li>
-        <li>
-          <p>第6天</p>
-          <img src="./image/icon_notchecked.png">
-        </li>
-        <li>
-          <p>第7天</p>
-          <img src="./image/icon-3_money.png">
-        </li>
+
       </ul>
       <button
-        style="background-image:url('./src/common/image/icon/icon-button-n.png')">
+        style="background-image:url('./src/common/image/icon/icon-button-r.png')"
+        v-show="isReg" @click="singIn">
+        立即签到
+      </button>
+      <button
+        style="background-image:url('./src/common/image/icon/icon-button-n.png')"
+        v-show="!isReg" @click="singIn">
         今日已签到
       </button>
       <div class="tip">
@@ -55,42 +42,250 @@
         </div>
       </div>
     </div>
+    <RegList :prize="prize"></RegList>
   </div>
 
 </template>
 
 <script type="text/ecmascript-6">
+  import {getRegistration, setSingIn} from  'api/map'
+  import Rules from 'base/rules/rules'
+  import RegList from 'base/reg_list/reg_list'
+  import redPacket from '../../common/js/red-packet'
+
+
+  let GEOLOCATION
 
   export default {
-
     data(){
       return {
-        isShowTip: 0
+        isShowTip: 0,
+        map: null,
+        redPac: [{
+          title: '第一天',
+          image: './src/common/image/icon/icon-12_money.png',
+          showTitle: 0,
+          ispacket: 1
+        }, {
+          title: '第二天',
+          image: './src/common/image/icon/icon_notchecked.png',
+          showTitle: 0,
+          ispacket: 0
+
+        }, {
+          title: '第三天',
+          image: './src/common/image/icon/icon-2_money.png',
+          showTitle: 0,
+          ispacket: 2
+        }, {
+          title: '第四天',
+          image: './src/common/image/icon/icon_notchecked.png',
+          showTitle: 0,
+          ispacket: 0
+        }, {
+          title: '第五天',
+          image: './src/common/image/icon/icon_notchecked.png',
+          showTitle: 0,
+          ispacket: 0
+        }, {
+          title: '第六天',
+          image: './src/common/image/icon/icon_notchecked.png',
+          showTitle: 0,
+          ispacket: 0
+        }, {
+          title: '第七天',
+          image: './src/common/image/icon/icon-3_money.png',
+          showTitle: 0,
+          ispacket: 3
+        }],
+        peo: '',
+        house: '',
+        continuous: 0,
+        allRedMsg: null,
+        isReg: true,
+        distance: '正在计算距离…',
+        isShowPeo: false,
+        name: '',
+        date: '',
+        desc: '',
+        start: null,
+        webSocket: null,
+        prize:[]
       }
     },
+    components: {
+      Rules,
+      RegList
 
+    },
+    created(){
+      this._getRegistration()
+
+    },
     methods: {
+
       showTip(){
         this.isShowTip = !this.isShowTip
-        console.log(this.isShowTip)
+      },
+//   获取初始化数据
+      _getRegistration() {
+        getRegistration().then((res) => {
+//          获取领取信息
+          this.winPrize()
+          console.log(res)
+          this.showMap(res.scope)
+          this.allRedMsg = res
+          this.house = [res.merchant_data.longitude, res.merchant_data.latitude]
+          if (res.is_yesterday === 1) {
+            this.continuous = res.first_sign.continuous
+            this.redPac.forEach((item, idx) => {
+              if (idx + 1 <= this.continuous) {
+                item = new redPacket(item)
+                this.redPac.splice(idx, 1, item)
+
+              }
+            })
+          }
+          console.log(res.is_today)
+          if (res.is_today !== 0) {
+            this.isReg = false
+          }
+
+        })
+      },
+      //显示规则
+      showRules(){
+        this.$refs.rules.show()
+        this.name = this.allRedMsg.title
+        this.date = this.allRedMsg.from_date
+        this.desc = this.allRedMsg.explain
+      },
+//      签到提交
+      singIn(){
+        this.isReg = false
+        this.start()
+        let data = {sign_id: this.allRedMsg.id, continuous: this.continuous + 1}
+//        setSingIn(data).then((res) => {
+//          console.log(res)
+//        })
+      },
+//      判断距离
+      isDistance(dis){
+        var disWay = dis > 1000 ? (dis / 1000) : dis
+        if (disWay > 3) {
+          this.distance = `你距离该店铺${disWay.toFixed(2)}公里`
+//          this.isReg = false
+        } else {
+          this.distance = `你距离该店铺${disWay.toFixed(2)}米`
+        }
+
+      },
+//      事实中奖轮播
+      winPrize(){
+        let that = this
+        this.webSocket = new WebSocket('ws://120.78.222.144:8686')
+        this.webSocket.onerror = function (event) {
+          console.log('连接失败')
+        }
+        //与WebSocket建立连接
+        this.webSocket.onopen = function (event) {
+          let activityId = that.allRedMsg.customer_sign_list[0].customer_id
+          that.webSocket.send(`{"id":${that.allRedMsg.id}, "activity_id":${activityId}}`)
+        }
+        that.webSocket.onmessage = function (event) {
+          // 将返回的content限制输出
+          let res = JSON.parse(event.data)
+          console.log(res)
+          if(res.length > 0){
+            res.forEach((item)=>{
+              that.prize.unshift(item)
+            })
+          }else{
+            that.prize.shift()
+            that.prize.push(res)
+          }
+
+
+//
+          console.log(JSON.parse(event.data))
+        }
+        this.start = function () {
+          let msg =
+            {avatarurl:that.allRedMsg.customer_info.avatarUrl,nickname:that.allRedMsg.customer_info.nickname,day:that.continuous,'packed_count':2}
+            console.log(that)
+          //向服务器发送请求
+//          that.webSocket.send('{"content":{"avatarurl":"https:\/\/wx.qlogo.cn\/mmopen\/vi_32\/uWKfXvruiaTia7zDz9D2AeX5XOSiaEZScU1MJ5sWBoXWIibl7IK98nLE1K4O00zBDvef24Mic3aKjUqqXhgXdJkSMpQ\/0","nickname":"\u963f\u4e36Ben","day":1,"packed_count":1}, "activity_id":"1"}')
+        }
+      },
+//      地图与人的地位
+      showMap(res){//      店铺定位
+        var that = this
+        let marker1 = new AMap.Marker({ //添加自定义点标记
+          map: this.map,
+          position: this.house, //基点位置
+          offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
+          draggable: false, //是否可拖动
+          content: `<img src="./src/common/image/icon/icon-shop_normal.png" style="height: 28px;width: 32px">`
+          //自定义点标记覆盖物内容
+        })
+
+//      标记提示
+        marker1.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+          offset: new AMap.Pixel(-52, -26),//修改label相对于maker的位置
+          content: `本店周边<span style="color:#FF4E00 ">${res / 1000}</span>公里内可签到`
+        })
+//      获取人定位
+        this.map.plugin('AMap.Geolocation', () => {
+          GEOLOCATION = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+            showButton: false,        //显示定位按钮，默认：true
+            buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+            panToLocation: false,     //定位成功后将定位到的位置作为地图中心点，默认：true
+            showMarker: false,       //定位成功后在定位到的位置显示点标记，默认：true
+
+
+          })
+          that.map.addControl(GEOLOCATION)
+          GEOLOCATION.getCurrentPosition()
+          AMap.event.addListener(GEOLOCATION, 'complete', onComplete)//返回定位信息
+          AMap.event.addListener(GEOLOCATION, 'error', onError)      //返回定位出错信息
+        })
+        //解析定位结果
+        function onComplete(data) {
+          console.log(data)
+          that.peo = [data.position.lng, data.position.lat]
+          let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
+          let dirs = lnglat.distance(that.house)
+          that.isDistance(dirs.toFixed(2))
+        }
+
+        function onError() {
+          let marker2 = new AMap.Marker({ //添加自定义点标记
+            map: that.map,
+            position: that.peo, //基点位置
+            offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
+            draggable: false, //是否可拖动
+            content: `<img src="./src/common/image/icon/pic-people_right.png"
+style="height: 32px;width: 24.5px">`
+            //自定义点标记覆盖物内容
+          })
+        }
+
       }
     },
     mounted(){
-      let map = new AMap.Map('container', {
+      var that = this
+
+      this.map = new AMap.Map('container', {
         resizeEnable: true,
         zoom: 15,
-        center: [113.29318, 23.25062]
+        center: this.house
       })
-      let marker1 = new AMap.Marker({ //添加自定义点标记
-        map: map,
-        position: [113.29318, 23.25062], //基点位置
-        offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
-        draggable: false, //是否可拖动
-        content: `<img src="./src/common/image/icon/icon-shop_normal.png" style="height: 28px;width: 32px">`
-        //自定义点标记覆盖物内容
-      })
+      //      计算距离
+//
 
-      document.querySelector('#container').style.height =
+      document.querySelector('#container').style.paddingTop =
         (document.body.offsetHeight * 0.36) + 'px'
     }
   }
@@ -115,6 +310,11 @@
       background-image: url("./image/bk-qd.png")
       background-color: rgba(0, 0, 0, 0)
       background-size: cover
+      .farPeo
+        width: 31px
+        position: absolute
+        bottom: 26.8px
+        right: 15px
       p
         position: absolute
         bottom: 2%
@@ -197,7 +397,9 @@
         padding-top: 3.2%
       img
         width: 100%
-        position: relative
+        position: absolute
+        bottom: 0
+        left: 0
         z-index: 100
     .award
       position: absolute
@@ -209,8 +411,8 @@
   .reg_red:before
     content: ''
     position: absolute
-    width: 320px
-    top: 72.5%
+    width: 83%
+    top: 78.5%
     left: 30px
     background: url('./image/pic-xu_Line.png')
     height: 1px
@@ -237,7 +439,7 @@
     border-top: 1px solid $color-row-line
     margin-top: 6px
     .move_fa
-      background-color: #706B82
+      background: #706B82
     div
       position: absolute
       height: 24px
@@ -247,12 +449,7 @@
       transform: translateY(-50%)
       background: #dddddd
       border-radius: @height
-      -webkit-transition: all 1s
-      -moz-transition: all 1s
-      -ms-transition: all 1s
-      -o-transition: all 1s
-      transition: all 1s
-
+      transition: background 1s
       span
         display: inline-block
         height: 22px
@@ -260,11 +457,8 @@
         margin: 1px 1px
         border-radius: 50%
         background: $color-background-s
-        transition: all .5s
+        transition: transform .5s
       .move
         transform: translateX(19px)
-
-
-
 
 </style>

@@ -2,37 +2,31 @@
   <div class="reg_list">
     <h4>谁领到了红包？</h4>
     <ul>
-      <li>
-        <img src="./logo.png">
-        <p>小鱼儿领取了红包<span>+￥2.00</span></p>
-        <span>50米</span>
-      </li>
-      <li>
-        <img src="./logo.png">
-        <p>小鱼儿领取了红包<span>+￥2.00</span></p>
-        <span>50米</span>
-      </li>
-      <li>
-        <img src="./logo.png">
-        <p>小鱼儿领取了红包<span>+￥2.00</span></p>
-        <span>50米</span>
-      </li>
-      <li>
-        <img src="./logo.png">
-        <p>小鱼儿领取了红包<span>+￥2.00</span></p>
-        <span>50米</span>
-      </li>
-      <li>
-        <img src="./logo.png">
-        <p>小鱼儿领取了红包<span>+￥2.00</span></p>
-        <span>50米</span>
+      <li v-for="(pri,index) in prize" :key="index">
+        <img :src="pri.avatarurl">
+        <p>{{pri.nickname}}连续签到{{pri.day}}天</p>
+        <span v-for="n in pri.packed_count"></span>
       </li>
     </ul>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    props: {
+      prize:''
+    },
+    data(){
+      return {
+        start: null,
+      }
+    },
+    methods: {
+
+    },
+    created(){
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -70,9 +64,9 @@
       padding: $padding-all
       display: flex
       position: relative
-      border-bottom :0.5px solid $color-row-line
+      border-bottom: 0.5px solid $color-row-line
       &:last-child
-        border-bottom :none
+        border-bottom: none
       img
         height: 24px
         width: @height
@@ -80,11 +74,18 @@
         line-height: 24px
         margin-left: 5px
         span
-          color:$color-assist-tr
-      >span
+          color: $color-assist-tr
+      > span
         position: absolute
         right: 12px
         top: 50%
-        transform :translateY(-50%)
-        color:$color-text-tr
+        transform: translateY(-50%)
+        height: 18px
+        width: 14.5px
+        background-image: url("./icon-money_1.png")
+        background-size: cover
+        &:nth-of-type(2)
+          right: 30px
+        &:nth-of-type(3)
+          right: 49px
 </style>

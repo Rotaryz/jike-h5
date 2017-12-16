@@ -155,21 +155,6 @@
             this._getLuckyNum()
           }, duration * 1000)
         })
-//        let addAngle = 0
-//        if (this.rotate > 0) {
-//          let beforeAngle = this.rotate % 360
-//          addAngle = 360 - beforeAngle
-//        }
-//        let angle = 3 * 60
-//        let random = Math.floor(Math.random() * 10 + 5)
-//        this.rotate = this.rotate + random * 360 + angle + addAngle
-//        let duration = random / 2
-//        this.$refs.wheel.style[transitionDuration] = duration + 's'
-//        this.$refs.wheel.style[transform] = `rotate(-${this.rotate}deg)`
-//        setTimeout(() => {
-//          this.showPrizeModal()
-//          this.wheeling = false
-//        }, duration * 1000)
       },
       showPrizeModal() {
         this.$refs.prizeModal.show()

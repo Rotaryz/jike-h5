@@ -163,7 +163,6 @@
 
           if (res.is_today !== 0) {
             this.isReg = false
-            this.dealType(this.continuous)
           }
 
           if(res.opne_template_id === '0'){

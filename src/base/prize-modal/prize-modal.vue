@@ -70,6 +70,7 @@
     height: 100%
     over-flow: hidden
     background: $color-mask-bgc
+    z-index :1500
     &.fade-enter, &.fade-leave-to
       opacity: 0
     &.fade-enter-to, &.fade-leave-to
@@ -90,6 +91,7 @@
         width: 250px
         height: 300px
         background-color: $color-white
+        border-radius :5px
         &.zoom-enter, &.zoom-leave-to
           transform: scale(.5)
         &.zoom-enter-to, &.zoom-leave-to

@@ -7,7 +7,7 @@ body, html
   -webkit-tap-highlight-color: transparent
   background: $color-background
   color: $color-text
-
+  height: 100%
 .border-top-1px, .border-right-1px, .border-bottom-1px, .border-left-1px
   position: relative
   &:before, &:after
@@ -53,14 +53,17 @@ body, html
     &:before
       width: 200%
       transform: scale(.5) translateZ(0)
+
   .border-right-1px
     &:after
       height: 200%
       transform: scale(.5) translateZ(0)
+
   .border-bottom-1px
     &:after
       width: 200%
       transform: scale(.5) translateZ(0)
+
   .border-left-1px
     &:before
       height: 200%
@@ -71,14 +74,17 @@ body, html
     &:before
       width: 300%
       transform: scale(.333) translateZ(0)
+
   .border-right-1px
     &:after
       height: 300%
       transform: scale(.333) translateZ(0)
+
   .border-bottom-1px
     &:after
       width: 300%
       transform: scale(.333) translateZ(0)
+
   .border-left-1px
     &:before
       height: 300%

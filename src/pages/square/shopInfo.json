@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "merchant_id": 100000,
+      "credential_type": "",
+      "credential_number": "",
+      "user_name": "",
+      "shop_name": "国颐堂(总店)",
+      "describe": "养发护发",
+      "mobile": "13631606692",
+      "industry_id": 1,
+      "business_circle_id": 1,
+      "address": "白云区国际创意园A5 301",
+      "open_status": 1,
+      "open_time": "10:00",
+      "close_time": "20:00",
+      "week_day": "1,2,3,4,5,6",
+      "logo_image_id": 1,
+      "app_key": "",
+      "app_secret": "",
+      "app_longitude": 0,
+      "app_latitude": 0,
+      "longitude": 120.545525,
+      "latitude": 23.641256,
+      "is_showed": 1,
+      "deleted_at": null,
+      "created_at": "2017-12-07 10:54:33",
+      "updated_at": "2017-12-07 14:29:29"
+    }
+  ]
+}

@@ -78,9 +78,9 @@ bg-image($url)
 icon-image($name)
   display: inline-block
   background-size: 100% 100%
-  background-image: url("../image/icon/" + $name + "@2x.png")
+  background-image: url("./" + $name + "@2x.png")
   @media (-webkit-min-device-pixel-ratio: 3),(min-device-pixel-ratio: 3)
-    background-image: url("../image/icon/" + $name + "@2x.png")
+    background-image: url("./" + $name + "@3x.png")
 
 vendor(prop, args)
   -webkit-{prop} args
@@ -98,4 +98,20 @@ no-wrap()
   text-overflow: ellipsis
   overflow: hidden
   white-space: nowrap
+
+//  水平居中
+row-center()
+  left:50%
+  transform :translateX(-50%)
+
+//垂直居中
+col-center()
+  top:50%
+  transform :translateY(-50%)
+
+//  全居中
+all-center()
+  top:50%
+  left:50%
+  transform :translate(-50%,-50%)
 

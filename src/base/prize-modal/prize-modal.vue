@@ -1,14 +1,16 @@
 <template>
   <transition name="fade">
-    <div class="prize-modal"  @touchmove.prevent @click="cancel">
+    <div class="prize-modal" @touchmove.prevent @click="cancel"
+         v-show="state === 1"
+    >
       <div class="modal-wrapper" @click.stop>
         <transition name="zoom">
-          <div class="modal" >
+          <div class="modal">
             <div v-if="emotion" class="emotion" :class="emotion"></div>
             <div class="content">
               <slot></slot>
             </div>
-            <div class="close" @click="close"></div>
+            <div class="close" @click="close" v-show="isClose === 1"></div>
           </div>
         </transition>
       </div>
@@ -31,7 +33,8 @@
     },
     data() {
       return {
-        state: STATE_HIDE
+        state: STATE_HIDE,
+        isClose: STATE_SHOW
       }
     },
 
@@ -52,6 +55,12 @@
       },
       hide() {
         this.state = STATE_HIDE
+      },
+      hideClose(){
+        this.isClose = STATE_HIDE
+      },
+      showClose(){
+        this.isClose = STATE_SHOW
       }
     }
   }
@@ -62,7 +71,6 @@
   @import "~common/stylus/mixin"
 
   .prize-modal
-    display:none
     position: fixed
     top: 0
     left: 0
@@ -71,7 +79,7 @@
     height: 100%
     over-flow: hidden
     background: $color-mask-bgc
-    z-index :1500
+    z-index: 1500
     &.fade-enter, &.fade-leave-to
       opacity: 0
     &.fade-enter-to, &.fade-leave-to
@@ -92,12 +100,12 @@
         width: 250px
         height: 300px
         background-color: $color-white
-        border-radius :5px
+        border-radius: 5px
         &.zoom-enter, &.zoom-leave-to
           transform: scale(.5)
         &.zoom-enter-to, &.zoom-leave-to
           transition: all .3s cubic-bezier(1, -0.07, 0.51, 1.48)
-          /*transition-delay: .3s*/
+        /*transition-delay: .3s*/
         .emotion
           position: absolute
           display: block

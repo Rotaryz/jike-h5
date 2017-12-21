@@ -7,7 +7,8 @@
     </div>
     <div id="container">
       <div class="convers">
-        <img src="./image/pic-people_right.png" class="farPeo">
+        <img src="./image/pic-people_right.png" class="farPeo"
+             v-show="isShowPeo">
         <p>{{distance}}</p>
         <div class="rule">
           <p @click="showRules">规则</p>
@@ -32,7 +33,7 @@
       </button>
       <button
         style="background-image:url('./src/common/image/icon/icon-button-n.png')"
-        v-show="!isReg" @click="singIn">
+        v-show="!isReg">
         今日已签到
       </button>
       <div class="tip">
@@ -43,15 +44,36 @@
       </div>
     </div>
     <RegList :prize="prize"></RegList>
+    <PrizeModal ref="regmal">
+      <div class="redFa">
+        <span class="page">{{showPage}}</span>
+        <p style="display: none">本红包由国颐堂提供</p>
+        <p class="money" v-show="showRegPac">{{money}}<span>元</span></p>
+        <div :class="{open:true, op_move:moveOpen}" @click="_drawPacket"></div>
+        <div class="s-monall">
+          <div class="s-mon" v-for="(ms,index) in morePeg" :key="index">+{{
+            ms.price}}</div>
+        </div>
+        <div class="s-monall s-monBo">
+          <div class="s-mon" v-for="(end,index) in endPeg" :key="index">+{{
+            end.price}}</div>
+        </div>
+        <div class="re_detail" v-show="showRegPac">
+          <p>现金已经存放入您的账户可进入个人中心-红包查看详情</p>
+          <div class="share">查看红包</div>
+        </div>
+      </div>
+    </PrizeModal>
   </div>
 
 </template>
 
 <script type="text/ecmascript-6">
-  import {getRegistration, setSingIn,remind} from  'api/map'
+  import {getRegistration, setSingIn, remind, drawPacket} from  'api/map'
   import Rules from 'base/rules/rules'
   import RegList from 'base/reg_list/reg_list'
   import redPacket from '../../common/js/red-packet'
+  import PrizeModal from 'base/prize-modal/prize-modal'
 
 
   let GEOLOCATION
@@ -110,12 +132,22 @@
         desc: '',
         start: null,
         webSocket: null,
-        prize:[]
+        prize: [],
+        showRegPac: false,
+        showPage: '',
+        moveOpen: false,
+        money: '',
+        redNum: 0,
+        opeCi: 0,
+        morePeg: [],
+        endPeg:[],
+        redList: null
       }
     },
     components: {
       Rules,
-      RegList
+      RegList,
+      PrizeModal
 
     },
     created(){
@@ -127,13 +159,13 @@
       showTip(){
         this.isShowTip = !this.isShowTip
         let status = 0
-        if(this.isShowTip){
+        if (this.isShowTip) {
           status = 1
-        }else {
+        } else {
           status = 0
         }
-        let data = {status:status,id:this.allRedMsg.id}
-        remind(data).then((res)=>{
+        let data = {status: status, id: this.allRedMsg.id}
+        remind(data).then((res) => {
 //          console.log(res)
         })
       },
@@ -143,9 +175,39 @@
           if (idx + 1 <= continuous && item.ispacket !== undefined) {
             item = new redPacket(item)
             this.redPac.splice(idx, 1, item)
-
           }
         })
+      },
+//      领取红包
+      _drawPacket(){
+        this.opeCi++
+        this.moveOpen = !this.moveOpen
+        console.log(this.moveOpen)
+        setTimeout(() => {
+            let allMoney = 0
+            this.showPage = this.opeCi + '/' + this.redNum
+            console.log(this.opeCi)
+            if (this.opeCi === 1) {
+//              开一个时
+              console.log({price: this.redList[0].price})
+              this.morePeg.push({price: this.redList[0].price})
+            } else if (this.opeCi === 2 && this.redNum === 2 ||this.opeCi === 3 && this.redNum === 3) {
+//              两个包全
+              this.showRegPac = true
+              this.morePeg = []
+              this.redList.forEach((item)=>{
+                this.endPeg.push(item)
+                allMoney+= parseFloat(item.price)
+              })
+              this.money = allMoney.toFixed(2)
+              this.$refs.regmal.showClose()
+
+            } else if (this.opeCi === 2 && this.redNum === 3) {
+//              三个包开两个是
+              this.morePeg.push({price: this.redList[1].price})
+            }
+        }, 2000)
+
       },
 //   获取初始化数据
       _getRegistration() {
@@ -160,18 +222,15 @@
             this.continuous = res.first_sign.continuous
             this.dealType(this.continuous)
           }
-
           if (res.is_today !== 0) {
             this.isReg = false
             this.dealType(this.continuous)
           }
-
-          if(res.opne_template_id === '0'){
+          if (res.opne_template_id === '0') {
             this.isShowTip = false
-          }else{
+          } else {
             this.isShowTip = true
           }
-
         })
       },
       //显示规则
@@ -185,10 +244,32 @@
       singIn(){
         this.isReg = false
         this.start()
-        this.continuous +=1
-        let data = {sign_id: this.allRedMsg.id, continuous: this.continuous}
+        this.continuous += 1
+        let data = {sign_id: this.allRedMsg.id, continuous:1}
         setSingIn(data).then((res) => {
-          if(res === '1'){
+          this.redList = res
+          console.log(res)
+          this.redNum = res.length
+          if (res.length === 1) {
+            this.$refs.regmal.show()
+            this.money = res[0].price
+            this.showRegPac = true
+          } else if (res.length > 1) {
+            this.$refs.regmal.show()
+            this.showPage = '0/' + res.length
+            this.$refs.regmal.hideClose()
+          }
+          if (res.num >= 0) {
+            if (res.num > 1) {
+              this.showPage = '0/' + res.num
+              console.log(this.$refs.regmal)
+
+            }
+            this.$refs.regmal.show()
+          }
+
+
+          if (res) {
             this.dealType(this.continuous)
           }
         })
@@ -213,27 +294,33 @@
         }
         //与WebSocket建立连接
         this.webSocket.onopen = function (event) {
-          let activityId = that.allRedMsg.customer_sign_list[0].customer_id
+          let activityId = that.allRedMsg.customer_id
           that.webSocket.send(`{"id":${that.allRedMsg.id}, "activity_id":${activityId}}`)
         }
         that.webSocket.onmessage = function (event) {
           // 将返回的content限制输出
           let res = JSON.parse(event.data)
-          if(res.length > 0){
-            res.forEach((item)=>{
+//          console.log(event.data)
+          if (Array.isArray(res)) {
+//            console.log(1)
+            res.forEach((item) => {
               that.prize.unshift(item)
             })
-          }else{
+          } else {
             that.prize.shift()
             that.prize.push(res)
           }
-
         }
         this.start = function () {
           let msg =
-            {"avatarurl":that.allRedMsg.customer_info.avatarUrl,"nickname":that.allRedMsg.customer_info.nickname,"day":that.continuous,"packed_count":2}
+            {
+              "avatarurl": that.allRedMsg.customer_info.avatarUrl,
+              "nickname": that.allRedMsg.customer_info.nickname,
+              "day": that.continuous,
+              "packed_count": 2
+            }
           //向服务器发送请求
-          that.webSocket.send(`{"content":${JSON.stringify(msg)}, "activity_id":${that.allRedMsg.customer_sign_list[0].customer_id}}`)
+          that.webSocket.send(`{"content":${JSON.stringify(msg)}, "activity_id":${that.allRedMsg.customer_id}}`)
         }
       },
 //      地图与人的地位
@@ -262,8 +349,6 @@
             buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
             panToLocation: false,     //定位成功后将定位到的位置作为地图中心点，默认：true
             showMarker: false,       //定位成功后在定位到的位置显示点标记，默认：true
-
-
           })
           that.map.addControl(GEOLOCATION)
           GEOLOCATION.getCurrentPosition()
@@ -276,21 +361,36 @@
           that.peo = [data.position.lng, data.position.lat]
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
           let dirs = lnglat.distance(that.house)
+          console.log(dirs)
+          if (dirs <= 3000) {
+//            定人且画线
+            let marker2 = new AMap.Marker({ //添加自定义点标记
+              map: that.map,
+              position: that.peo, //基点位置
+              offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
+              draggable: false, //是否可拖动
+              content: `<img src="./src/common/image/icon/pic-people_right.png"
+style="height: 32px;width: 24.5px">`
+              //自定义点标记覆盖物内容
+            })
+            let lineArr = [that.house, that.peo]
+//            画线
+            let polyline = new AMap.Polyline({
+              path: lineArr,          //设置线覆盖物路径
+              strokeColor: "#3366FF", //线颜色
+              strokeOpacity: 1,       //线透明度
+              strokeWeight: 5,        //线宽
+              strokeStyle: "solid",   //线样式
+              strokeDasharray: [10, 5] //补充线样式
+            })
+            polyline.setMap(map)
+          } else {
+            that.isShowPeo = true
+          }
           that.isDistance(dirs.toFixed(2))
         }
-
         function onError() {
-          let marker2 = new AMap.Marker({ //添加自定义点标记
-            map: that.map,
-            position: that.peo, //基点位置
-            offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
-            draggable: false, //是否可拖动
-            content: `<img src="./src/common/image/icon/pic-people_right.png"
-style="height: 32px;width: 24.5px">`
-            //自定义点标记覆盖物内容
-          })
         }
-
       }
     },
     mounted(){
@@ -301,9 +401,6 @@ style="height: 32px;width: 24.5px">`
         zoom: 15,
         center: this.house
       })
-      //      计算距离
-//
-
       document.querySelector('#container').style.paddingTop =
         (document.body.offsetHeight * 0.36) + 'px'
     }
@@ -479,5 +576,108 @@ style="height: 32px;width: 24.5px">`
         transition: transform .5s
       .move
         transform: translateX(19px)
+
+  //  红包
+  .redFa
+    width: 100%
+    height: 100%
+    background: #fff
+    background-image: url('./image/pic-money_winbg.png')
+    background-size: cover
+    border-radius: 5px
+    font-size: $font-size-small
+    position: relative
+    .s-monall
+      color: $color-white
+      width: 100%
+      position: absolute
+      text-align: center
+      font-size: $font-size-medium
+      top: 50px
+      background: rgba(0, 0, 0, 0)
+      font-family: $font-family-light
+      .s-mon
+        line-height: 1
+        margin-top: 11px
+        background: rgba(0, 0, 0, 0)
+        position: relative
+        &:before
+          content: ''
+          position: absolute
+          width: 12.5px
+          height: 13.5px
+          background: url('./image/icon-money-bg.png')
+          background-size: cover
+          bottom: 0
+          left: 93px
+    .s-monBo
+      font-size: $font-size-small-s
+      top: 101.5px
+      padding-left:14px
+      .s-mon
+        display: inline-block
+        margin-right:17px
+        margin-top :0px
+        &:before
+          left: -10px
+          width: 8.8px
+          height :9.504px
+    p
+      line-height: 206px
+      color: #E1452B
+      text-align: center
+    .money
+      line-height: 124px
+      font-size: ($font-size-small-s* 3)
+      color: #FFDA4F
+      span
+        font-size: $font-size-small
+    .page
+      position: absolute
+      right: $padding-all
+      top: ($padding-all + 3)
+      color: $color-text
+    .open
+      height: 66.5px
+      width: @height
+      border-radius: 50%
+      position: absolute
+      top: 56%
+      background-image: url("./image/icon-open_money.png")
+      background-size: cover
+      row-center()
+      transform: translateX(-50%) rotateY(0deg)
+      transition: all 2s
+    .op_move
+      transform: translateX(-50%) rotateY(720deg)
+    .re_detail
+      height: 58.5%
+      width: 100%
+      left: 0
+      background: $color-background-s
+      position: absolute
+      bottom: 0
+      border-bottom-right-radius: 5px
+      border-bottom-left-radius: 5px
+
+      p
+        width: 65.4%
+        margin: 17px auto 1.8%
+        line-height: 1.4
+        color: $color-text-tr
+      div
+        height: 23%
+        width: 92%
+        display: flex
+        align-items: center
+        justify-content: center
+        border-radius: 2px
+      .share
+        background: $color-assist-tr
+        color: $color-red
+        position: absolute
+        bottom: 15px
+        row-center()
+        color: $color-text-transwhite
 
 </style>

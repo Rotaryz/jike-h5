@@ -5,16 +5,20 @@
       <p class="add_msg">{{allRedMsg ?
         allRedMsg.merchant_data.address : '正在定位...'}}</p>
     </div>
-    <div id="container">
-      <div class="convers">
-        <img src="./image/pic-people_right.png" class="farPeo"
-             v-show="isShowPeo">
-        <p>{{distance}}</p>
-        <div class="rule">
-          <p @click="showRules">规则</p>
+    <div class="conmap">
+      <div id="container">
+        <div class="convers">
+          <img src="./image/bk-qd.png" class="bk_map">
+          <img src="./image/pic-people_right.png" class="farPeo"
+               v-show="isShowPeo">
+          <p>{{distance}}</p>
+          <div class="rule">
+            <p @click="showRules">规则</p>
+          </div>
         </div>
       </div>
     </div>
+
     <Rules :name="name,date,desc" ref="rules"></Rules>
     <div>
       <ul class="reg_red">
@@ -374,8 +378,10 @@ style="height: 32px;width: 24.5px">`
         zoom: 15,
         center: this.house
       })
-      document.querySelector('#container').style.paddingTop =
-        (document.body.offsetHeight * 0.36) + 'px'
+      let container = document.querySelector('#container')
+      console.log(container.style)
+      container.style.paddingTop =
+        ((document.body.offsetHeight+64) * 0.36) + 'px'
     }
   }
 </script>
@@ -385,10 +391,12 @@ style="height: 32px;width: 24.5px">`
   @import "~common/stylus/mixin"
 
   /*地图*/
+  .conmap
+    padding: 0 12px
+
   #container
-    height: 36%
+    height: 100%
     position: relative
-    width: 93.6%
     margin: 0 auto
     .convers
       width: 100%
@@ -396,9 +404,11 @@ style="height: 32px;width: 24.5px">`
       position: absolute
       top: 0
       z-index: 1000
-      background-image: url("./image/bk-qd.png")
       background-color: rgba(0, 0, 0, 0)
-      background-size: cover
+      .bk_map
+        position: absolute
+        height: 100%
+        width: 100%
       .farPeo
         width: 31px
         position: absolute

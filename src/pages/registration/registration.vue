@@ -6,10 +6,11 @@
 
 <script type="text/ecmascript-6">
   import RegMap from 'base/reg_map/reg_map'
+
   export default {
     components: {
-      RegMap,
-    },
+      RegMap
+    }
   }
 </script>
 

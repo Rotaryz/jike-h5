@@ -1,7 +1,11 @@
 import axios from 'axios'
+import {getSearch} from './util'
 
 export function initAxios() {
+  const search = getSearch()
+  localStorage.setItem('token', search.token)
+  localStorage.setItem('merchantId', search.merchantId)
   axios.defaults.baseURL = 'http://dev.jike-wap-api.jerryf.cn'
-  axios.defaults.headers.get['Authorization'] = '748403ea9832b1c173fbc248f07fc73dd88598065b4b1a9495f7bda0b6f182e0cabd83ea9832b1c173fbc248f07fc73dd8859'
-  axios.defaults.headers.get['Current-merchant'] = '100000'
+  axios.defaults.headers.get['Authorization'] = search.token
+  axios.defaults.headers.get['Current-merchant'] = search.merchantId
 }

@@ -66,7 +66,7 @@
           <div class="content">{{prize.id === 0 ? '明天再来' : `可进入个人中心-${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}查看详情`}}</div>
         </div>
         <div class="bottom">
-          <div class="btn">{{prize.id === 0 ? '随便逛逛' : `查看${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}`}}</div>
+          <div class="btn" @click="handleClick">{{prize.id === 0 ? '随便逛逛' : `查看${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}`}}</div>
         </div>
       </div>
     </prize-modal>
@@ -103,6 +103,7 @@
       }
     },
     created() {
+      document.title = '大转盘'
       this.direction = 'vertical'
       this._getWheelDetail()
     },
@@ -139,7 +140,6 @@
           let angle = index * 60
           let random = Math.floor(Math.random() * 10 + 5)
           this.rotate = this.rotate + random * 360 + angle + addAngle
-          console.log(this.rotate % 360)
           let duration = random / 2
           this.$refs.wheel.style[transitionDuration] = duration + 's'
           this.$refs.wheel.style[transform] = `rotate(-${this.rotate}deg)`
@@ -161,6 +161,19 @@
       },
       showRules() {
         this.$refs.rules.show()
+      },
+      handleClick() {
+        /* eslint-disable no-undef */
+        if (this.prize.id === 0) {
+          // 推荐
+          wx.miniProgram.navigateTo({url: 'pages/recommend/recommend'})
+        } else if (this.prize.promotion_type === 'coupon') {
+          // 优惠券
+          wx.miniProgram.navigateTo({url: '/pages/user/myCoupon/myCoupon'})
+        } else if (this.prize.promotion_type === 'redpacket' || this.prize.promotion_type === 'lucky_redpacket') {
+          // 红包
+          wx.miniProgram.navigateTo({url: '/pages/user/redPacket/redPacket'})
+        }
       },
       _getWheelDetail() {
         getWheelDetail()

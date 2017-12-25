@@ -46,7 +46,7 @@
     },
     data() {
       return {
-        state: STATE_HIDE,
+        state: STATE_HIDE
       }
     },
     methods: {
@@ -66,9 +66,8 @@
       },
       hide() {
         this.state = STATE_HIDE
-      },
+      }
     }
-
   }
 </script>
 

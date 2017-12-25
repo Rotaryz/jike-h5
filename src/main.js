@@ -6,15 +6,10 @@ import router from './router'
 import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import store from './store'
-import Axios from 'axios'
 import {initAxios} from 'common/js/config'
-
-import 'swiper/dist/css/swiper.css'
-
 
 import 'common/stylus/index.styl'
 
-Vue.prototype.$AJAX = Axios
 /* eslint-disable no-unused-vars */
 // import vConsole from 'vconsole'
 
@@ -23,15 +18,13 @@ initAxios()
 fastclick.attach(document.body)
 
 Vue.use(VueLazyload, {
-	loading: ''
+  loading: ''
 })
 
 /* eslint-disable no-new */
 new Vue({
-	el: '#app',
-	router,
-	store,
-	render: h => h(App)
+  el: '#app',
+  router,
+  store,
+  render: h => h(App)
 })
-
-

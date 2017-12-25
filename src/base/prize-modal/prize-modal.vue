@@ -1,11 +1,9 @@
 <template>
   <transition name="fade">
-    <div class="prize-modal" @touchmove.prevent @click="cancel"
-         v-show="state === 1"
-    >
+    <div class="prize-modal" v-show="state === 1" @touchmove.prevent @click="cancel">
       <div class="modal-wrapper" @click.stop>
         <transition name="zoom">
-          <div class="modal">
+          <div class="modal" v-show="state === 1">
             <div v-if="emotion" class="emotion" :class="emotion"></div>
             <div class="content">
               <slot></slot>
@@ -23,6 +21,7 @@
   const STATE_SHOW = 1
 
   const COMPONENT_NAME = 'modal'
+
   export default {
     name: COMPONENT_NAME,
     props: {
@@ -37,7 +36,6 @@
         isClose: STATE_SHOW
       }
     },
-
     methods: {
       cancel() {
         this.hide()
@@ -74,7 +72,6 @@
     position: fixed
     top: 0
     left: 0
-    z-index: 100
     width: 100%
     height: 100%
     over-flow: hidden
@@ -105,7 +102,6 @@
           transform: scale(.5)
         &.zoom-enter-to, &.zoom-leave-to
           transition: all .3s cubic-bezier(1, -0.07, 0.51, 1.48)
-        /*transition-delay: .3s*/
         .emotion
           position: absolute
           display: block

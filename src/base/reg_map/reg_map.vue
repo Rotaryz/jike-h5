@@ -38,8 +38,8 @@
       </button>
       <div class="tip">
         <p>开启连续签到提醒</p>
-        <div :class="{move_fa:isShowTip}">
-          <span :class="{move:isShowTip}" @click="showTip"></span>
+        <div :class="{move_fa:isShowTip}" @click="showTip">
+          <span :class="{move:isShowTip}"></span>
         </div>
       </div>
     </div>

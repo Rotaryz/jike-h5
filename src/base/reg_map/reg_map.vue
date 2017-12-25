@@ -70,7 +70,13 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getRegistration, setSingIn, remind, drawPacket,signLists} from  'api/map'
+  import {
+    getRegistration,
+    setSingIn,
+    remind,
+    drawPacket,
+    signLists
+  } from  'api/map'
   import Rules from 'base/rules/rules'
   import RegList from 'base/reg_list/reg_list'
   import redPacket from '../../common/js/red-packet'
@@ -280,14 +286,6 @@
         }
 
       },
-//      事实中奖轮播
-
-      .
-        3
-
-
-
-
       winPrize(){
         let data = {id: 1}
         signLists(data).then((res) => {

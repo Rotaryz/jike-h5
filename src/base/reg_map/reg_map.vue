@@ -52,11 +52,13 @@
         <div :class="{open:true, op_move:moveOpen}" @click="_drawPacket"></div>
         <div class="s-monall">
           <div class="s-mon" v-for="(ms,index) in morePeg" :key="index">+{{
-            ms.price}}</div>
+            ms.price}}
+          </div>
         </div>
         <div class="s-monall s-monBo">
           <div class="s-mon" v-for="(end,index) in endPeg" :key="index">+{{
-            end.price}}</div>
+            end.price}}
+          </div>
         </div>
         <div class="re_detail" v-show="showRegPac">
           <p>现金已经存放入您的账户可进入个人中心-红包查看详情</p>
@@ -65,19 +67,15 @@
       </div>
     </PrizeModal>
   </div>
-
 </template>
 
 <script type="text/ecmascript-6">
-  import {getRegistration, setSingIn, remind, drawPacket} from  'api/map'
+  import {getRegistration, setSingIn, remind, drawPacket,signLists} from  'api/map'
   import Rules from 'base/rules/rules'
   import RegList from 'base/reg_list/reg_list'
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
-
-
   let GEOLOCATION
-
   export default {
     data(){
       return {
@@ -140,7 +138,7 @@
         redNum: 0,
         opeCi: 0,
         morePeg: [],
-        endPeg:[],
+        endPeg: [],
         redList: null
       }
     },
@@ -184,33 +182,34 @@
         this.moveOpen = !this.moveOpen
         console.log(this.moveOpen)
         setTimeout(() => {
-            let allMoney = 0
-            this.showPage = this.opeCi + '/' + this.redNum
-            console.log(this.opeCi)
-            if (this.opeCi === 1) {
+          let allMoney = 0
+          this.showPage = this.opeCi + '/' + this.redNum
+          console.log(this.opeCi)
+          if (this.opeCi === 1) {
 //              开一个时
-              console.log({price: this.redList[0].price})
-              this.morePeg.push({price: this.redList[0].price})
-            } else if (this.opeCi === 2 && this.redNum === 2 ||this.opeCi === 3 && this.redNum === 3) {
+            console.log({price: this.redList[0].price})
+            this.morePeg.push({price: this.redList[0].price})
+          } else if (this.opeCi === 2 && this.redNum === 2 || this.opeCi === 3 && this.redNum === 3) {
 //              两个包全
-              this.showRegPac = true
-              this.morePeg = []
-              this.redList.forEach((item)=>{
-                this.endPeg.push(item)
-                allMoney+= parseFloat(item.price)
-              })
-              this.money = allMoney.toFixed(2)
-              this.$refs.regmal.showClose()
+            this.showRegPac = true
+            this.morePeg = []
+            this.redList.forEach((item) => {
+              this.endPeg.push(item)
+              allMoney += parseFloat(item.price)
+            })
+            this.money = allMoney.toFixed(2)
+            this.$refs.regmal.showClose()
 
-            } else if (this.opeCi === 2 && this.redNum === 3) {
+          } else if (this.opeCi === 2 && this.redNum === 3) {
 //              三个包开两个是
-              this.morePeg.push({price: this.redList[1].price})
-            }
+            this.morePeg.push({price: this.redList[1].price})
+          }
         }, 2000)
 
       },
 //   获取初始化数据
       _getRegistration() {
+        this.winPrize()
         getRegistration().then((res) => {
 //          获取领取信息
           this.winPrize()
@@ -243,9 +242,8 @@
 //      签到提交
       singIn(){
         this.isReg = false
-        this.start()
         this.continuous += 1
-        let data = {sign_id: this.allRedMsg.id, continuous:1}
+        let data = {sign_id: this.allRedMsg.id, continuous: 1}
         setSingIn(data).then((res) => {
           this.redList = res
           console.log(res)
@@ -263,12 +261,9 @@
             if (res.num > 1) {
               this.showPage = '0/' + res.num
               console.log(this.$refs.regmal)
-
             }
             this.$refs.regmal.show()
           }
-
-
           if (res) {
             this.dealType(this.continuous)
           }
@@ -287,41 +282,11 @@
       },
 //      事实中奖轮播
       winPrize(){
-        let that = this
-        this.webSocket = new WebSocket('ws://120.78.222.144:8686')
-        this.webSocket.onerror = function (event) {
-          console.log('连接失败')
-        }
-        //与WebSocket建立连接
-        this.webSocket.onopen = function (event) {
-          let activityId = that.allRedMsg.customer_id
-          that.webSocket.send(`{"id":${that.allRedMsg.id}, "activity_id":${activityId}}`)
-        }
-        that.webSocket.onmessage = function (event) {
-          // 将返回的content限制输出
-          let res = JSON.parse(event.data)
-//          console.log(event.data)
-          if (Array.isArray(res)) {
-//            console.log(1)
-            res.forEach((item) => {
-              that.prize.unshift(item)
-            })
-          } else {
-            that.prize.shift()
-            that.prize.push(res)
-          }
-        }
-        this.start = function () {
-          let msg =
-            {
-              "avatarurl": that.allRedMsg.customer_info.avatarUrl,
-              "nickname": that.allRedMsg.customer_info.nickname,
-              "day": that.continuous,
-              "packed_count": 2
-            }
-          //向服务器发送请求
-          that.webSocket.send(`{"content":${JSON.stringify(msg)}, "activity_id":${that.allRedMsg.customer_id}}`)
-        }
+        let data = {id: 1}
+        signLists(data).then((res) => {
+          this.prize = res
+          console.log(res)
+        })
       },
 //      地图与人的地位
       showMap(res){//      店铺定位
@@ -389,13 +354,13 @@ style="height: 32px;width: 24.5px">`
           }
           that.isDistance(dirs.toFixed(2))
         }
+
         function onError() {
         }
       }
     },
     mounted(){
       var that = this
-
       this.map = new AMap.Map('container', {
         resizeEnable: true,
         zoom: 15,
@@ -613,15 +578,15 @@ style="height: 32px;width: 24.5px">`
     .s-monBo
       font-size: $font-size-small-s
       top: 101.5px
-      padding-left:14px
+      padding-left: 14px
       .s-mon
         display: inline-block
-        margin-right:17px
-        margin-top :0px
+        margin-right: 17px
+        margin-top: 0px
         &:before
           left: -10px
           width: 8.8px
-          height :9.504px
+          height: 9.504px
     p
       line-height: 206px
       color: #E1452B

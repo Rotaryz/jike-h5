@@ -378,10 +378,6 @@ style="height: 32px;width: 24.5px">`
         zoom: 15,
         center: this.house
       })
-      let container = document.querySelector('#container')
-      console.log(container.style)
-      container.style.paddingTop =
-        ((document.body.offsetHeight+64) * 0.36) + 'px'
     }
   }
 </script>
@@ -392,10 +388,11 @@ style="height: 32px;width: 24.5px">`
 
   /*地图*/
   .conmap
-    padding: 0 12px
-
+    padding: 0 3.2vw
   #container
-    height: 100%
+    width: 100%
+    height: 0
+    padding-top: 64.13vw
     position: relative
     margin: 0 auto
     .convers

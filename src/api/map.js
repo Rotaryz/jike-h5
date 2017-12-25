@@ -37,8 +37,39 @@ export function setSingIn(data) {
  */
 export function remind(data) {
   const url = `/api/activity/sign/openpush`
-  return axios.get(url,{
-      params:data
+  return axios.get(url, {
+      params: data
+    }
+  ).then((res) => {
+    if (res.data.error === ERR_OK) {
+      return Promise.resolve(res.data.data)
+    }
+  })
+}
+
+/**
+ * 领取红包
+ * @returns {Promise.<TResult>}
+ */
+export function drawPacket(data) {
+  const url = `/api/activity/sign/drawPacket`
+  const parmas = Object.assign({}, commonParams, data)
+  return axios.post(url, parmas
+  ).then((res) => {
+    if (res.data.error === ERR_OK) {
+      return Promise.resolve(res.data.data)
+    }
+  })
+}
+/**
+ * 获取中奖用户列表接口地
+ * @param data
+ * @returns {Promise.<TResult>}
+ */
+export function signLists(data) {
+  const url = `/api/activity/sign`
+  return axios.get(url, {
+      params: data
     }
   ).then((res) => {
     if (res.data.error === ERR_OK) {

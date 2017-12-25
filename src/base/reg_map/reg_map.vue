@@ -62,7 +62,7 @@
         </div>
         <div class="re_detail" v-show="showRegPac">
           <p>现金已经存放入您的账户可进入个人中心-红包查看详情</p>
-          <div class="share">查看红包</div>
+          <div class="share" @click="jumpMine">查看红包</div>
         </div>
       </div>
     </PrizeModal>
@@ -159,7 +159,9 @@
 
     },
     methods: {
-
+      jumpMine(){
+        wx.miniProgram.navigateTo({url: '/path/to/pages/user/redPacket/redPacket'})
+      },
       showTip(){
         this.isShowTip = !this.isShowTip
         let status = 0
@@ -365,6 +367,7 @@ style="height: 32px;width: 24.5px">`
       }
     },
     mounted(){
+      document.title = '签到红包'
       var that = this
       this.map = new AMap.Map('container', {
         resizeEnable: true,

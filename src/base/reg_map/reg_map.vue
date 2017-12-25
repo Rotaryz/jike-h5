@@ -281,6 +281,13 @@
 
       },
 //      事实中奖轮播
+
+      .
+        3
+
+
+
+
       winPrize(){
         let data = {id: 1}
         signLists(data).then((res) => {

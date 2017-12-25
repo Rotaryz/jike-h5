@@ -20,13 +20,13 @@ export default class squareMethod {
       iconPath = './src/common/image/icon/icon-shop_close.png'
     } else if (item.open_status === 1) {
       iconPath = './src/common/image/icon/icon-shop_money.png'
-    } else if (item.open_status === 2 ) {
+    } else if (item.open_status === 2) {
       iconPath = './src/common/image/icon/icon-shop_Renovation.png'
     }
-    if(item.current_merchant){
+    if (item.current_merchant) {
       this.width = '48px'
       this.height = '43px'
-    }else {
+    } else {
       this.width = '32px'
       this.height = '28px'
     }

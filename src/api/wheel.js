@@ -42,6 +42,11 @@ export function getLuckyNum(params) {
   })
 }
 
+/**
+ * 抽奖
+ * @param params
+ * @returns {Promise.<TResult>}
+ */
 export function doLucky(params) {
   const url = '/api/activity/lucky/do-lucky'
   return axios.get(url, {params}).then((res) => {

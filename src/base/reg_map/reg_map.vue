@@ -429,7 +429,7 @@ style="height: 32px;width: 24.5px">`
           width: @height
           right: 10px
           top: 50%
-          background: $color-background-s
+          background: $color-white
           transform: rotate(45deg) translateY(-74%)
         &:before
           right: 12px
@@ -460,7 +460,7 @@ style="height: 32px;width: 24.5px">`
       transform: translateY(-50%)
 
   div
-    background-color: $color-background-s
+    background-color: $color-white
 
   .reg_red
     display: flex
@@ -545,7 +545,7 @@ style="height: 32px;width: 24.5px">`
         width: 22px
         margin: 1px 1px
         border-radius: 50%
-        background: $color-background-s
+        background: $color-white
         transition: transform .5s
       .move
         transform: translateX(19px)
@@ -627,7 +627,7 @@ style="height: 32px;width: 24.5px">`
       height: 58.5%
       width: 100%
       left: 0
-      background: $color-background-s
+      background: $color-white
       position: absolute
       bottom: 0
       border-bottom-right-radius: 5px

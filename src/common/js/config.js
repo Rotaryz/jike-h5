@@ -5,7 +5,7 @@ export function initAxios() {
   const search = getSearch()
   localStorage.setItem('token', search.token)
   localStorage.setItem('merchantId', search.merchantId)
-  axios.defaults.baseURL = 'http://dev.jike-wap-api.jerryf.cn'
+  axios.defaults.baseURL = 'http://jike-wap-api.com'
   axios.defaults.headers.get['Authorization'] = search.token
   axios.defaults.headers.get['Current-merchant'] = search.merchantId
 }

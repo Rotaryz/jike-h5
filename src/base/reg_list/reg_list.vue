@@ -3,9 +3,9 @@
     <h4>谁领到了红包？</h4>
     <ul>
       <li v-for="(pri,index) in prize" :key="index">
-        <img :src="pri.wechat_data.avatarUrl">
-        <p>{{pri.nickname}}连续签到{{pri.packed_count}}天</p>
-        <span v-for="n in pri.num"></span>
+        <img :src="pri.avatar_url">
+        <p>{{pri.nickname}}连续签到{{pri.continuous}}天</p>
+        <span v-for="n in pri.redpacket_count"></span>
       </li>
     </ul>
   </div>

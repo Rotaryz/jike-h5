@@ -18,6 +18,7 @@
         </div>
       </div>
     </div>
+
     <Rules :name="name,date,desc" ref="rules"></Rules>
     <div>
       <ul class="reg_red">
@@ -73,23 +74,20 @@
 </template>
 
 <script type="text/ecmascript-6">
-  /* eslint-disable no-undef */
-  /* eslint-disable no-unused-vars */
   import {
     getRegistration,
     setSingIn,
     remind,
+    drawPacket,
     signLists
-  } from 'api/map'
+  } from  'api/map'
   import Rules from 'base/rules/rules'
   import RegList from 'base/reg_list/reg_list'
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
-
   let GEOLOCATION
-
   export default {
-    data() {
+    data(){
       return {
         isShowTip: 0,
         map: null,
@@ -134,7 +132,7 @@
         house: '',
         continuous: 0,
         allRedMsg: null,
-        isReg: true,
+        isReg: false,
         distance: '正在计算距离…',
         isShowPeo: false,
         name: '',
@@ -158,15 +156,17 @@
       Rules,
       RegList,
       PrizeModal
+
     },
-    created() {
+    created(){
       this._getRegistration()
+
     },
     methods: {
-      jumpMine() {
+      jumpMine(){
         wx.miniProgram.navigateTo({url: '/path/to/pages/user/redPacket/redPacket'})
       },
-      showTip() {
+      showTip(){
         this.isShowTip = !this.isShowTip
         let status = 0
         if (this.isShowTip) {
@@ -174,13 +174,13 @@
         } else {
           status = 0
         }
-        let data = {status: status, id: this.allRedMsg.id}
+        let data = {status: status, sign_id: this.allRedMsg.id}
         remind(data).then((res) => {
-//          console.log(res)
+          console.log(res)
         })
       },
 //      处理签订状态
-      dealType(continuous) {
+      dealType(continuous){
         this.redPac.forEach((item, idx) => {
           if (idx + 1 <= continuous && item.ispacket !== undefined) {
             item = new redPacket(item)
@@ -189,14 +189,16 @@
         })
       },
 //      领取红包
-      _drawPacket() {
+      _drawPacket(){
         this.opeCi++
         this.moveOpen = !this.moveOpen
         setTimeout(() => {
           let allMoney = 0
           this.showPage = this.opeCi + '/' + this.redNum
+          console.log(this.opeCi)
           if (this.opeCi === 1) {
 //              开一个时
+            console.log({price: this.redList[0].price})
             this.morePeg.push({price: this.redList[0].price})
           } else if (this.opeCi === 2 && this.redNum === 2 || this.opeCi === 3 && this.redNum === 3) {
 //              两个包全
@@ -208,143 +210,163 @@
             })
             this.money = allMoney.toFixed(2)
             this.$refs.regmal.showClose()
+
           } else if (this.opeCi === 2 && this.redNum === 3) {
 //              三个包开两个是
             this.morePeg.push({price: this.redList[1].price})
           }
         }, 2000)
+
       },
 //   获取初始化数据
       _getRegistration() {
-        this.winPrize()
         getRegistration().then((res) => {
 //          获取领取信息
-          this.winPrize()
+          this.winPrize(res)
+
           this.showMap(res.scope)
           this.allRedMsg = res
           this.house = [res.merchant_data.longitude, res.merchant_data.latitude]
-          if (res.is_yesterday === 1) {
-            this.continuous = res.first_sign.continuous
+          if (res.is_yesterday === 1 || res.is_today === 1) {
+            this.continuous = res.continuous
             this.dealType(this.continuous)
           }
+          console.log(this.continuous)
           if (res.is_today !== 0) {
             this.isReg = false
             this.dealType(this.continuous)
           }
-          if (res.opne_template_id === '0') {
+          if (res.opne_template_id === 0) {
             this.isShowTip = false
           } else {
             this.isShowTip = true
           }
         })
       },
-      // 显示规则
-      showRules() {
+      //显示规则
+      showRules(){
         this.$refs.rules.show()
         this.name = this.allRedMsg.title
         this.date = this.allRedMsg.from_date
         this.desc = this.allRedMsg.explain
       },
 //      签到提交
-      singIn() {
+      singIn(){
         this.isReg = false
         this.continuous += 1
-        let data = {sign_id: this.allRedMsg.id, continuous: 1}
+        let distance = parseFloat(this.distance.slice(6)) * 1000
+        let data = {
+          sign_id: this.allRedMsg.id,
+          continuous: this.continuous,
+          distance: distance,
+          address: ''
+        }
         setSingIn(data).then((res) => {
-          this.redList = res
-          this.redNum = res.length
-          if (res.length === 1) {
-            this.$refs.regmal.show()
-            this.money = res[0].price
-            this.showRegPac = true
-          } else if (res.length > 1) {
-            this.$refs.regmal.show()
-            this.showPage = '0/' + res.length
-            this.$refs.regmal.hideClose()
-          }
-          if (res.num >= 0) {
-            if (res.num > 1) {
-              this.showPage = '0/' + res.num
+          if (res !== undefined) {
+            this.redList = res
+
+            this.redNum = res.length
+            if (res.length === 1) {
+              this.$refs.regmal.show()
+              this.money = res[0].price
+              this.showRegPac = true
+            } else if (res.length > 1) {
+              this.$refs.regmal.show()
+              this.showPage = '0/' + res.length
+              this.$refs.regmal.hideClose()
             }
-            this.$refs.regmal.show()
-          }
-          if (res) {
-            this.dealType(this.continuous)
+            if (res.num >= 0) {
+              if (res.num > 1) {
+                this.showPage = '0/' + res.num
+                console.log(this.$refs.regmal)
+              }
+              this.$refs.regmal.show()
+            }
+            if (res) {
+              this.dealType(this.continuous)
+            }
           }
         })
       },
 //      判断距离
-      isDistance(dis) {
+      isDistance(dis){
         var disWay = dis > 1000 ? (dis / 1000) : dis
         if (disWay > 3) {
           this.distance = `你距离该店铺${disWay.toFixed(2)}公里`
-//          this.isReg = false
+          this.isReg = false
         } else {
           this.distance = `你距离该店铺${disWay.toFixed(2)}米`
+          this.isReg = true
         }
+
       },
-      winPrize() {
-        let data = {id: 1}
+      winPrize(res){
+        console.log(res.id)
+        let data = {sign_id: res.id}
         signLists(data).then((res) => {
           this.prize = res
+          console.log(res)
         })
       },
 //      地图与人的地位
-      showMap(res) { //      店铺定位
+      showMap(res){//      店铺定位
         var that = this
-        let marker1 = new AMap.Marker({ // 添加自定义点标记
+        let marker1 = new AMap.Marker({ //添加自定义点标记
           map: this.map,
-          position: this.house, // 基点位置
-          offset: new AMap.Pixel(-14, -16), // 相对于基点的偏移位置
-          draggable: false, // 是否可拖动
+          position: this.house, //基点位置
+          offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
+          draggable: false, //是否可拖动
           content: `<img src="./src/common/image/icon/icon-shop_normal.png" style="height: 28px;width: 32px">`
-          // 自定义点标记覆盖物内容
+          //自定义点标记覆盖物内容
         })
+
 //      标记提示
-        marker1.setLabel({// label默认蓝框白底左上角显示，样式className为：amap-marker-label
-          offset: new AMap.Pixel(-52, -26), // 修改label相对于maker的位置
+        marker1.setLabel({//label默认蓝框白底左上角显示，样式className为：amap-marker-label
+          offset: new AMap.Pixel(-52, -26),//修改label相对于maker的位置
           content: `本店周边<span style="color:#FF4E00 ">${res / 1000}</span>公里内可签到`
         })
 //      获取人定位
         this.map.plugin('AMap.Geolocation', () => {
           GEOLOCATION = new AMap.Geolocation({
-            enableHighAccuracy: true, // 是否使用高精度定位，默认:true
-            maximumAge: 0,           // 定位结果缓存0毫秒，默认：0
-            showButton: false,        // 显示定位按钮，默认：true
-            buttonPosition: 'LB',    // 定位按钮停靠位置，默认：'LB'，左下角
-            panToLocation: false,     // 定位成功后将定位到的位置作为地图中心点，默认：true
-            showMarker: false      // 定位成功后在定位到的位置显示点标记，默认：true
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+            showButton: false,        //显示定位按钮，默认：true
+            buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+            panToLocation: false,     //定位成功后将定位到的位置作为地图中心点，默认：true
+            showMarker: false,       //定位成功后在定位到的位置显示点标记，默认：true
           })
           that.map.addControl(GEOLOCATION)
           GEOLOCATION.getCurrentPosition()
-          AMap.event.addListener(GEOLOCATION, 'complete', onComplete) // 返回定位信息
-          AMap.event.addListener(GEOLOCATION, 'error', onError)      // 返回定位出错信息
+          AMap.event.addListener(GEOLOCATION, 'complete', onComplete)//返回定位信息
+          AMap.event.addListener(GEOLOCATION, 'error', onError)      //返回定位出错信息
         })
-
-        // 解析定位结果
+        //解析定位结果
         function onComplete(data) {
+          console.log(data)
           that.peo = [data.position.lng, data.position.lat]
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
           let dirs = lnglat.distance(that.house)
+          console.log(dirs)
           if (dirs <= 3000) {
 //            定人且画线
-            let marker2 = new AMap.Marker({ // 添加自定义点标记
+            let marker2 = new AMap.Marker({ //添加自定义点标记
               map: that.map,
-              position: that.peo, // 基点位置
-              offset: new AMap.Pixel(-14, -16), // 相对于基点的偏移位置
-              draggable: false, // 是否可拖动
-              content: `<img src="./src/common/image/icon/pic-people_right.png" style="height: 32px;width: 24.5px">`
-              // 自定义点标记覆盖物内容
+              position: that.peo, //基点位置
+              offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
+              draggable: false, //是否可拖动
+              content: `<img src="./src/common/image/icon/pic-people_right.png"
+style="height: 32px;width: 24.5px">`
+              //自定义点标记覆盖物内容
             })
             let lineArr = [that.house, that.peo]
 //            画线
             let polyline = new AMap.Polyline({
-              path: lineArr,          // 设置线覆盖物路径
-              strokeColor: '#3366FF', // 线颜色
-              strokeOpacity: 1,       // 线透明度
-              strokeWeight: 5,        // 线宽
-              strokeStyle: 'solid',   // 线样式
-              strokeDasharray: [10, 5] // 补充线样式
+              path: lineArr,          //设置线覆盖物路径
+              strokeColor: '#3366FF', //线颜色
+              strokeOpacity: 1,       //线透明度
+              strokeWeight: 5,        //线宽
+              strokeStyle: "solid",   //线样式
+              strokeDasharray: [10, 5] //补充线样式
             })
             polyline.setMap(map)
           } else {
@@ -357,8 +379,9 @@
         }
       }
     },
-    mounted() {
+    mounted(){
       document.title = '签到红包'
+      var that = this
       this.map = new AMap.Map('container', {
         resizeEnable: true,
         zoom: 15,

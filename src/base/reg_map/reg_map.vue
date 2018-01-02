@@ -132,7 +132,7 @@
         house: '',
         continuous: 0,
         allRedMsg: null,
-        isReg: true,
+        isReg: false,
         distance: '正在计算距离…',
         isShowPeo: false,
         name: '',
@@ -174,9 +174,9 @@
         } else {
           status = 0
         }
-        let data = {status: status, id: this.allRedMsg.id}
+        let data = {status: status, sign_id: this.allRedMsg.id}
         remind(data).then((res) => {
-//          console.log(res)
+          console.log(res)
         })
       },
 //      处理签订状态
@@ -192,7 +192,6 @@
       _drawPacket(){
         this.opeCi++
         this.moveOpen = !this.moveOpen
-        console.log(this.moveOpen)
         setTimeout(() => {
           let allMoney = 0
           this.showPage = this.opeCi + '/' + this.redNum
@@ -221,23 +220,23 @@
       },
 //   获取初始化数据
       _getRegistration() {
-        this.winPrize()
         getRegistration().then((res) => {
 //          获取领取信息
-          this.winPrize()
-          console.log(res)
+          this.winPrize(res)
+
           this.showMap(res.scope)
           this.allRedMsg = res
           this.house = [res.merchant_data.longitude, res.merchant_data.latitude]
-          if (res.is_yesterday === 1) {
-            this.continuous = res.first_sign.continuous
+          if (res.is_yesterday === 1 || res.is_today === 1) {
+            this.continuous = res.continuous
             this.dealType(this.continuous)
           }
+          console.log(this.continuous)
           if (res.is_today !== 0) {
             this.isReg = false
             this.dealType(this.continuous)
           }
-          if (res.opne_template_id === '0') {
+          if (res.opne_template_id === 0) {
             this.isShowTip = false
           } else {
             this.isShowTip = true
@@ -255,29 +254,37 @@
       singIn(){
         this.isReg = false
         this.continuous += 1
-        let data = {sign_id: this.allRedMsg.id, continuous: 1}
+        let distance = parseFloat(this.distance.slice(6)) * 1000
+        let data = {
+          sign_id: this.allRedMsg.id,
+          continuous: this.continuous,
+          distance: distance,
+          address: ''
+        }
         setSingIn(data).then((res) => {
-          this.redList = res
-          console.log(res)
-          this.redNum = res.length
-          if (res.length === 1) {
-            this.$refs.regmal.show()
-            this.money = res[0].price
-            this.showRegPac = true
-          } else if (res.length > 1) {
-            this.$refs.regmal.show()
-            this.showPage = '0/' + res.length
-            this.$refs.regmal.hideClose()
-          }
-          if (res.num >= 0) {
-            if (res.num > 1) {
-              this.showPage = '0/' + res.num
-              console.log(this.$refs.regmal)
+          if (res !== undefined) {
+            this.redList = res
+
+            this.redNum = res.length
+            if (res.length === 1) {
+              this.$refs.regmal.show()
+              this.money = res[0].price
+              this.showRegPac = true
+            } else if (res.length > 1) {
+              this.$refs.regmal.show()
+              this.showPage = '0/' + res.length
+              this.$refs.regmal.hideClose()
             }
-            this.$refs.regmal.show()
-          }
-          if (res) {
-            this.dealType(this.continuous)
+            if (res.num >= 0) {
+              if (res.num > 1) {
+                this.showPage = '0/' + res.num
+                console.log(this.$refs.regmal)
+              }
+              this.$refs.regmal.show()
+            }
+            if (res) {
+              this.dealType(this.continuous)
+            }
           }
         })
       },
@@ -286,14 +293,16 @@
         var disWay = dis > 1000 ? (dis / 1000) : dis
         if (disWay > 3) {
           this.distance = `你距离该店铺${disWay.toFixed(2)}公里`
-//          this.isReg = false
+          this.isReg = false
         } else {
           this.distance = `你距离该店铺${disWay.toFixed(2)}米`
+          this.isReg = true
         }
 
       },
-      winPrize(){
-        let data = {id: 1}
+      winPrize(res){
+        console.log(res.id)
+        let data = {sign_id: res.id}
         signLists(data).then((res) => {
           this.prize = res
           console.log(res)
@@ -353,7 +362,7 @@ style="height: 32px;width: 24.5px">`
 //            画线
             let polyline = new AMap.Polyline({
               path: lineArr,          //设置线覆盖物路径
-              strokeColor: "#3366FF", //线颜色
+              strokeColor: '#3366FF', //线颜色
               strokeOpacity: 1,       //线透明度
               strokeWeight: 5,        //线宽
               strokeStyle: "solid",   //线样式
@@ -389,6 +398,7 @@ style="height: 32px;width: 24.5px">`
   /*地图*/
   .conmap
     padding: 0 3.2vw
+
   #container
     width: 100%
     height: 0

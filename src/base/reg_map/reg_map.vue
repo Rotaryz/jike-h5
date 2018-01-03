@@ -30,14 +30,10 @@
         </li>
 
       </ul>
-      <button
-        style="background-image:url('./src/common/image/icon/icon-button-r.png')"
-        v-show="isReg" @click="singIn">
+      <button class="ok" v-show="isReg" @click="singIn">
         立即签到
       </button>
-      <button
-        style="background-image:url('./src/common/image/icon/icon-button-n.png')"
-        v-show="!isReg">
+      <button class="no" v-show="!isReg">
         今日已签到
       </button>
       <div class="tip">
@@ -85,7 +81,6 @@
   import RegList from 'base/reg_list/reg_list'
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
-  let GEOLOCATION
   export default {
     data(){
       return {
@@ -93,38 +88,38 @@
         map: null,
         redPac: [{
           title: '第一天',
-          image: './src/common/image/icon/icon-12_money.png',
+          image: require('./image/icon-12_money.png'),
           showTitle: 0,
           ispacket: 1
         }, {
           title: '第二天',
-          image: './src/common/image/icon/icon_notchecked.png',
+          image: require('./image/icon_notchecked.png'),
           showTitle: 0,
           ispacket: 0
 
         }, {
           title: '第三天',
-          image: './src/common/image/icon/icon-2_money.png',
+          image: require('./image/icon-2_money.png'),
           showTitle: 0,
           ispacket: 2
         }, {
           title: '第四天',
-          image: './src/common/image/icon/icon_notchecked.png',
+          image: require('./image/icon_notchecked.png'),
           showTitle: 0,
           ispacket: 0
         }, {
           title: '第五天',
-          image: './src/common/image/icon/icon_notchecked.png',
+          image: require('./image/icon_notchecked.png'),
           showTitle: 0,
           ispacket: 0
         }, {
           title: '第六天',
-          image: './src/common/image/icon/icon_notchecked.png',
+          image: require('./image/icon_notchecked.png'),
           showTitle: 0,
           ispacket: 0
         }, {
           title: '第七天',
-          image: './src/common/image/icon/icon-3_money.png',
+          image: require('./image/icon-3_money.png'),
           showTitle: 0,
           ispacket: 3
         }],
@@ -216,7 +211,6 @@
             this.morePeg.push({price: this.redList[1].price})
           }
         }, 2000)
-
       },
 //   获取初始化数据
       _getRegistration() {
@@ -231,7 +225,6 @@
             this.continuous = res.continuous
             this.dealType(this.continuous)
           }
-          console.log(this.continuous)
           if (res.is_today !== 0) {
             this.isReg = false
             this.dealType(this.continuous)
@@ -316,7 +309,7 @@
           position: this.house, //基点位置
           offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
           draggable: false, //是否可拖动
-          content: `<img src="./src/common/image/icon/icon-shop_normal.png" style="height: 28px;width: 32px">`
+          content: `<img src="${require('./image/icon-shop_normal.png')}" style="height: 28px;width: 32px">`
           //自定义点标记覆盖物内容
         })
 
@@ -354,7 +347,7 @@
               position: that.peo, //基点位置
               offset: new AMap.Pixel(-14, -16), //相对于基点的偏移位置
               draggable: false, //是否可拖动
-              content: `<img src="./src/common/image/icon/pic-people_right.png"
+              content: `<img src="${require('./image/pic-people_right.png')}"
 style="height: 32px;width: 24.5px">`
               //自定义点标记覆盖物内容
             })
@@ -374,7 +367,6 @@ style="height: 32px;width: 24.5px">`
           }
           that.isDistance(dirs.toFixed(2))
         }
-
         function onError() {
         }
       }
@@ -536,6 +528,12 @@ style="height: 32px;width: 24.5px">`
     margin-top: $padding-all
     color: rgba(255, 255, 255, .7)
     font-size: $font-size-medium
+
+  .ok
+    background-image: url('./image/icon-button-r.png')
+
+  .no
+    background-image: url('./image/icon-button-n.png')
 
   .tip
     font-size: $font-size-small

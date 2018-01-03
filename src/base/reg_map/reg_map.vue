@@ -34,7 +34,7 @@
         立即签到
       </button>
       <button class="no" v-show="!isReg">
-        今日已签到
+        {{reLitle}}
       </button>
       <div class="tip">
         <p>开启连续签到提醒</p>
@@ -144,7 +144,8 @@
         opeCi: 0,
         morePeg: [],
         endPeg: [],
-        redList: null
+        redList: null,
+        reLitle: '今日已签到 '
       }
     },
     components: {
@@ -286,6 +287,7 @@
         var disWay = dis > 1000 ? (dis / 1000) : dis
         if (disWay > 3) {
           this.distance = `你距离该店铺${disWay.toFixed(2)}公里`
+          this.reLitle = '不在签到范围内'
           this.isReg = false
         } else {
           this.distance = `你距离该店铺${disWay.toFixed(2)}米`
@@ -367,6 +369,7 @@ style="height: 32px;width: 24.5px">`
           }
           that.isDistance(dirs.toFixed(2))
         }
+
         function onError() {
         }
       }

@@ -348,7 +348,8 @@
           position: this.house, //  基点位置
           offset: new AMap.Pixel(-14, -16), //  相对于基点的偏移位置
           draggable: false, //  是否可拖动
-          content: `<img src="${require(`./image/${image}.png`)}" style="height: 34px;width: 32px">`
+          content:
+            `<img src="${require(`./image/${image}.png`)}" style="height:9.07vw ;width: 8.53vw">`
           //  自定义点标记覆盖物内容
         })
 
@@ -425,7 +426,7 @@
     .map-title
       position: absolute
       text-align: center
-      top: 30.2%
+      top: 19.2vw
       row-center()
       color: $color-white
       background: $color-theme

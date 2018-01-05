@@ -39,9 +39,5 @@ export function getSearch() {
     var value = pairs[i].substring(pos + 1)
     args[name] = value
   }
-  args = {
-    token: '692644deaa855546031338573fe0ecaf930184deaa855546031338573fe0ecaf93018395275dd659df928a859a57e292de5f721300',
-    merchantId: 100000
-  }
   return args
 }

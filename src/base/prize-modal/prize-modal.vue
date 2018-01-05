@@ -126,6 +126,6 @@
           display: block
           width: 23px
           height: 23px
-          bg-image('./icon-close_white')
+          bg-image('./icon-delet')
           background-size: 23px 23px
 </style>

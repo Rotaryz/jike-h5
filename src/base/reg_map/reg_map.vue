@@ -1,41 +1,49 @@
 <template>
   <div class="map_all">
     <div class="add">
-      <img class="nav_ico" src="./image/Group9.png"/>
-      <p class="add_msg">{{allRedMsg ?
-        allRedMsg.merchant_data.address : '正在定位...'}}</p>
+      <div>
+        <img class="nav_ico" src="./image/Group9.png"/>
+        <p class="add_msg">{{allRedMsg ?
+          allRedMsg.merchant_data.address : '正在定位...'}}</p>
+      </div>
     </div>
     <div class="conmap">
       <div id="container">
         <div class="convers">
-          <img src="./image/bk-qd.png" class="bk_map">
-          <img src="./image/pic-people_right.png" class="farPeo"
-               v-show="isShowPeo">
-          <p>{{distance}}</p>
+          <div class="cilent"></div>
+          <img v-show="showPeo" src="./image/icon-s_sister@2x.png"
+               :class="{'farPeo':true,'nearPeo' : farPeo}">
+          <p class="map-dis">{{distance}}</p>
           <div class="rule">
-            <p @click="showRules">规则</p>
+            <p @click="showRules">活动规则</p>
           </div>
+        </div>
+        <div class="map-title">
+          本店周边3公里内可签到
         </div>
       </div>
     </div>
 
-    <Rules :name="name,date,desc" ref="rules"></Rules>
-    <div>
+    <Rules :rulesList="rulesList" ref="rules"></Rules>
+    <div class="reg-box">
       <ul class="reg_red">
         <li v-for="(red,index) in redPac" :key="index">
-          <p :class="{award:red.showTitle ===1}">{{red.title}}</p>
-          <img src="./image/Rectangle 5.png" alt="" class="award"
-               v-show="red.showTitle ===1">
+          <p>{{red.title}}</p>
+          <img :src="red.showTitle === 1 ?
+          require('./image/pic-r_rewardno@2x.png') :require('./image/pic-r_reward@2x.png') "
+               alt=""
+               class="award"
+               v-show="red.showTitle !==0">
           <img :src="red.image">
         </li>
 
       </ul>
-      <button class="ok" v-show="isReg" @click="singIn">
+      <div class="ok buttons" v-show="isReg" @click="singIn">
         立即签到
-      </button>
-      <button class="no" v-show="!isReg">
+      </div>
+      <div class="no buttons" v-show="!isReg">
         {{regTitle}}
-      </button>
+      </div>
       <div class="tip">
         <p>开启连续签到提醒</p>
         <div :class="{move_fa:isShowTip}" @click="showTip">
@@ -47,25 +55,29 @@
     <PrizeModal ref="regmal">
       <div class="redFa">
         <span class="page">{{showPage}}</span>
-        <p style="display: none">本红包由国颐堂提供</p>
         <p class="money" v-show="showRegPac">{{money}}<span>元</span></p>
         <div :class="{open:true, op_move:moveOpen}" @click="_drawPacket"></div>
         <div class="s-monall">
-          <div class="s-mon" v-for="(ms,index) in morePeg" :key="index">+{{
+          <div class="s-mon" v-for="(ms,index) in morePeg" :key="index">￥{{
             ms.price}}
           </div>
         </div>
         <div class="s-monall s-monBo">
-          <div class="s-mon" v-for="(end,index) in endPeg" :key="index">+{{
+          <div class="s-mon" v-for="(end,index) in endPeg" :key="index">￥{{
             end.price}}
           </div>
         </div>
         <div class="re_detail" v-show="showRegPac">
-          <p>现金已经存放入您的账户可进入个人中心-红包查看详情</p>
+          <pre>
+           现金已经存放入您的账户
+         可进入个人中心-红包查看详情
+          </pre>
           <div class="share" @click="jumpMine">查看红包</div>
         </div>
+        <p>{{shopName}}</p>
       </div>
     </PrizeModal>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
@@ -80,18 +92,26 @@
   import RegList from 'base/reg_list/reg_list'
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
+  import Toast from 'base/toast/toast'
 
   let GEOLOCATION
 
   export default {
+    components: {
+      Rules,
+      RegList,
+      PrizeModal,
+      Toast
+    },
     data() {
       return {
+        shopName: '',
         isShowTip: 0,
         map: null,
         redPac: [{
-          title: '第一天',
-          image: require('./image/icon-12_money.png'),
-          showTitle: 0,
+          title: '',
+          image: require('./image/icon-r_moenyno32@2x.png'),
+          showTitle: 1,
           ispacket: 1
         }, {
           title: '第二天',
@@ -101,14 +121,14 @@
 
         }, {
           title: '第三天',
-          image: require('./image/icon-2_money.png'),
-          showTitle: 0,
-          ispacket: 2
-        }, {
-          title: '第四天',
           image: require('./image/icon_notchecked.png'),
           showTitle: 0,
           ispacket: 0
+        }, {
+          title: '',
+          image: require('./image/icon-r_moenyno32@2x.png'),
+          showTitle: 1,
+          ispacket: 2
         }, {
           title: '第五天',
           image: require('./image/icon_notchecked.png'),
@@ -120,9 +140,9 @@
           showTitle: 0,
           ispacket: 0
         }, {
-          title: '第七天',
-          image: require('./image/icon-3_money.png'),
-          showTitle: 0,
+          title: '',
+          image: require('./image/icon-r_moenyno32@2x.png'),
+          showTitle: 1,
           ispacket: 3
         }],
         peo: '',
@@ -132,9 +152,7 @@
         isReg: false,
         distance: '正在计算距离…',
         isShowPeo: false,
-        name: '',
-        date: '',
-        desc: '',
+        rulesList: [],
         start: null,
         webSocket: null,
         prize: [],
@@ -147,14 +165,10 @@
         morePeg: [],
         endPeg: [],
         redList: null,
-        regTitle: '不在签到范围内'
+        regTitle: '不在签到范围内',
+        showPeo: false,
+        farPeo: true
       }
-    },
-    components: {
-      Rules,
-      RegList,
-      PrizeModal
-
     },
     created() {
       this._getRegistration()
@@ -173,7 +187,6 @@
         }
         let data = {status: status, sign_id: this.allRedMsg.id}
         remind(data).then((res) => {
-          console.log(res)
         })
       },
 //      处理签订状态
@@ -192,11 +205,10 @@
         setTimeout(() => {
           let allMoney = 0
           this.showPage = this.opeCi + '/' + this.redNum
-          console.log(this.opeCi)
           if (this.opeCi === 1) {
 //              开一个时
-            console.log({price: this.redList[0].price})
             this.morePeg.push({price: this.redList[0].price})
+
           } else if (this.opeCi === 2 && this.redNum === 2 || this.opeCi === 3 && this.redNum === 3) {
 //              两个包全
             this.showRegPac = true
@@ -218,8 +230,7 @@
         getRegistration().then((res) => {
 //          获取领取信息
           this.winPrize(res)
-
-          this.showMap(res.scope)
+          this.showMap(res.scope, res)
           this.allRedMsg = res
           this.house = [res.merchant_data.longitude, res.merchant_data.latitude]
           if (res.is_yesterday === 1 || res.is_today === 1) {
@@ -241,15 +252,35 @@
       // 显示规则
       showRules() {
         this.$refs.rules.show()
-        this.name = this.allRedMsg.title
-        this.date = this.allRedMsg.from_date
-        this.desc = this.allRedMsg.explain
+        let data = [{
+          title: '活动名称',
+          content: this.allRedMsg.title,
+          status: 0
+        }, {
+          title: '活动时间',
+          content: this.allRedMsg.from_date + '-' + this.allRedMsg.to_date,
+          status: 0
+        }, {
+          title: '签到范围',
+          content: this.allRedMsg.scope >= 1000 ?
+            `${this.allRedMsg.scope / 1000}公里` : `${this.allRedMsg.scope}米`,
+          status: 0
+        }, {
+          title: '签到规则',
+          content: '',
+          status: 1
+        }, {
+          title: '活动说明',
+          content: this.allRedMsg.explain,
+          status: 1
+        }]
+        this.rulesList = data
       },
 //      签到提交
       singIn() {
-        this.isReg = false
         this.continuous += 1
-        let distance = parseFloat(this.distance.slice(6)) * 1000
+        let distance = this.distance ===
+        '正在计算距离…' ? 0 : parseFloat(this.distance.slice(6)) * 1000
         let data = {
           sign_id: this.allRedMsg.id,
           continuous: this.continuous,
@@ -258,6 +289,8 @@
         }
         setSingIn(data).then((res) => {
           if (res !== undefined) {
+            this.isReg = false
+            this.regTitle = '今日已签到'
             this.redList = res
 
             this.redNum = res.length
@@ -273,13 +306,15 @@
             if (res.num >= 0) {
               if (res.num > 1) {
                 this.showPage = '0/' + res.num
-                console.log(this.$refs.regmal)
               }
               this.$refs.regmal.show()
             }
             if (res) {
-              this.dealType(this.continuous)
+              this._getRegistration()
             }
+          } else {
+//            签到失败提示
+            this.$refs.toast.show('签到失败，请重试！')
           }
         })
       },
@@ -292,34 +327,31 @@
           this.regTitle = '不在签到范围内'
         } else {
           this.distance = `你距离该店铺${disWay.toFixed(2)}米`
-          this.isReg = true
+          if (this.allRedMsg.is_today === 0) {
+            this.isReg = true
+          }
         }
       },
       winPrize(res) {
-        console.log(res.id)
         let data = {sign_id: res.id}
         signLists(data).then((res) => {
           this.prize = res
-          console.log(res)
         })
       },
-//      地图与人的地位
-      showMap(res) { //      店铺定位
+      //      地图与人的地位
+      showMap(res, data) { //      店铺定位
         var that = this
+        let codeName = data['merchant_data']['industry']['code_name']
+        let image = `icon-s_${codeName}@2x`
         let marker1 = new AMap.Marker({ //  添加自定义点标记
           map: this.map,
           position: this.house, //  基点位置
           offset: new AMap.Pixel(-14, -16), //  相对于基点的偏移位置
           draggable: false, //  是否可拖动
-          content: `<img src="${require('./image/icon-shop_normal.png')}" style="height: 28px;width: 32px">`
+          content: `<img src="${require(`./image/${image}.png`)}" style="height: 34px;width: 32px">`
           //  自定义点标记覆盖物内容
         })
 
-//      标记提示
-        marker1.setLabel({ //  label默认蓝框白底左上角显示，样式className为：amap-marker-label
-          offset: new AMap.Pixel(-52, -26), //  修改label相对于maker的位置
-          content: `本店周边<span style="color:#FF4E00 ">${res / 1000}</span>公里内可签到`
-        })
 //      获取人定位
         this.map.plugin('AMap.Geolocation', () => {
           GEOLOCATION = new AMap.Geolocation({
@@ -337,40 +369,20 @@
         })
         //  解析定位结果
         function onComplete(data) {
-          console.log(data)
           that.peo = [data.position.lng, data.position.lat]
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
+          that.showPeo = true
           let dirs = lnglat.distance(that.house)
-          console.log(dirs)
           if (dirs <= 3000) {
-//            定人且画线
-            let marker2 = new AMap.Marker({ // 添加自定义点标记
-              map: that.map,
-              position: that.peo, // 基点位置
-              offset: new AMap.Pixel(-14, -16), // 相对于基点的偏移位置
-              draggable: false, // 是否可拖动
-              content: `<img src="${require('./image/pic-people_right.png')}"
-style="height: 32px;width: 24.5px">`
-              // 自定义点标记覆盖物内容
-            })
-            let lineArr = [that.house, that.peo]
-//            画线
-            let polyline = new AMap.Polyline({
-              path: lineArr,          // 设置线覆盖物路径
-              strokeColor: '#3366FF', // 线颜色
-              strokeOpacity: 1,       // 线透明度
-              strokeWeight: 5,        // 线宽
-              strokeStyle: 'solid',   // 线样式
-              strokeDasharray: [10, 5] // 补充线样式
-            })
-            polyline.setMap(map)
+            that.farPeo = true
           } else {
-            that.isShowPeo = true
+            that.farPeo = false
           }
           that.isDistance(dirs.toFixed(2))
         }
 
         function onError() {
+          that.$refs.toast.show('定位失败，请重试！')
         }
       }
     },
@@ -378,9 +390,12 @@ style="height: 32px;width: 24.5px">`
       document.title = '签到红包'
       this.map = new AMap.Map('container', {
         resizeEnable: true,
-        zoom: 15,
+        zoom: 16,
         center: this.house
       })
+      document.querySelector('.amap-logo').style.display = 'none'
+      document.querySelector('.amap-copyright').innerHTML = ''
+
     }
   }
 </script>
@@ -392,6 +407,14 @@ style="height: 32px;width: 24.5px">`
   /*地图*/
   .conmap
     padding: 0 3.2vw
+    background-color: $color-white
+
+  .reg-box
+    background-color: $color-white
+
+  .amap-logo {
+    display: none !important
+  }
 
   #container
     width: 100%
@@ -399,6 +422,27 @@ style="height: 32px;width: 24.5px">`
     padding-top: 64.13vw
     position: relative
     margin: 0 auto
+    .map-title
+      position: absolute
+      text-align: center
+      top: 30.2%
+      row-center()
+      color: $color-white
+      background: $color-theme
+      border-radius: 50px
+      padding: 3px 7px
+      font-size: $font-size-small-s
+      z-index: 19000
+      &:before
+        content: ''
+        position: absolute
+        bottom: -10px
+        height: 0px
+        row-center()
+        border: 5px solid $color-theme
+        border-bottom: 5px solid transparent
+        border-right: 5px solid transparent
+        border-left: 5px solid transparent
     .convers
       width: 100%
       height: 100%
@@ -406,62 +450,68 @@ style="height: 32px;width: 24.5px">`
       top: 0
       z-index: 1000
       background-color: rgba(0, 0, 0, 0)
-      .bk_map
+      .cilent
+        height: 46.7vw
+        width: 46.7vw
+        all-center()
         position: absolute
-        height: 100%
-        width: 100%
+        border-radius: 50%
+        background: rgba(0, 0, 0, 0)
+        border: 1px dashed #696671
       .farPeo
-        width: 31px
+        width: 18px
         position: absolute
-        bottom: 26.8px
-        right: 15px
+        bottom: 30px
+        right: 44px
+      .nearPeo
+        right: 25vw
+        bottom: 72px
       p
         position: absolute
-        bottom: 2%
-        color: #7A0000
+        bottom: 3%
+        color: $color-text
         font-size: $font-size-small
+        font-family: $font-family-regular
         row-center()
+      .map-dis
+        padding: 4px 40px
+        no-wrap()
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 8%,
+        rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)
       .rule
-        width: 44px
+        width: 58px
         height: 20px
         line-height: @height
-        border-radius: 50px
-        background-color: rgba(0, 0, 0, 0)
-        border: 2px solid #FFFFFF;
+        border-top-left-radius: 50px
+        border-bottom-left-radius: 50px
+        background-color: $color-theme
         position: absolute
-        right: 12px
+        right: 0px
         top: 12px
-        font-size: $font-size-small-s
-        z-index: 200
-        &:after, &:before
-          content: ''
-          position: absolute
-          height: 8px
-          width: @height
-          right: 10px
-          top: 50%
-          background: $color-white
-          transform: rotate(45deg) translateY(-74%)
-        &:before
+        z-index: 200 /*&:before
           right: 12px
           background: $color-assist-tr
-          z-index: 100
+          z-index: 100*/
         p
+          font-size: $font-size-small-s
           color: rgba(255, 255, 255, .7)
           no-wrap()
           position: relative
           z-index: 200
-          text-indent: 7px
+          text-indent: 6px
 
   .add
+    padding: 0 $padding-all
     height: 30px
     line-height: 30px
     font-size: $font-size-small
-    text-indent: 24px
+    text-indent: 12px
+    background: $color-white
     position: relative
-    padding-right: 20px
     color: $color-text-d
     no-wrap()
+    p
+      background: $color-background
     .nav_ico
       width 8px
       height 10px
@@ -470,9 +520,6 @@ style="height: 32px;width: 24.5px">`
       left: 12px
       transform: translateY(-50%)
 
-  div
-    background-color: $color-white
-
   .reg_red
     display: flex
     flex-direction: row
@@ -480,14 +527,14 @@ style="height: 32px;width: 24.5px">`
     color: $color-text-tr
     padding-top: $padding-all
     position: relative
-
+    background-color: $color-white
     li
       width: 10%
       font-size: $font-size-small-s
       line-height: $font-size-medium
       position: relative
       text-align: center
-      height: 63px
+      height: 48px
       no-wrap()
       p
         margin-bottom: 7px
@@ -496,30 +543,31 @@ style="height: 32px;width: 24.5px">`
         z-index: 1100
         padding-top: 3.2%
       img
-        width: 100%
+        width: 54%
         position: absolute
         bottom: 0
         left: 0
+        row-center()
         z-index: 100
     .award
       position: absolute
       top: 0
       color: rgba(255, 255, 255, .6)
       background-size: cover
-      width: 98%
+      width: 83%
 
   .reg_red:before
     content: ''
     position: absolute
     width: 83%
-    top: 78.5%
+    top: 82%
     left: 30px
     background: url('./image/pic-xu_Line.png')
     height: 1px
 
-  button
-    width: 185px
-    height: 54px
+  .buttons
+    width: 175px
+    height: 32px
     line-height: 32px
     text-align center
     position: relative
@@ -527,15 +575,16 @@ style="height: 32px;width: 24.5px">`
     transform: translateX(-50%)
     background-size cover
     background-position: top right
-    margin-top: $padding-all
-    color: rgba(255, 255, 255, .7)
-    font-size: $font-size-medium
+    margin: 19.5px 0
+    color: #696671
+    font-size: $font-size-small
 
   .ok
-    background-image: url('./image/icon-button-r.png')
+    background: #FF4E00
+    color: $color-text-transwhite
 
   .no
-    background-image: url('./image/icon-button-n.png')
+    background: #DDDDDD
 
   .tip
     font-size: $font-size-small
@@ -544,6 +593,7 @@ style="height: 32px;width: 24.5px">`
     position: relative
     border-top: 1px solid $color-row-line
     margin-top: 6px
+    margin-bottom: 10px
     .move_fa
       background: #706B82
     div
@@ -577,20 +627,27 @@ style="height: 32px;width: 24.5px">`
     border-radius: 5px
     font-size: $font-size-small
     position: relative
+    p
+      color: #C52D14
+      row-center()
+      position: absolute
+      bottom: 30px
     .s-monall
       color: $color-white
       width: 100%
       position: absolute
-      text-align: center
       font-size: $font-size-medium
       top: 50px
       background: rgba(0, 0, 0, 0)
       font-family: $font-family-light
       .s-mon
+        display: inline-block
+        margin-left: 110px
         line-height: 1
         margin-top: 11px
         background: rgba(0, 0, 0, 0)
         position: relative
+
         &:before
           content: ''
           position: absolute
@@ -599,25 +656,24 @@ style="height: 32px;width: 24.5px">`
           background: url('./image/icon-money-bg.png')
           background-size: cover
           bottom: 0
-          left: 93px
+          left: -23px
     .s-monBo
       font-size: $font-size-small-s
-      top: 101.5px
-      padding-left: 14px
+      top: 92.5px
+      display: flex
+      justify-content: center
       .s-mon
-        display: inline-block
-        margin-right: 17px
-        margin-top: 0px
+        margin-left: 24px
+        &:first-child
+          margin-left: 0
         &:before
+          top: 1px
           left: -10px
           width: 8.8px
           height: 9.504px
-    p
-      line-height: 206px
-      color: #E1452B
-      text-align: center
     .money
-      line-height: 124px
+      position: absolute
+      top: 56.5px
       font-size: ($font-size-small-s* 3)
       color: #FFDA4F
       span
@@ -649,12 +705,13 @@ style="height: 32px;width: 24.5px">`
       bottom: 0
       border-bottom-right-radius: 5px
       border-bottom-left-radius: 5px
-
-      p
+      pre
+        position: absolute
+        bottom: 87px
         width: 65.4%
         margin: 17px auto 1.8%
         line-height: 1.4
-        color: $color-text-tr
+        color: #868590
       div
         height: 23%
         width: 92%
@@ -663,11 +720,11 @@ style="height: 32px;width: 24.5px">`
         justify-content: center
         border-radius: 2px
       .share
-        background: $color-assist-tr
-        color: $color-red
+        background: $color-white
+        color: $color-text
+        border: 0.5px solid #DDDDDD
+        border-radius: 4px
         position: absolute
         bottom: 15px
         row-center()
-        color: $color-text-transwhite
-
 </style>

@@ -188,10 +188,11 @@
         }
         let data = {status: status, sign_id: this.allRedMsg.id}
         remind(data).then((res) => {
-          console.log(res)
+          if (res.error === 0) {
+            this.isShowTip = !this.isShowTip
+          }
+          this.$refs.toast.show(res.message)
         })
-        this.isShowTip = !this.isShowTip
-
 
       },
 //      处理签订状态

@@ -5,7 +5,7 @@
       <li v-for="(pri,index) in prize" :key="index">
         <img :src="pri.avatar_url">
         <p>{{pri.nickname}}连续签到{{pri.continuous}}天</p>
-        <span v-for="n in pri.redpacket_count"></span>
+        <b>{{pri.redpacket_count}}x</b><span></span>
       </li>
     </ul>
   </div>
@@ -14,16 +14,14 @@
 <script type="text/ecmascript-6">
   export default {
     props: {
-      prize:''
+      prize: ''
     },
     data(){
       return {
         start: null,
       }
     },
-    methods: {
-
-    },
+    methods: {},
     created(){
     }
   }
@@ -33,10 +31,10 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
   .reg_list
-    margin-top: 10px
-    background: $color-background-s
+    background: $color-white
     padding-top: 17px
     color: $color-text
+    padding-bottom: 10px
 
   h4
     font-size: $font-size-medium
@@ -80,12 +78,19 @@
         right: 12px
         top: 50%
         transform: translateY(-50%)
-        height: 18px
-        width: 14.5px
-        background-image: url("./icon-money_1.png")
+        height: 16px
+        width: 14px
+        bg-image('./icon-r_money32')
         background-size: cover
         &:nth-of-type(2)
           right: 30px
         &:nth-of-type(3)
           right: 49px
+      b
+        font-weight: 100
+        position: absolute
+        right: 28.5px
+        color: #696671
+        col-center()
+
 </style>

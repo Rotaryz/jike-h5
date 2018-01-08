@@ -7,24 +7,31 @@
             <div class="avatar-wrapper">
               <img class="full-image" :src="item.userinfo.avatarUrl" alt="">
             </div>
-            <div class="content">{{item.userinfo.nickname}}领取了{{item.promotion.promotion_title}}奖品</div>
+            <div class="content">
+              {{item.userinfo.nickname}}领取了{{item.promotion.promotion_title}}奖品
+            </div>
           </div>
           <div class="item" v-if="luckers.length > 0">
             <div class="avatar-wrapper">
-              <img class="full-image" :src="luckers[0].userinfo.avatarUrl" alt="">
+              <img class="full-image" :src="luckers[0].userinfo.avatarUrl"
+                   alt="">
             </div>
-            <div class="content">{{luckers[0].userinfo.nickname}}领取了{{luckers[0].promotion.promotion_title}}奖品</div>
+            <div class="content">
+              {{luckers[0].userinfo.nickname}}领取了{{luckers[0].promotion.promotion_title}}奖品
+            </div>
           </div>
         </div>
       </div>
-      <div class="right-wrapper" @click="showRules">规则 <i class="icon-arrow-right"></i></div>
+      <div class="right-wrapper" @click="showRules">规则 <i
+        class="icon-arrow-right"></i></div>
     </div>
     <div class="title-wrapper"></div>
     <div class="wheel-wrapper">
       <div class="wheel">
         <div class="wheel-pointer" @click="drawPrize"></div>
         <div class="wheel-content" ref="wheel">
-          <div class="prize" v-for="item, index in wheelList" :class="`prize-${index}`">
+          <div class="prize" v-for="item, index in wheelList"
+               :class="`prize-${index}`">
             <p class="name">{{item.promotion_title}}</p>
             <div class="img-wrapper">
               <img :src="item.promotion_img" alt="">
@@ -39,7 +46,8 @@
         </div>
       </div>
       <div class="bottom-pan"></div>
-      <p class="count-wrapper">您剩余 <span class="number">{{count}}</span> 次抽奖机会</p>
+      <p class="count-wrapper">您剩余 <span class="number">{{count}}</span> 次抽奖机会
+      </p>
     </div>
     <div class="prize-wrapper">
       <div class="title"></div>
@@ -49,7 +57,9 @@
             <div class="avatar-wrapper">
               <img class="full-image" :src="item.userinfo.avatarUrl" alt="">
             </div>
-            <div class="content">{{item.userinfo.nickname}}领取了{{item.promotion.promotion_title}}奖品</div>
+            <div class="content">
+              {{item.userinfo.nickname}}领取了{{item.promotion.promotion_title}}奖品
+            </div>
           </div>
           <div class="right-wrapper">2017-11-21</div>
         </div>
@@ -62,15 +72,20 @@
           <p class="content">{{prize.promotion_title}}</p>
         </div>
         <div class="middle">
-          <div class="content">{{prize.id === 0 ? '中奖机会天天有' : '奖品已经存放入您的账户'}}</div>
-          <div class="content">{{prize.id === 0 ? '明天再来' : `可进入个人中心-${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}查看详情`}}</div>
+          <div class="content">{{prize.id === 0 ? '中奖机会天天有' : '奖品已经存放入您的账户'}}
+          </div>
+          <div class="content">
+            {{prize.id === 0 ? '明天再来' : `可进入个人中心-${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}查看详情`}}
+          </div>
         </div>
         <div class="bottom">
-          <div class="btn" @click="handleClick">{{prize.id === 0 ? '随便逛逛' : `查看${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}`}}</div>
+          <div class="btn" @click="handleClick">
+            {{prize.id === 0 ? '随便逛逛' : `查看${prize.promotion_type === 'coupon' ? '优惠券' : '红包'}`}}
+          </div>
         </div>
       </div>
     </prize-modal>
-    <rules ref="rules" :name="activityName" :date="activityDate" :desc="activityDesc"></rules>
+    <rules ref="rules" :rulesList="rulesList"></rules>
     <toast ref="toast"></toast>
   </div>
 </template>
@@ -94,10 +109,8 @@
         rotate: 0,
         wheeling: false,
         prize: {},
-        activityName: '',
-        activityDesc: '',
-        activityDate: '',
         luckers: [],
+        rulesList: [],
         activeIndex: 0,
         emotion: 'success'
       }
@@ -178,9 +191,25 @@
       _getWheelDetail() {
         getWheelDetail()
           .then((res) => {
-            this.activityName = res.name
-            this.activityDate = res.from_date + ' 至 ' + res.to_date
-            this.activityDesc = res.activity_desc
+            console.log(res)
+            let data = [{
+              title: '活动名称',
+              content: res.name,
+              status: 0
+            }, {
+              title: '活动时间',
+              content: `${res.from_date}至${res.to_date}`,
+              status: 0
+            }, {
+              title: '活动规则',
+              content: '',
+              status: 1
+            }, {
+              title: '中奖说明',
+              content: res.activity_desc,
+              status: 1
+            }]
+            this.rulesList = data
             this.wheelList = res.activity_promotion
             this.activityId = res.id
             this._getLuckyUser()

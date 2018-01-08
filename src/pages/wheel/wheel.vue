@@ -166,7 +166,7 @@
         /* eslint-disable no-undef */
         if (this.prize.id === 0) {
           // 推荐
-          wx.miniProgram.navigateTo({url: 'pages/recommend/recommend'})
+          wx.miniProgram.switchTab({url: '/pages/recommend/recommend'})
         } else if (this.prize.promotion_type === 'coupon') {
           // 优惠券
           wx.miniProgram.navigateTo({url: '/pages/user/myCoupon/myCoupon'})

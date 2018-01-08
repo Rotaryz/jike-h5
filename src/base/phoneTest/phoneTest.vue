@@ -1,72 +1,82 @@
 <template>
-  <div class="phoneTest-phoneCover" wx:if="{{phoneTestCover}}">
-    <div class="phoneTest-phoneWindow">
+  <transition name="fade">
+    <div class="phoneTest-phoneCover" v-show="phoneTestCover">
+      <div class="phoneTest-phoneWindow">
 
-      <div class="phoneTest-phoneWindow-head">
-        <text class="phoneTest-phoneWindow-headTxt">绑定手机号</text>
-        <div class="phoneTest-closeBtn" @click="closeCover">
-          <img class="phoneTest-closeBtn-icon"
-               src="./img/icon-close_win.png"/>
+        <div class="phoneTest-phoneWindow-head">
+          <text class="phoneTest-phoneWindow-headTxt">绑定手机号</text>
+          <div class="phoneTest-closeBtn" @click="closeCover">
+            <img class="phoneTest-closeBtn-icon"
+                 src="./image/icon-close_win.png"/>
+          </div>
         </div>
-      </div>
 
-      <text class="phoneTest-titleTxt">绑定手机号,获取更多红包、优惠券等信息</text>
+        <text class="phoneTest-titleTxt">绑定手机号,获取更多红包、优惠券等信息</text>
 
-      <div class="phoneTest-list">
-        <div class="phoneTest-list-item">
-          <img class="phoneTest-list-item-image"
+        <div class="phoneTest-list">
+          <div class="phoneTest-list-item">
+            <img class="phoneTest-list-item-image"
                  src="./image/icon-phone.png"/>
-          <input type="number" placeholder="输入手机号" placeholder-class="phoneTest-list-item-placeh"
-                 class="phoneTest-list-item-input" maxlength="11" bindinput="phoneNumIn"/>
-        </div>
+            <input type="number" placeholder="输入手机号"
+                   class="phoneTest-list-item-input" v-model="phoneNum"
+                   @input="phoneNumIn"/>
+          </div>
 
-        <div class="phoneTest-list-item">
-          <img class="phoneTest-list-item-image" src="./image/icon-code.png"/>
-          <div class="phoneTest-list-codeBox">
-            <input type="text" placeholder="验证码" placeholder-class="phoneTest-list-item-placeh"
-                   class="phoneTest-list-item-input" maxlength="6" bindinput="phoneCodeIn"/>
-            <div class="{{phoneCodeDisabled?'phoneTest-list-code phoneTest-list-codeRed':'phoneTest-list-code'}}"
-                  @click="getPhoneCode">{{phoneCodeTime}}
+          <div class="phoneTest-list-item">
+            <img class="phoneTest-list-item-image" src="./image/icon-code.png"/>
+            <div class="phoneTest-list-codeBox">
+              <input type="text" placeholder="验证码" v-model="phoneCode"
+                     class="phoneTest-list-item-input" @input="phoneCodeIn"/>
+              <div
+                :class="phoneCodeDisabled?'phoneTest-list-code phoneTest-list-codeRed':'phoneTest-list-code'"
+                @click="getPhoneCode">{{phoneCodeTime}}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="{{submitDisabled?'phoneTest-submit':'phoneTest-submit phoneTest-submit-disabled'}}"
-            @click="submitMsg">确定
+        <div
+          :class="{'phoneTest-submit':true ,
+        'phoneTest-submit-disabled':!submitDisabled}" @click="submitMsg">
+          确定
+        </div>
       </div>
+      <Toast ref="toast"></Toast>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
   /* eslint-disable no-undef */
-  import tips from '@/common/js/tips'
-  import user from 'api/user'
+  import Toast from 'base/toast/toast'
+  import {getPhoneCode, bindPhone} from 'api/user'
+  export default{
+    components: {
+      Toast
+    },
+    data(){
+      return {
+        phoneCodeTime: '获取验证码',
+        phoneCodeDisabled: false,
+        submitDisabled: true,
+        phoneTestCover: false,
+        phoneNum: '',
+        phoneCode: '',
+        modify: false
+      }
+    },
+    watch: {
+      phoneNum(val){
+        if (val > 11) {
+          this.phoneNum = val.slice(0, 11)
+        } else {
+          this.phoneNum = val
+        }
 
-  export default class PhoneTest extends wepy.component {
-    data = {
-      phoneCodeTime: '获取验证码',
-      phoneCodeDisabled: false,
-      submitDisabled: true,
-      phoneTestCover: false,
-      phoneNum: 0,
-      phoneCode: 0,
-      modify: false
-    }
+      }
+    },
 
-    onLoad() {
-    }
-
-    async _getPhoneCode(data) {
-      return await user.getPhoneCode(data)
-    }
-
-    async _bindPhone(data) {
-      return await user.bindPhone(data)
-    }
-
-    methods = {
+    methods: {
       bindPhone(type) {
         if (typeof (type) === 'string') {
           this.modify = true
@@ -74,7 +84,6 @@
           this.modify = false
         }
         this.phoneTestCover = true
-        this.$apply()
       },
       closeCover() {
         this.phoneNum = 0
@@ -83,7 +92,7 @@
         this.phoneTestCover = false
       },
       phoneNumIn(e) {
-        this.phoneNum = e.detail.value
+//        this.phoneNum = e.detail.value
         var reg = /^1[3|4|5|7|8][0-9]{9}$/
         if (reg.test(this.phoneNum) && this.phoneCode.length === 6) {
           this.submitDisabled = false
@@ -92,7 +101,6 @@
         }
       },
       phoneCodeIn(e) {
-        this.phoneCode = e.detail.value
         var reg = /^1[3|4|5|7|8][0-9]{9}$/
         if (reg.test(this.phoneNum) && this.phoneCode.length === 6) {
           this.submitDisabled = false
@@ -100,40 +108,35 @@
           this.submitDisabled = true
         }
       },
-      async getPhoneCode() {
+      getPhoneCode() {
         var reg = /^1[3|4|5|7|8][0-9]{9}$/
         var self = this
         if (reg.test(self.phoneNum) && !self.phoneCodeDisabled) {
-          let jkToken = await this.$getToken()
           self.phoneCodeTime = '发送中···'
           let data = {
-            jk_token: jkToken,
             mobile: self.phoneNum
           }
-          let phoneCode = await this._getPhoneCode(data)
-          if (phoneCode.error !== 0) {
-
-          }
-          this.loaded()
+          getPhoneCode(data).then((res) => {
+            console.log(res)
+            this.$refs.toast.show(res.message)
+          })
           this.phoneCodeDisabled = true
           let time = 60
           this.phoneCodeTime = time + 's'
-          let timer = setInterval(function () {
+          let timer = setInterval(() => {
             time--
             self.phoneCodeTime = time + 's'
-            self.$apply()
             if (time <= 0) {
               self.phoneCodeTime = '获取验证码'
               self.phoneCodeDisabled = false
-              self.$apply()
               clearInterval(timer)
             }
           }, 1000)
         } else {
-
+          this.$refs.toast.show('请输入正确的手机号码')
         }
       },
-      async submitMsg() {
+      submitMsg() {
         let reg = /^1[3|4|5|7|8][0-9]{9}$/
         let self = this
         if (this.phoneNum && reg.test(self.phoneNum) && this.phoneCode && this.phoneCode.length === 6) {
@@ -150,40 +153,46 @@
               code: self.phoneCode
             }
           }
-          let resData = await this._bindPhone(data)
-          this.loaded()
-          if (resData.error === 0) {
-            self.phoneTestCover = false
-            self.$apply()
-            tips.success('手机绑定成功')
-            self.$emit('isPhoneOk')
-          } else {
-            self.phoneTestCover = false
-            self.$apply()
-            tips.fail('绑定失败')
-          }
+          bindPhone(data).then((res) => {
+            if (res.error === 0) {
+              this.$refs.toast.show('手机绑定成功')
+              setTimeout(() => {
+                self.phoneTestCover = false
+              }, 1500)
+              localStorage.setItem('isBinding', '1')
+            } else {
+              this.$refs.toast.show(res.message)
+            }
+
+          })
         }
+      },
+      show() {
+        this.phoneTestCover = true
       }
     }
 
-    show() {
-      this.phoneTestCover = true
-      this.$apply()
-    }
   }
 </script>
 
 <style lang="stylus">
   @import "../../common/stylus/variable"
+  input
+    outline: none
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
 
   .phoneTest-phoneCover
     position: fixed
-    z-index: 1000
+    z-index: 2000
     left: 0
     top: 0
     height: 100vh
     width: 100vw
     background: $color-mask-bgc
+    &.fade-enter, &.fade-leave-to
+      opacity: 0
+    &.fade-enter-to, &.fade-leave-to
+      transition: all .3s ease-in-out
 
   .phoneTest-phoneWindow
     position: fixed

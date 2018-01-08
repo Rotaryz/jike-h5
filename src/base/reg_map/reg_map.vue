@@ -78,6 +78,7 @@
       </div>
     </PrizeModal>
     <toast ref="toast"></toast>
+    <PhoneTest ref="phoneTest"></PhoneTest>
   </div>
 </template>
 
@@ -93,6 +94,7 @@
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
   import Toast from 'base/toast/toast'
+  import PhoneTest from 'base/phoneTest/phoneTest'
 
   let GEOLOCATION
 
@@ -101,7 +103,8 @@
       Rules,
       RegList,
       PrizeModal,
-      Toast
+      Toast,
+      PhoneTest
     },
     data() {
       return {
@@ -169,16 +172,18 @@
         regTitle: '不在签到范围内',
         showPeo: false,
         farPeo: true,
-        scope: ''
+        scope: '',
       }
     },
     created() {
       this._getRegistration()
     },
     methods: {
+//      跳转到个人中心
       jumpMine() {
         wx.miniProgram.navigateTo({url: '/pages/user/redPacket/redPacket'})
       },
+//      开启提醒
       showTip() {
         let status = 0
         if (!this.isShowTip) {
@@ -296,45 +301,51 @@
 //      签到提交
       singIn() {
 //        测试
-        let count = this.continuous + 1
-        let distance = this.distance ===
-        '正在计算距离…' ? 0 : parseFloat(this.distance.slice(6)) * 1000
-        let data = {
-          sign_id: this.allRedMsg.id,
-          continuous: count,
-          distance: distance,
-          address: ''
-        }
-        setSingIn(data).then((res) => {
-          if (res.error === 1) {
-//            签到失败提示
-            this.$refs.toast.show(res.message)
-          } else {
-            this.continuous += 1
-            this.isReg = false
-            this.regTitle = '今日已签到'
-            this.redList = res
-            this.redNum = res.length
-            if (res.length === 1) {
-              this.$refs.regmal.show()
-              this.money = res[0].price
-              this.showRegPac = true
-            } else if (res.length > 1) {
-              this.$refs.regmal.show()
-              this.showPage = '0/' + res.length
-              this.$refs.regmal.hideClose()
-            }
-            if (res.num >= 0) {
-              if (res.num > 1) {
-                this.showPage = '0/' + res.num
-              }
-              this.$refs.regmal.show()
-            }
-            if (res) {
-              this._getRegistration()
-            }
+        let binding = localStorage.getItem('isBinding')
+        if (binding === '1') {
+//        绑定手机号码时
+          this.continuous += 1
+          let distance = this.distance ===
+          '正在计算距离…' ? 0 : parseFloat(this.distance.slice(6)) * 1000
+          let data = {
+            sign_id: this.allRedMsg.id,
+            continuous: this.continuous,
+            distance: distance,
+            address: ''
           }
-        })
+          setSingIn(data).then((res) => {
+            if (res.error === 1) {
+//            签到失败提示
+              this.$refs.toast.show(res.message)
+            } else {
+              this.isReg = false
+              this.regTitle = '今日已签到'
+              this.redList = res
+              this.redNum = res.length
+              if (res.length === 1) {
+                this.$refs.regmal.show()
+                this.money = res[0].price
+                this.showRegPac = true
+              } else if (res.length > 1) {
+                this.$refs.regmal.show()
+                this.showPage = '0/' + res.length
+                this.$refs.regmal.hideClose()
+              }
+              if (res.num >= 0) {
+                if (res.num > 1) {
+                  this.showPage = '0/' + res.num
+                }
+                this.$refs.regmal.show()
+              }
+              if (res) {
+                this._getRegistration()
+              }
+            }
+          })
+        } else {
+//         未绑定手机号码时
+          this.$refs.phoneTest.show()
+        }
       },
 //      判断距离
       isDistance(dis) {
@@ -357,8 +368,9 @@
           this.prize = res
         })
       },
-      //      地图与人的地位
-      showMap(res, data) { //      店铺定位
+//      地图与人的地位
+      showMap(res, data) {
+        //      店铺定位
         var that = this
         let codeName = data['merchant_data']['industry']['code_name']
         let image = `icon-s_${codeName}@2x`
@@ -370,7 +382,6 @@
           content: `<img src="${require(`./image/${image}.png`)}" style="height:9.07vw ;width: 8.53vw">`
           //  自定义点标记覆盖物内容
         })
-
 //      获取人定位
         this.map.plugin('AMap.Geolocation', () => {
           GEOLOCATION = new AMap.Geolocation({

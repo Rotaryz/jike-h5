@@ -7,7 +7,7 @@
           <li v-for="(item, index) in rulesList" :key="index"
               :class="{'explain':item.status === 1}">
             <p class="title">{{item.title}}:
-              <spna class="contents">{{item.content}}</spna>
+              <span class="contents">{{item.content}}</span>
             </p>
           </li>
         </ul>
@@ -97,7 +97,7 @@
         text-align: center
         line-height: 25px
         padding-top: 8.2%
-        font-size: $font-size-large
+        font-size: $font-size-medium
         position: relative
         &:before
           content: ''

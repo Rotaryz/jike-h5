@@ -27,6 +27,8 @@ export function setSingIn(data) {
   ).then((res) => {
     if (res.data.error === ERR_OK) {
       return Promise.resolve(res.data.data)
+    } else {
+      return Promise.resolve(res.data)
     }
   })
 }
@@ -41,9 +43,7 @@ export function remind(data) {
       params: data
     }
   ).then((res) => {
-    if (res.data.error === ERR_OK) {
-      return Promise.resolve(res.data.data)
-    }
+    return Promise.resolve(res.data)
   })
 }
 

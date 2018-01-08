@@ -10,12 +10,12 @@ export default class redPacket {
   constructor(item) {
     if (item.ispacket === 0) {
       this.image = img1
-      this.title = ''
       this.showTitle = 0
+      this.title = item.title
     } else {
       this.image = img2
-      this.title = ''
       this.showTitle = 2
+      this.title = item.title
     }
   }
 }

@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="map-title">
-          本店周边3公里内可签到
+          本店周边{{scope}}内可签到
         </div>
       </div>
     </div>
@@ -149,6 +149,7 @@
         house: '',
         continuous: 0,
         allRedMsg: null,
+//      测试
         isReg: false,
         distance: '正在计算距离…',
         isShowPeo: false,
@@ -167,7 +168,8 @@
         redList: null,
         regTitle: '不在签到范围内',
         showPeo: false,
-        farPeo: true
+        farPeo: true,
+        scope: ''
       }
     },
     created() {
@@ -175,19 +177,22 @@
     },
     methods: {
       jumpMine() {
-        wx.miniProgram.navigateTo({url: '/path/to/pages/user/redPacket/redPacket'})
+        wx.miniProgram.navigateTo({url: '/pages/user/redPacket/redPacket'})
       },
       showTip() {
-        this.isShowTip = !this.isShowTip
         let status = 0
-        if (this.isShowTip) {
+        if (!this.isShowTip) {
           status = 1
         } else {
           status = 0
         }
         let data = {status: status, sign_id: this.allRedMsg.id}
         remind(data).then((res) => {
+          console.log(res)
         })
+        this.isShowTip = !this.isShowTip
+
+
       },
 //      处理签订状态
       dealType(continuous) {
@@ -232,13 +237,24 @@
           this.winPrize(res)
           this.showMap(res.scope, res)
           this.allRedMsg = res
+          if (this.allRedMsg.scope >= 1000) {
+            this.scope = `${this.allRedMsg.scope / 1000 }公里`
+          } else {
+            this.scope = `${this.allRedMsg.scope}米`
+          }
           this.house = [res.merchant_data.longitude, res.merchant_data.latitude]
-          if (res.is_yesterday === 1 || res.is_today === 1) {
+          if ((res.is_yesterday === 1 && res.continuous !== 7) || (res.is_today
+            === 1 && res.continuous === 7)) {
             this.continuous = res.continuous
+            this.dealType(this.continuous)
+          }
+          if (res.continuous === 7 && res.is_today === 0) {
+            this.continuous = 0
             this.dealType(this.continuous)
           }
           if (res.is_today !== 0) {
             this.regTitle = '今日已签到'
+//            测试
             this.isReg = false
             this.dealType(this.continuous)
           }
@@ -258,7 +274,7 @@
           status: 0
         }, {
           title: '活动时间',
-          content: this.allRedMsg.from_date + '-' + this.allRedMsg.to_date,
+          content: this.allRedMsg.from_date + '至' + this.allRedMsg.to_date,
           status: 0
         }, {
           title: '签到范围',
@@ -270,7 +286,7 @@
           content: '',
           status: 1
         }, {
-          title: '活动说明',
+          title: '签到说明',
           content: this.allRedMsg.explain,
           status: 1
         }]
@@ -278,21 +294,25 @@
       },
 //      签到提交
       singIn() {
-        this.continuous += 1
+//        测试
+        let count = this.continuous + 1
         let distance = this.distance ===
         '正在计算距离…' ? 0 : parseFloat(this.distance.slice(6)) * 1000
         let data = {
           sign_id: this.allRedMsg.id,
-          continuous: this.continuous,
+          continuous: count,
           distance: distance,
           address: ''
         }
         setSingIn(data).then((res) => {
-          if (res !== undefined) {
+          if (res.error === 1) {
+//            签到失败提示
+            this.$refs.toast.show(res.message)
+          } else {
+            this.continuous += 1
             this.isReg = false
             this.regTitle = '今日已签到'
             this.redList = res
-
             this.redNum = res.length
             if (res.length === 1) {
               this.$refs.regmal.show()
@@ -312,25 +332,23 @@
             if (res) {
               this._getRegistration()
             }
-          } else {
-//            签到失败提示
-            this.$refs.toast.show('签到失败，请重试！')
           }
         })
       },
 //      判断距离
       isDistance(dis) {
-        var disWay = dis > 1000 ? (dis / 1000) : dis
-        if (disWay > 3) {
-          this.distance = `你距离该店铺${disWay.toFixed(2)}公里`
+        var disWay = dis > 1000 ? `${(dis / 1000).toFixed(2)}公里` :
+          `${dis.toFixed(2)}米`
+        if (dis * 1 > this.allRedMsg.scope) {
           this.isReg = false
           this.regTitle = '不在签到范围内'
         } else {
-          this.distance = `你距离该店铺${disWay.toFixed(2)}米`
           if (this.allRedMsg.is_today === 0) {
+            this.regTitle = '立即签到'
             this.isReg = true
           }
         }
+        this.distance = `你距离该店铺${disWay}`
       },
       winPrize(res) {
         let data = {sign_id: res.id}
@@ -348,8 +366,7 @@
           position: this.house, //  基点位置
           offset: new AMap.Pixel(-14, -16), //  相对于基点的偏移位置
           draggable: false, //  是否可拖动
-          content:
-            `<img src="${require(`./image/${image}.png`)}" style="height:9.07vw ;width: 8.53vw">`
+          content: `<img src="${require(`./image/${image}.png`)}" style="height:9.07vw ;width: 8.53vw">`
           //  自定义点标记覆盖物内容
         })
 
@@ -374,7 +391,7 @@
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
           that.showPeo = true
           let dirs = lnglat.distance(that.house)
-          if (dirs <= 3000) {
+          if (dirs <= that.allRedMsg.scope) {
             that.farPeo = true
           } else {
             that.farPeo = false
@@ -396,7 +413,6 @@
       })
       document.querySelector('.amap-logo').style.display = 'none'
       document.querySelector('.amap-copyright').innerHTML = ''
-
     }
   }
 </script>
@@ -433,7 +449,7 @@
       border-radius: 50px
       padding: 3px 7px
       font-size: $font-size-small-s
-      z-index: 19000
+      z-index: 100
       &:before
         content: ''
         position: absolute
@@ -535,7 +551,7 @@
       line-height: $font-size-medium
       position: relative
       text-align: center
-      height: 48px
+      height: 45px
       no-wrap()
       p
         margin-bottom: 7px
@@ -544,9 +560,9 @@
         z-index: 1100
         padding-top: 3.2%
       img
-        width: 54%
+        width: 43%
         position: absolute
-        bottom: 0
+        bottom: 2px
         left: 0
         row-center()
         z-index: 100

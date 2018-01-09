@@ -129,7 +129,7 @@
   .close
     position: absolute
     left: 50%
-    bottom: 115px
+    top: 140.26vw
     display: block
     width: 23px
     height: 23px

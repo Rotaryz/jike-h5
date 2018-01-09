@@ -117,7 +117,6 @@
             mobile: self.phoneNum
           }
           getPhoneCode(data).then((res) => {
-            console.log(res)
             this.$refs.toast.show(res.message)
           })
           this.phoneCodeDisabled = true

@@ -1,7 +1,7 @@
 /**
  * Created by user on 2017/12/11.
  */
-import {ERR_OK, commonParams} from './config'
+import {ERR_OK} from './config'
 import axios from 'axios'
 
 /**
@@ -22,8 +22,8 @@ export function getRegistration() {
  */
 export function setSingIn(data) {
   const url = `/api/activity/sign`
-  const parmas = Object.assign({}, commonParams, data)
-  return axios.post(url, parmas
+  // const parmas = Object.assign({}, commonParams, data)
+  return axios.post(url, data
   ).then((res) => {
     if (res.data.error === ERR_OK) {
       return Promise.resolve(res.data.data)

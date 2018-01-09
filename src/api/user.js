@@ -1,7 +1,7 @@
 /**
  * Created by user on 2018/1/8.
  */
-import {ERR_OK, commonParams} from './config'
+import {ERR_OK} from './config'
 import axios from 'axios'
 /**
  * 发送验证码
@@ -9,8 +9,8 @@ import axios from 'axios'
  */
 export function getPhoneCode(data) {
   const url = `/api/info/send-message`
-  const parmas = Object.assign({}, commonParams, data)
-  return axios.post(url, parmas
+  // const parmas = Object.assign({}, commonParams, data)
+  return axios.post(url, data
   ).then((res) => {
     return Promise.resolve(res.data)
   })

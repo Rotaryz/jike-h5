@@ -35,7 +35,7 @@
     top: 50%
     left: 50%
     min-width: 200px
-    z-index: 999
+    z-index: 9999
     padding: 10px 0
     opacity: .9
     border: 1px solid #666

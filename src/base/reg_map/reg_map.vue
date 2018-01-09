@@ -558,12 +558,12 @@
     position: relative
     background-color: $color-white
     li
-      width: 10%
+      width: 11%
       font-size: $font-size-small-s
       line-height: $font-size-medium
       position: relative
       text-align: center
-      height: 45px
+      height: 12vw
       no-wrap()
       p
         margin-bottom: 7px
@@ -572,7 +572,7 @@
         z-index: 1100
         padding-top: 3.2%
       img
-        width: 43%
+        width: 39%
         position: absolute
         bottom: 2px
         left: 0

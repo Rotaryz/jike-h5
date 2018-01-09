@@ -401,13 +401,13 @@
         function onComplete(data) {
           that.peo = [data.position.lng, data.position.lat]
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
-          that.showPeo = true
           let dirs = lnglat.distance(that.house)
           if (dirs <= that.allRedMsg.scope) {
             that.farPeo = true
           } else {
             that.farPeo = false
           }
+          that.showPeo = true
           that.isDistance(dirs.toFixed(2))
         }
 

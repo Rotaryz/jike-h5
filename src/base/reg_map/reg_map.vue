@@ -402,6 +402,7 @@
           that.peo = [data.position.lng, data.position.lat]
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
           let dirs = lnglat.distance(that.house)
+          alert(dirs)
           if (dirs <= that.allRedMsg.scope) {
             that.farPeo = true
           } else {

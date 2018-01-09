@@ -347,21 +347,6 @@
           this.$refs.phoneTest.show()
         }
       },
-//      判断距离
-      isDistance(dis) {
-        var disWay = dis > 1000 ? `${(dis / 1000).toFixed(2)}公里` :
-          `${dis.toFixed(2)}米`
-        if (dis * 1 > this.allRedMsg.scope) {
-          this.isReg = false
-          this.regTitle = '不在签到范围内'
-        } else {
-          if (this.allRedMsg.is_today === 0) {
-            this.regTitle = '立即签到'
-            this.isReg = true
-          }
-        }
-        this.distance = `你距离该店铺${disWay}`
-      },
       winPrize(res) {
         let data = {sign_id: res.id}
         signLists(data).then((res) => {
@@ -402,14 +387,22 @@
           that.peo = [data.position.lng, data.position.lat]
           let lnglat = new AMap.LngLat(data.position.lng, data.position.lat)
           let dirs = lnglat.distance(that.house)
-          alert(dirs)
+          //      判断距离
           if (dirs <= that.allRedMsg.scope) {
             that.farPeo = true
+            if (that.allRedMsg.is_today === 0) {
+              that.regTitle = '立即签到'
+              that.isReg = true
+            }
           } else {
             that.farPeo = false
+            that.isReg = false
+            that.regTitle = '不在签到范围内'
           }
           that.showPeo = true
-          that.isDistance(dirs.toFixed(2))
+          var disWay = dirs > 1000 ? `${(dirs / 1000).toFixed(2)}公里` :
+            `${dirs.toFixed(2)}米`
+          that.distance = `你距离该店铺${disWay}`
         }
 
         function onError() {

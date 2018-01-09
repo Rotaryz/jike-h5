@@ -30,17 +30,19 @@
       <div class="wheel">
         <div class="wheel-pointer" @click="drawPrize"></div>
         <div class="wheel-content" ref="wheel">
-          <div class="prize" v-for="item, index in wheelList"
-               :class="`prize-${index}`">
-            <p class="name">{{item.promotion_title}}</p>
-            <div class="img-wrapper">
-              <img :src="item.promotion_img" alt="">
+          <div class="wheel-relative">
+            <div class="prize" v-for="item, index in wheelList"
+                 :class="`prize-${index}`">
+              <p class="name">{{item.promotion_title}}</p>
+              <div class="img-wrapper">
+                <img :src="item.promotion_img" alt="">
+              </div>
             </div>
-          </div>
-          <div class="prize prize-5">
-            <p class="name">谢谢惠顾</p>
-            <div class="img-wrapper">
-              <img src="./pic-face@2x.png" alt="">
+            <div class="prize prize-5">
+              <p class="name">谢谢惠顾</p>
+              <div class="img-wrapper">
+                <img src="./pic-face@2x.png" alt="">
+              </div>
             </div>
           </div>
         </div>
@@ -348,29 +350,35 @@
           transition-property: transform
           bg-image('./pic-zp')
           background-size: 100% 100%
-          .prize
-            position: absolute
-            width: 45%
+          .wheel-relative
+            position: relative
+            width: 100%
             height: 100%
-            box-sizing: border-box
-            padding-top: 11%
-            text-align: center
-            for $i in 0 1 2 3 4 5
-              &.prize-{$i}
-                z-index: (-($i) + 6)
-                transform: rotate($i * 60deg)
-            .name
-              margin-bottom: 10%
-              font-size: $font-size-small-s
-              color: $color-orange
-            .img-wrapper
-              width: 37.04%
-              height: 13.11%
-              margin: 0 auto
+            .prize
+              position: absolute
+              top: 0
+              left: 27.7%
+              width: 45%
+              height: 100%
               box-sizing: border-box
-              img
-                max-width: 100%
-                max-height: 100%
+              padding-top: 11%
+              text-align: center
+              for $i in 0 1 2 3 4 5
+                &.prize-{$i}
+                  z-index: (-($i) + 6)
+                  transform: rotate($i * 60deg)
+              .name
+                margin-bottom: 10%
+                font-size: $font-size-small-s
+                color: $color-orange
+              .img-wrapper
+                width: 37.04%
+                height: 13.11%
+                margin: 0 auto
+                box-sizing: border-box
+                img
+                  max-width: 100%
+                  max-height: 100%
       .bottom-pan
         width: 100%
         height: 0

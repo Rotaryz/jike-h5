@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
-    <div class="ruleDetail" v-show="state === 1">
-      <div class="con-box">
+    <div class="ruleDetail" v-show="state === 1" @click="close">
+      <div class="con-box" @click.stop>
         <h3>活动规则</h3>
         <ul>
           <li v-for="(item, index) in rulesList" :key="index"

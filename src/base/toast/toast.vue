@@ -32,24 +32,21 @@
 
   .toast
     position: fixed
-    top: 50%
+    z-index: 9999
+    top: 42%
     left: 50%
     min-width: 200px
-    z-index: 9999
+    max-width: 300px
+    margin-left: -100px
     padding: 10px 0
     opacity: .9
-    border: 1px solid #666
     border-radius: 6px
     transition: all .5s ease-out
-    transform: translate(-50%, -50%)
     text-align: center
-    background-color: rgba(0,0,0,.8)
-    &.fade-enter, &.fade-leave-active
-      opacity: 0
-    &.fade-enter-active, &.fade-leave-active
-      transition: all .3s ease-in-out
+    background-color: rgba(0, 0, 0, .8)
     .content
       line-height: 20px
+      font-size: $font-size-medium
       color: $color-white
 
 </style>

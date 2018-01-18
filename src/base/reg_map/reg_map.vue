@@ -589,6 +589,7 @@
     height: 1px
 
   .buttons
+    border-radius: 4px
     width: 175px
     height: 32px
     line-height: 32px

@@ -63,7 +63,7 @@
               {{item.userinfo.nickname}}领取了{{item.promotion.promotion_title}}奖品
             </div>
           </div>
-          <div class="right-wrapper">2017-11-21</div>
+          <div class="right-wrapper">{{item.created_at}}</div>
         </div>
       </div>
     </div>

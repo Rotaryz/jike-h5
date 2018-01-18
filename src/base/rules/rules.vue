@@ -7,7 +7,8 @@
           <li v-for="(item, index) in rulesList" :key="index"
               :class="{'explain':item.status === 1}">
             <p class="title">{{item.title}}:
-              <span class="contents">{{item.content}}</span>
+              <span class="contents" v-for="(cont, index) in item.content"
+                    :key="index">{{cont}}</span>
             </p>
           </li>
         </ul>
@@ -31,13 +32,16 @@
         type: Array,
         default: [{
           title: '活动名称',
-          content: ''
+          content: ['dfdsfs', 'asdasd'],
+          status: 0
         }, {
           title: '活动时间',
-          content: ''
+          content: ['sadsadad'],
+          status: 0
         }, {
           title: '活动说明',
-          content: ''
+          content: ['asfasdas'],
+          status: 1
         }]
       }
     },
@@ -88,6 +92,7 @@
     .con-box
       height: 301px
       width: 265px
+      padding-bottom: 10px
       overflow-y: scroll
       background: $color-white
       position: absolute
@@ -109,7 +114,6 @@
           bottom: -6px
           row-center()
       ul
-        margin-top: 14px
         li
           padding: 0 7.3%
           p
@@ -118,13 +122,29 @@
             .conShow
               color: $color-assist-tr
           .title
-            padding-top: 5px
-        .explain
-          margin-top: 26px
-          color: #9B9B9B
+            padding-top: 19px
+
           .contents
+            line-height: 20px
             display: block
-            color: $color-text
+            color: #9B9B9B
+            position: relative
+            margin-left: 5px
+            &::after
+              content: ''
+              position: absolute
+              height: 2px
+              width: 2px
+              background: #9B9B9B
+              border-radius: 100%
+              top: 10px
+              left: -5px
+        .explain
+          &:last-child
+            .contents
+              margin-left: 0
+              &::after
+                display: none
 
   .close
     position: absolute

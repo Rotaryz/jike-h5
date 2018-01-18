@@ -195,23 +195,28 @@
       _getWheelDetail() {
         getWheelDetail()
           .then((res) => {
+          const prize = res.activity_promotion.map((item, index) => {
+            return `${index + 1}.${item.promotion_title}`
+          })
+            console.log(prize)
             let data = [{
               title: '活动名称',
-              content: res.name,
+              content: [res.name],
               status: 0
             }, {
               title: '活动时间',
-              content: `${res.from_date}至${res.to_date}`,
+              content: [`${res.to_date}`],
               status: 0
             }, {
               title: '活动规则',
-              content: '',
+              content: ['活动期间内，每人每天一次抽奖机会；', '奖品数量有限，先到先得；', res.activity_desc],
               status: 1
             }, {
-              title: '中奖说明',
-              content: res.activity_desc,
+              title: '活动奖品',
+              content: prize,
               status: 1
             }]
+            console.log(this.wheelList)
             this.rulesList = data
             this.wheelList = res.activity_promotion
             this.activityId = res.id

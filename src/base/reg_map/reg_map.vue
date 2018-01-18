@@ -23,8 +23,8 @@
         </div>
       </div>
     </div>
-
-    <Rules :rulesList="rulesList" ref="rules"></Rules>
+    <!-- -->
+    <Rules ref="rules" :rulesList="rulesList"></Rules>
     <div class="reg-box">
       <ul class="reg_red">
         <li v-for="(red,index) in redPac" :key="index">
@@ -101,8 +101,7 @@
       Rules,
       RegList,
       PrizeModal,
-      Toast,
-      PhoneTest
+      Toast
     },
     data() {
       return {
@@ -275,24 +274,23 @@
         this.$refs.rules.show()
         let data = [{
           title: '活动名称',
-          content: this.allRedMsg.title,
+          content: [this.allRedMsg.title],
           status: 0
         }, {
           title: '活动时间',
-          content: this.allRedMsg.from_date + '至' + this.allRedMsg.to_date,
+          content: [this.allRedMsg.from_date + '至' + this.allRedMsg.to_date],
           status: 0
         }, {
-          title: '签到范围',
-          content: this.allRedMsg.scope >= 1000 ?
-            `${this.allRedMsg.scope / 1000}公里` : `${this.allRedMsg.scope}米`,
-          status: 0
-        }, {
-          title: '签到规则',
-          content: '',
+          title: '活动说明',
+          content: [`此活动为线下签到，只有在门店${this.scope}范围内才可签到；`,
+            '首次成功签到，可一次获得一个随机红包；',
+            '连续成功签到4次，可一次获得两个随机红包；',
+            '连续成功签到7次，可一次获得三个随机红包；',
+            '奖品数量有限，先到先得；', this.allRedMsg.explain],
           status: 1
         }, {
-          title: '签到说明',
-          content: this.allRedMsg.explain,
+          title: '活动奖品',
+          content: ['1.现金红包'],
           status: 1
         }]
         this.rulesList = data
@@ -318,14 +316,23 @@
             this.regTitle = '今日已签到'
             this.redList = res
             this.redNum = res.length
+            if (this.continuous === 1 && res.length === 0) {
+              this.$refs.toast.show('红包已被领完，明天再来')
+            }
             if (res.length === 1) {
               this.$refs.regmal.show()
               this.money = res[0].price
               this.showRegPac = true
+              if (this.continuous !== 1) {
+                this.$refs.toast.show('红包已被领完，明天再来')
+              }
             } else if (res.length > 1) {
               this.$refs.regmal.show()
               this.showPage = '0/' + res.length
               this.$refs.regmal.hideClose()
+              if (this.continuous !== 4 && res.length === 2) {
+                this.$refs.toast.show('红包已被领完，明天再来')
+              }
             }
             if (res.num >= 0) {
               if (res.num > 1) {

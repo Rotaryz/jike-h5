@@ -78,7 +78,6 @@
       </div>
     </PrizeModal>
     <toast ref="toast"></toast>
-    <PhoneTest ref="phoneTest"></PhoneTest>
   </div>
 </template>
 
@@ -94,7 +93,6 @@
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
   import Toast from 'base/toast/toast'
-  import PhoneTest from 'base/phoneTest/phoneTest'
 
   let GEOLOCATION
 
@@ -250,7 +248,8 @@
           }
           this.house = [res.merchant_data.longitude, res.merchant_data.latitude]
           if ((res.is_yesterday === 1 && res.continuous !== 7) || (res.is_today
-            === 1 && res.continuous === 7)) {
+            === 1 && res.continuous === 7) || (res.is_today === 1 &&
+            res.continuous < 7)) {
             this.continuous = res.continuous
             this.dealType(this.continuous)
           }
@@ -300,53 +299,47 @@
       },
 //      签到提交
       singIn() {
-//        测试
-        let binding = localStorage.getItem('isBinding')
-        if (binding === '1') {
-//        绑定手机号码时
-          this.continuous += 1
-          let distance = this.distance ===
-          '正在计算距离…' ? 0 : parseFloat(this.distance.slice(6)) * 1000
-          let data = {
-            sign_id: this.allRedMsg.id,
-            continuous: this.continuous,
-            distance: distance,
-            address: ''
-          }
-          setSingIn(data).then((res) => {
-            if (res.error === 1) {
-//            签到失败提示
-              this.$refs.toast.show(res.message)
-            } else {
-              this.isReg = false
-              this.regTitle = '今日已签到'
-              this.redList = res
-              this.redNum = res.length
-              if (res.length === 1) {
-                this.$refs.regmal.show()
-                this.money = res[0].price
-                this.showRegPac = true
-              } else if (res.length > 1) {
-                this.$refs.regmal.show()
-                this.showPage = '0/' + res.length
-                this.$refs.regmal.hideClose()
-              }
-              if (res.num >= 0) {
-                if (res.num > 1) {
-                  this.showPage = '0/' + res.num
-                }
-                this.$refs.regmal.show()
-              }
-              if (res) {
-                this._getRegistration()
-              }
-            }
-          })
-        } else {
-//         未绑定手机号码时
-          this.$refs.phoneTest.show()
+        this.continuous += 1
+        let distance = this.distance ===
+        '正在计算距离…' ? 0 : parseFloat(this.distance.slice(6)) * 1000
+        let data = {
+          sign_id: this.allRedMsg.id,
+          continuous: this.continuous,
+          distance: distance,
+          address: ''
         }
+        setSingIn(data).then((res) => {
+          if (res.error === 1) {
+//            签到失败提示
+            this.$refs.toast.show(res.message)
+            this.continuous -= 1
+          } else {
+            this.isReg = false
+            this.regTitle = '今日已签到'
+            this.redList = res
+            this.redNum = res.length
+            if (res.length === 1) {
+              this.$refs.regmal.show()
+              this.money = res[0].price
+              this.showRegPac = true
+            } else if (res.length > 1) {
+              this.$refs.regmal.show()
+              this.showPage = '0/' + res.length
+              this.$refs.regmal.hideClose()
+            }
+            if (res.num >= 0) {
+              if (res.num > 1) {
+                this.showPage = '0/' + res.num
+              }
+              this.$refs.regmal.show()
+            }
+            if (res) {
+              this._getRegistration()
+            }
+          }
+        })
       },
+//      赢取红包
       winPrize(res) {
         let data = {sign_id: res.id}
         signLists(data).then((res) => {

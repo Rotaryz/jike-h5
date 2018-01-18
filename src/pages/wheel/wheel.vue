@@ -129,54 +129,49 @@
     },
     methods: {
       drawPrize() {
-        let binding = localStorage.getItem('isBinding')
-        if (binding === '1') {
-          if (this.count === 0) {
-            this.$refs.toast.show('您的抽奖次数已用完！')
-            return
-          }
-          if (this.wheeling) {
-            return
-          }
-          this.wheeling = true
-          const data = {
-            activity_id: this.activityId
-          }
-          doLucky(data).then((res) => {
-            this.prize = res
-            let index
-            const noPrice = res.id === 0
-            if (noPrice) {
-              index = 5
-            } else {
-              index = this.wheelList.findIndex((item) => item.id === res.id)
-            }
-            let addAngle = 0
-            if (this.rotate > 0) {
-              let beforeAngle = this.rotate % 360
-              addAngle = 360 - beforeAngle
-            }
-            let angle = index * 60
-            let random = Math.floor(Math.random() * 10 + 5)
-            this.rotate = this.rotate + random * 360 + angle + addAngle
-            let duration = random / 2
-            this.$refs.wheel.style[transitionDuration] = duration + 's'
-            this.$refs.wheel.style[transform] = `rotate(-${this.rotate}deg)`
-            setTimeout(() => {
-              if (noPrice) {
-                this.emotion = 'fail'
-              } else {
-                this.emotion = 'success'
-              }
-              this.showPrizeModal()
-              this.wheeling = false
-              this._getLuckyUser()
-              this._getLuckyNum()
-            }, duration * 1000)
-          })
-        } else {
-          this.$refs.phoneTest.show()
+        if (this.count === 0) {
+          this.$refs.toast.show('您的抽奖次数已用完！')
+          return
         }
+        if (this.wheeling) {
+          return
+        }
+        this.wheeling = true
+        const data = {
+          activity_id: this.activityId
+        }
+        doLucky(data).then((res) => {
+          this.prize = res
+          let index
+          const noPrice = res.id === 0
+          if (noPrice) {
+            index = 5
+          } else {
+            index = this.wheelList.findIndex((item) => item.id === res.id)
+          }
+          let addAngle = 0
+          if (this.rotate > 0) {
+            let beforeAngle = this.rotate % 360
+            addAngle = 360 - beforeAngle
+          }
+          let angle = index * 60
+          let random = Math.floor(Math.random() * 10 + 5)
+          this.rotate = this.rotate + random * 360 + angle + addAngle
+          let duration = random / 2
+          this.$refs.wheel.style[transitionDuration] = duration + 's'
+          this.$refs.wheel.style[transform] = `rotate(-${this.rotate}deg)`
+          setTimeout(() => {
+            if (noPrice) {
+              this.emotion = 'fail'
+            } else {
+              this.emotion = 'success'
+            }
+            this.showPrizeModal()
+            this.wheeling = false
+            this._getLuckyUser()
+            this._getLuckyNum()
+          }, duration * 1000)
+        })
       },
       showPrizeModal() {
         this.$refs.prizeModal.show()

@@ -143,8 +143,6 @@
           &:last-child
             .contents
               margin-left: 0
-              &::after
-                display: none
 
   .close
     position: absolute

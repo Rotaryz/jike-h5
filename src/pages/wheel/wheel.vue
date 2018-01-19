@@ -196,7 +196,7 @@
         getWheelDetail()
           .then((res) => {
             const prize = res.activity_promotion.map((item, index) => {
-              return `${index + 1}.${item.promotion_title}`
+              return `${item.promotion_title}`
             })
             console.log(prize)
             let data = [{

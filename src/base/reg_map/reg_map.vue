@@ -290,7 +290,7 @@
           status: 1
         }, {
           title: '活动奖品',
-          content: ['1.现金红包'],
+          content: ['现金红包'],
           status: 1
         }]
         this.rulesList = data

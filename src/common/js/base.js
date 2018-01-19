@@ -21,11 +21,19 @@
 
 const version = '/v1'
 
+const env = process.env
+
+const PROD_URL = {
+  image: 'https://img.live.gytcrm.com',
+  login: 'https://jwt.live.gytcrm.com',
+  api: 'https://wap-api.live.gytcrm.com' + version
+}
+
 /**
  * 研发环境
  * @type {{image: string, login: string, api: string}}
  */
-const URLS = {
+const DEV_URL = {
   image: 'https://img.jerryf.cn',
   login: 'https://dev.jike-jwt.jerryf.cn',
   api: 'https://dev.jike-wap-api.jerryf.cn' + version
@@ -35,11 +43,11 @@ const URLS = {
  * 测试环境
  * @type {{image: string, login: string, api: string}}
  */
-// const URLS = {
-//   image: 'https://img.jkweixin.net',
-//   login: 'https://jwt.jkweixin.net',
-//   api: 'https://wap-api.jkweixin.net'
-// }
+const TEST_URL = {
+  image: 'https://img.jkweixin.net',
+  login: 'https://jwt.jkweixin.net',
+  api: 'https://wap-api.jkweixin.net'
+}
 
 /**
  * 生产环境
@@ -50,12 +58,12 @@ const URLS = {
 //   login: 'https://jwt.jkweixin.com',
 //   api: 'https://wap-api.jkweixin.com'
 // }
-class URIS {
-  constructor() {
-    this.image = URLS.image
-    this.login = URLS.login
-    this.api = URLS.api
-  }
+const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
+
+const URIS = {
+  image: URLS.image,
+  login: URLS.login,
+  api: URLS.api
 }
-export default new URIS()
+export default URIS
 

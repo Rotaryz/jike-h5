@@ -316,7 +316,7 @@
             this.regTitle = '今日已签到'
             this.redList = res
             this.redNum = res.length
-            if (this.continuous === 1 && res.length === 0) {
+            if ((this.continuous === 1 || this.continuous === 4 || this.continuous === 7) && res.length === 0) {
               this.$refs.toast.show('红包已被领完，明天再来')
             }
             if (res.length === 1) {

@@ -61,9 +61,9 @@ const TEST_URL = {
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
 
 const URIS = {
-  image: URLS.image,
-  login: URLS.login,
-  api: URLS.api
+  image: DEV_URL.image,
+  login: DEV_URL.login,
+  api: DEV_URL.api
 }
 export default URIS
 

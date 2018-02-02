@@ -146,12 +146,11 @@
 
   .close
     position: absolute
-    left: 50%
+    left: 46vw
     top: 140.26vw
     display: block
-    width: 23px
-    height: 23px
-    transform: translateX(-50%)
+    width: 24px
+    height: 24px
     bg-image('./icon-delet')
-    background-size: 23px 23px
+    background-size: cover
 </style>

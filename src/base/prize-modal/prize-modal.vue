@@ -32,7 +32,7 @@
     },
     data() {
       return {
-        state: STATE_SHOW,
+        state: STATE_HIDE,
         isClose: STATE_SHOW
       }
     },
@@ -105,7 +105,7 @@
         .emotion
           position: absolute
           display: block
-          left :16.5px
+          left :13.5px
           &.success
             top: -74.5px
             width: 217px

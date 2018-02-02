@@ -32,7 +32,7 @@
     },
     data() {
       return {
-        state: STATE_SHOW,
+        state: STATE_HIDE,
         isClose: STATE_SHOW
       }
     },

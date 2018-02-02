@@ -503,8 +503,9 @@
         rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)
       .rule
         width: 58px
-        height: 20px
-        line-height: @height
+        height: 12px
+        line-height: 1
+        padding: 4px 0
         border-top-left-radius: 50px
         border-bottom-left-radius: 50px
         background-color: $color-theme

@@ -32,7 +32,7 @@
     },
     data() {
       return {
-        state: STATE_HIDE,
+        state: STATE_SHOW,
         isClose: STATE_SHOW
       }
     },
@@ -113,6 +113,7 @@
             bg-image('./pic_unlucky')
             background-size: 217px 106.5px
           &.fail
+            left :88.75px
             top: -36.25px
             width: 72.5px
             height: 72.5px

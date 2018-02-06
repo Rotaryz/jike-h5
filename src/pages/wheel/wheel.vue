@@ -423,7 +423,7 @@
           justify-content: space-between
           height: 24px
           margin-bottom: 10px
-          padding: 0 20px
+          padding: 0 20px 0px 10px
           border-radius: 100px
           line-height: 24px
           border-1px(rgba(255, 255, 255, .15), 50px)

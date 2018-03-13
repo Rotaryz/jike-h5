@@ -24,9 +24,9 @@ const version = '/v1'
 const env = process.env
 
 const PROD_URL = {
-  image: 'https://img.live.gytcrm.com',
-  login: 'https://jwt.live.gytcrm.com',
-  api: 'https://wap-api.live.gytcrm.com' + version
+  image: 'https://img.jkweixin.com',
+  login: 'https://jwt.jkweixin.com',
+  api: 'https://wap-api.jkweixin.com' + version
 }
 
 /**
@@ -46,7 +46,7 @@ const DEV_URL = {
 const TEST_URL = {
   image: 'https://img.jkweixin.net',
   login: 'https://jwt.jkweixin.net',
-  api: 'https://wap-api.jkweixin.net'
+  api: 'https://wap-api.jkweixin.net' + version
 }
 
 /**

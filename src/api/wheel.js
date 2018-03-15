@@ -50,8 +50,6 @@ export function getLuckyNum(params) {
 export function doLucky(params) {
   const url = '/api/activity/lucky/do-lucky'
   return axios.get(url, {params}).then((res) => {
-    if (res.data.error === ERR_OK) {
-      return Promise.resolve(res.data.data)
-    }
+    return Promise.resolve(res.data)
   })
 }

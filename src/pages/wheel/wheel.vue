@@ -101,6 +101,7 @@
   import Load from 'base/load/load'
   import PhoneTest from 'base/phoneTest/phoneTest'
   import {prefixStyle} from 'common/js/dom'
+  import {ERR_OK} from 'api/config'
   import {getWheelDetail, getLuckyUsers, getLuckyNum, doLucky} from 'api/wheel'
 
   const transform = prefixStyle('transform')
@@ -145,36 +146,40 @@
         }
         doLucky(data).then((res) => {
           this.$refs.load.hide()
-          this.prize = res
-          let index
-          const noPrice = res.id === 0
-          if (noPrice) {
-            index = 5
-          } else {
-            index = this.wheelList.findIndex((item) => item.id === res.id)
-          }
-          let addAngle = 0
-          if (this.rotate > 0) {
-            let beforeAngle = this.rotate % 360
-            addAngle = 360 - beforeAngle
-          }
-          let angle = index * 60
-          let random = Math.floor(Math.random() * 10 + 5)
-          this.rotate = this.rotate + random * 360 + angle + addAngle
-          let duration = random / 2
-          this.$refs.wheel.style[transitionDuration] = duration + 's'
-          this.$refs.wheel.style[transform] = `rotate(-${this.rotate}deg)`
-          setTimeout(() => {
+          if (res.error === ERR_OK) {
+            this.prize = res
+            let index
+            const noPrice = res.id === 0
             if (noPrice) {
-              this.emotion = 'fail'
+              index = 5
             } else {
-              this.emotion = 'success'
+              index = this.wheelList.findIndex((item) => item.id === res.id)
             }
-            this.showPrizeModal()
-            this.wheeling = false
-            this._getLuckyUser()
-            this._getLuckyNum()
-          }, duration * 1000)
+            let addAngle = 0
+            if (this.rotate > 0) {
+              let beforeAngle = this.rotate % 360
+              addAngle = 360 - beforeAngle
+            }
+            let angle = index * 60
+            let random = Math.floor(Math.random() * 10 + 5)
+            this.rotate = this.rotate + random * 360 + angle + addAngle
+            let duration = random / 2
+            this.$refs.wheel.style[transitionDuration] = duration + 's'
+            this.$refs.wheel.style[transform] = `rotate(-${this.rotate}deg)`
+            setTimeout(() => {
+              if (noPrice) {
+                this.emotion = 'fail'
+              } else {
+                this.emotion = 'success'
+              }
+              this.showPrizeModal()
+              this.wheeling = false
+              this._getLuckyUser()
+              this._getLuckyNum()
+            }, duration * 1000)
+          } else {
+            this.$refs.toast.show(res.message)
+          }
         })
       },
       showPrizeModal() {

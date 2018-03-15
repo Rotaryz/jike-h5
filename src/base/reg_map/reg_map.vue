@@ -78,6 +78,7 @@
       </div>
     </PrizeModal>
     <toast ref="toast"></toast>
+    <Load ref="load"></Load>
   </div>
 </template>
 
@@ -93,7 +94,7 @@
   import redPacket from '../../common/js/red-packet'
   import PrizeModal from 'base/prize-modal/prize-modal'
   import Toast from 'base/toast/toast'
-
+  import Load from 'base/load/load'
   let GEOLOCATION
 
   export default {
@@ -101,7 +102,8 @@
       Rules,
       RegList,
       PrizeModal,
-      Toast
+      Toast,
+      Load
     },
     data() {
       return {

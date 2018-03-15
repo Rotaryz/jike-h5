@@ -89,7 +89,8 @@
     </prize-modal>
     <rules ref="rules" :rulesList="rulesList"></rules>
     <toast ref="toast"></toast>
-    <PhoneTest ref="phoneTest"></PhoneTest>
+    <phone-test ref="phoneTest"></phone-test>
+    <load ref="load"></load>
   </div>
 </template>
 
@@ -97,6 +98,7 @@
   import PrizeModal from 'base/prize-modal/prize-modal'
   import Rules from 'base/rules/rules'
   import Toast from 'base/toast/toast'
+  import Load from 'base/load/load'
   import PhoneTest from 'base/phoneTest/phoneTest'
   import {prefixStyle} from 'common/js/dom'
   import {getWheelDetail, getLuckyUsers, getLuckyNum, doLucky} from 'api/wheel'
@@ -136,11 +138,13 @@
         if (this.wheeling) {
           return
         }
+        this.$refs.load.show()
         this.wheeling = true
         const data = {
           activity_id: this.activityId
         }
         doLucky(data).then((res) => {
+          this.$refs.load.hide()
           this.prize = res
           let index
           const noPrice = res.id === 0
@@ -256,7 +260,8 @@
       PrizeModal,
       Rules,
       Toast,
-      PhoneTest
+      PhoneTest,
+      Load
     }
   }
 </script>

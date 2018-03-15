@@ -19,16 +19,9 @@
 //   B端api地址   https://backend-api.jkweixin.com
 //   C端api地址   https://wap-api.jkweixin.com
 
-const version = '/v1'
+const version = '/v2'
 
 const env = process.env
-
-const PROD_URL = {
-  image: 'https://img.live.gytcrm.com',
-  login: 'https://jwt.live.gytcrm.com',
-  api: 'https://wap-api.live.gytcrm.com' + version
-}
-
 /**
  * 研发环境
  * @type {{image: string, login: string, api: string}}
@@ -53,11 +46,11 @@ const TEST_URL = {
  * 生产环境
  * @type {{image: string, login: string, api: string}}
  */
-// const URLS = {
-//   image: 'https://img.jkweixin.com',
-//   login: 'https://jwt.jkweixin.com',
-//   api: 'https://wap-api.jkweixin.com'
-// }
+const PROD_URL = {
+  image: 'https://img.jkweixin.com',
+  login: 'https://jwt.jkweixin.com',
+  api: 'https://wap-api.jkweixin.com' + version
+}
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
 
 const URIS = {

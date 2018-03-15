@@ -22,6 +22,7 @@
 const version = '/v2'
 
 const env = process.env
+
 /**
  * 研发环境
  * @type {{image: string, login: string, api: string}}
@@ -39,7 +40,7 @@ const DEV_URL = {
 const TEST_URL = {
   image: 'https://img.jkweixin.net',
   login: 'https://jwt.jkweixin.net',
-  api: 'https://wap-api.jkweixin.net'
+  api: 'https://wap-api.jkweixin.net' + version
 }
 
 /**
@@ -51,6 +52,7 @@ const PROD_URL = {
   login: 'https://jwt.jkweixin.com',
   api: 'https://wap-api.jkweixin.com' + version
 }
+
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
 
 const URIS = {

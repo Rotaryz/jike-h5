@@ -505,26 +505,24 @@
         rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 100%)
       .rule
         width: 58px
-        height: 12px
         line-height: 1
-        padding: 4px 0
         border-top-left-radius: 50px
         border-bottom-left-radius: 50px
         background-color: $color-theme
         position: absolute
         right: 0px
         top: 12px
-        z-index: 200 /*&:before
-          right: 12px
-          background: $color-assist-tr
-          z-index: 100*/
+        height: 22px
+        z-index: 200
         p
+          line-height: 22px
           font-size: $font-size-small-s
           color: rgba(255, 255, 255, .7)
           no-wrap()
           position: relative
           z-index: 200
           text-indent: 6px
+          top: 0
 
   .add
     padding: 0 $padding-all

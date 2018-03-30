@@ -4,6 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 const Wheel = () => import('pages/wheel/wheel')
+const QrCode = () => import('pages/qrCode/qrCode')
 const Registration = () => import('pages/registration/registration')
 
 export default new Router({
@@ -21,6 +22,12 @@ export default new Router({
       name: 'Wheel',
       meta: {title: '大转盘'},
       component: Wheel
+    },
+    {
+      path: '/qrCode',
+      name: 'QrCode',
+      meta: {title: '加好友，聊天购物'},
+      component: QrCode
     }
   ]
 })

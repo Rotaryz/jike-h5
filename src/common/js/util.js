@@ -28,6 +28,7 @@ export function debounce(func, delay) {
 
 export function getSearch() {
   var args = {}
+  console.log(location)
   var query = location.search.substring(1)
   var pairs = query.split('&')
   for (var i = 0; i < pairs.length; i++) {

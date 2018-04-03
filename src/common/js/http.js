@@ -1,13 +1,11 @@
 'use strict'
 
 import axios from 'axios'
-import {BASE_URL} from 'api/config'
 
 const TIME_OUT = 10000
 const COMMON_HEADER = {}
 const ERR_OK = 0
 const ERR_NO = -404
-const authorization = localStorage.getItem('token') || sessionStorage.getItem('token')
 
 axios.interceptors.request.use(config => {
   // 请求数据前的拦截
@@ -64,10 +62,6 @@ function requestException(res) {
 }
 
 export default {
-  setDefaults() {
-    axios.defaults.headers.common['Authorization'] = authorization
-    axios.defaults.baseURL = BASE_URL.api
-  },
   post(url, data) {
     return axios({
       method: 'post',

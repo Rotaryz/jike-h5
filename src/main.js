@@ -7,9 +7,7 @@ import fastclick from 'fastclick'
 import VueLazyload from 'vue-lazyload'
 import store from './store'
 import {initAxios} from 'common/js/config'
-
 import 'common/stylus/index.styl'
-
 /* eslint-disable no-unused-vars */
 // import vConsole from 'vconsole'
 

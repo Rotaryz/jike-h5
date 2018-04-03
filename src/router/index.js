@@ -26,7 +26,7 @@ export default new Router({
     {
       path: '/qrCode',
       name: 'QrCode',
-      meta: {title: '加好友，聊天购物'},
+      meta: {title: '加赞播客服好友'},
       component: QrCode
     }
   ]

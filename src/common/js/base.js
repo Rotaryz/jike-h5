@@ -19,7 +19,7 @@
 //   B端api地址   https://backend-api.jkweixin.com
 //   C端api地址   https://wap-api.jkweixin.com
 
-const version = '/v2'
+const version = '/v1' //
 
 const env = process.env
 
@@ -28,9 +28,9 @@ const env = process.env
  * @type {{image: string, login: string, api: string}}
  */
 const DEV_URL = {
-  image: 'https://img.jerryf.cn',
-  login: 'https://dev.jike-jwt.jerryf.cn',
-  api: 'https://dev.jike-wap-api.jerryf.cn' + version
+  image: 'http://img.jerryf.cn',
+  login: 'http://dev.jike-jwt.jerryf.cn',
+  api: 'http://dev.jike-wap-api.jerryf.cn' + version
 }
 
 /**
@@ -53,8 +53,7 @@ const PROD_URL = {
   api: 'https://wap-api.jkweixin.com' + version
 }
 
-// const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
-const URLS = TEST_URL
+const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
 
 const URIS = {
   image: URLS.image,
@@ -62,4 +61,3 @@ const URIS = {
   api: URLS.api
 }
 export default URIS
-

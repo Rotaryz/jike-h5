@@ -13,6 +13,7 @@ import 'common/stylus/index.styl'
 
 initAxios()
 
+
 fastclick.attach(document.body)
 
 Vue.use(VueLazyload, {

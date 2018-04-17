@@ -147,6 +147,7 @@
         doLucky(data).then((res) => {
           this.$refs.load.hide()
           if (res.error === ERR_OK) {
+            res = res.data
             this.prize = res
             let index
             const noPrice = res.id === 0
@@ -207,7 +208,6 @@
             const prize = res.activity_promotion.map((item, index) => {
               return `${item.promotion_title}`
             })
-            console.log(prize)
             let data = [{
               title: '活动名称',
               content: [res.name],
@@ -225,7 +225,6 @@
               content: prize,
               status: 1
             }]
-            console.log(this.wheelList)
             this.rulesList = data
             this.wheelList = res.activity_promotion
             this.activityId = res.id

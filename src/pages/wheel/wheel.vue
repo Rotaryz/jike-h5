@@ -1,6 +1,6 @@
 <template>
   <div class="luckdraw">
-    <iframe id="show-iframe" frameborder=0 name="showHere" scrolling=auto src="http://www.baidu.com"></iframe>
+    <iframe id="show-iframe"  v-show="iframeState" frameborder=0 name="showHere" scrolling=auto src="http://www.baidu.com"></iframe>
     <div class="header-wrapper">
       <div class="left-wrapper">
         <div class="luckerPannel" ref="luckerPannel">
@@ -120,7 +120,8 @@
         luckers: [],
         rulesList: [],
         activeIndex: 0,
-        emotion: 'success'
+        emotion: 'success',
+        iframeState: false
       }
     },
     created() {
@@ -187,6 +188,7 @@
         this.$refs.prizeModal.show()
       },
       showRules() {
+        this.iframeState = true
         this.$refs.rules.show()
       },
       handleClick() {

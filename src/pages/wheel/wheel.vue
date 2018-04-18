@@ -1,5 +1,6 @@
 <template>
   <div class="luckdraw">
+    <iframe id="show-iframe" style="display: none"  frameborder=0 name="showHere" scrolling=auto src="http://www.baidu.com"></iframe>
     <div class="header-wrapper">
       <div class="left-wrapper">
         <div class="luckerPannel" ref="luckerPannel">

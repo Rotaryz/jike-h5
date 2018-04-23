@@ -27,11 +27,16 @@
     },
     created(options) {
       console.log(options)
-      this._getShopCode()
+      this._getShopCode(options)
     },
     methods: {
-      _getShopCode() {
-        getShopCode().then((res) => {
+      _getShopCode(options) {
+        let data = {merchantId: 100026}
+        if (options) {
+          data = {merchantId: options.merchantId}
+        }
+        getShopCode(data).then((res) => {
+          console.log(res)
           if (res.wechant_qrcode !== '') {
             this.codeImage = res.wechant_qrcode
           }

@@ -25,17 +25,12 @@
         codeImage: ''
       }
     },
-    created(options) {
-      console.log(options)
-      this._getShopCode(options)
+    created() {
+      this._getShopCode()
     },
     methods: {
-      _getShopCode(options) {
-        let data = {merchantId: 100026}
-        if (options) {
-          data = {merchantId: options.merchantId}
-        }
-        getShopCode(data).then((res) => {
+      _getShopCode() {
+        getShopCode().then((res) => {
           console.log(res)
           if (res.wechant_qrcode !== '') {
             this.codeImage = res.wechant_qrcode

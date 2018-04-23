@@ -6,9 +6,9 @@ import http from 'common/js/http'
  * @returns {Promise.<TResult>}
  */
 
-export function getShopCode(data) {
-  const url = `/api/customer-service/wechat`
-  return http.get(url, data).then((res) => {
+export function getShopCode() {
+  const url = `/api/customer-service/wechat?merchant_id=${localStorage.getItem('merchantId')}`
+  return http.get(url).then((res) => {
     if (res.error === ERR_OK) {
       return Promise.resolve(res.data)
     }

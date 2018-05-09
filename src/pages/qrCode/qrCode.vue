@@ -11,7 +11,7 @@
             <div class="model-add">扫码加好友</div>
           </div>
           <div class="model-code">
-            <img :src="codeImage" height="205" width="205"/></div>
+            <img v-if="codeImage" :src="codeImage" height="205" width="205"/></div>
           <div class="model-sweep">长按二维码 扫一扫</div>
         </div>
     </div>
@@ -25,13 +25,13 @@
         codeImage: ''
       }
     },
-    created(options) {
+    created() {
       this._getShopCode()
     },
     methods: {
       _getShopCode() {
-        let data = {merchant_id: '100026'}
-        getShopCode(data).then((res) => {
+        getShopCode().then((res) => {
+          console.log(res)
           if (res.wechant_qrcode !== '') {
             this.codeImage = res.wechant_qrcode
           }

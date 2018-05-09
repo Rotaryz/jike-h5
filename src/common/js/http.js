@@ -6,6 +6,8 @@ const TIME_OUT = 10000
 const COMMON_HEADER = {}
 const ERR_OK = 0
 const ERR_NO = -404
+const DEL_OUT = 10003 // 内容被删除
+const NOFOUND_OUT = 10004 // 内容被下线
 
 axios.interceptors.request.use(config => {
   // 请求数据前的拦截
@@ -41,6 +43,15 @@ function checkCode(res) {
   }
   // 如果网络请求成功，而提交的数据，或者是后端的一些未知错误所导致的，可以根据实际情况进行捕获异常
   if (res.data && (res.data.code !== ERR_OK)) {
+    let result = res.data.data
+    switch (res.data.code) {
+      case DEL_OUT:
+        wx.miniProgram.redirectTo({url: `/pages/sold-out/sold-out?appId=${result.app_id}&businessCircleId=${result.business_circle_id}&status=2`})
+        break
+      case NOFOUND_OUT:
+        wx.miniProgram.redirectTo({url: `/pages/sold-out/sold-out?appId=${result.app_id}&businessCircleId=${result.business_circle_id}&status=1`})
+        break
+    }
     // 可以进行switch操作，根据返回的code进行相对应的操作，然后抛异常
     console.warn(res.data.message)
     throw requestException(res)

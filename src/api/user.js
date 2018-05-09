@@ -1,8 +1,7 @@
 /**
  * Created by user on 2018/1/8.
  */
-import {ERR_OK} from './config'
-import axios from 'axios'
+import http from '../common/js/http'
 /**
  * 发送验证码
  * @returns {Promise.<*>}
@@ -10,7 +9,7 @@ import axios from 'axios'
 export function getPhoneCode(data) {
   const url = `/api/info/send-message`
   // const parmas = Object.assign({}, commonParams, data)
-  return axios.post(url, data
+  return http.post(url, data
   ).then((res) => {
     return Promise.resolve(res.data)
   })
@@ -21,7 +20,7 @@ export function getPhoneCode(data) {
  */
 export function bindPhone(data) {
   const url = `/api/info/valida-message`
-  return axios.get(url, {
+  return http.get(url, {
     params: data
   }).then((res) => {
     return Promise.resolve(res.data)

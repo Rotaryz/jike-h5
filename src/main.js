@@ -12,8 +12,6 @@ import 'common/stylus/index.styl'
 // import vConsole from 'vconsole'
 
 initAxios()
-
-
 fastclick.attach(document.body)
 
 Vue.use(VueLazyload, {

@@ -1,5 +1,5 @@
 import {ERR_OK} from './config'
-import axios from 'axios'
+import http from '../common/js/http'
 
 /**
  * 获取大转盘详情
@@ -7,8 +7,8 @@ import axios from 'axios'
  */
 export function getWheelDetail() {
   const url = `/api/activity/lucky/detail`
-  return axios.get(url).then((res) => {
-    if (res.data.error === ERR_OK) {
+  return http.get(url).then((res) => {
+    if (res.error === ERR_OK) {
       return Promise.resolve(res.data.data)
     }
   })
@@ -21,8 +21,8 @@ export function getWheelDetail() {
  */
 export function getLuckyUsers(id) {
   const url = `/api/activity/lucky/lucky-users/${id}`
-  return axios.get(url).then((res) => {
-    if (res.data.error === ERR_OK) {
+  return http.get(url).then((res) => {
+    if (res.error === ERR_OK) {
       return Promise.resolve(res.data.data)
     }
   })
@@ -35,8 +35,8 @@ export function getLuckyUsers(id) {
  */
 export function getLuckyNum(params) {
   const url = '/api/activity/lucky/num'
-  return axios.get(url, {params}).then((res) => {
-    if (res.data.error === ERR_OK) {
+  return http.get(url, {params}).then((res) => {
+    if (res.error === ERR_OK) {
       return Promise.resolve(res.data.data)
     }
   })
@@ -49,7 +49,7 @@ export function getLuckyNum(params) {
  */
 export function doLucky(params) {
   const url = '/api/activity/lucky/do-lucky'
-  return axios.get(url, {params}).then((res) => {
+  return http.get(url, {params}).then((res) => {
     return Promise.resolve(res.data)
   })
 }

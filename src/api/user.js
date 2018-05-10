@@ -11,7 +11,7 @@ export function getPhoneCode(data) {
   // const parmas = Object.assign({}, commonParams, data)
   return http.post(url, data
   ).then((res) => {
-    return Promise.resolve(res.data)
+    return Promise.resolve(res)
   })
 }
 /**
@@ -23,6 +23,6 @@ export function bindPhone(data) {
   return http.get(url, {
     params: data
   }).then((res) => {
-    return Promise.resolve(res.data)
+    return Promise.resolve(res)
   })
 }

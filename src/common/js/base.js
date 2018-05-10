@@ -53,8 +53,8 @@ const PROD_URL = {
   api: 'https://wap-api.jkweixin.com' + version
 }
 
-// const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
-const URLS = TEST_URL
+const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
+// const URLS = TEST_URL
 
 const URIS = {
   image: URLS.image,

@@ -145,6 +145,7 @@
           activity_id: this.activityId
         }
         doLucky(data).then((res) => {
+          console.log(res)
           this.$refs.load.hide()
           if (res.error === ERR_OK) {
             res = res.data

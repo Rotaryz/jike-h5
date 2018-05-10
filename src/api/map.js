@@ -12,7 +12,7 @@ export function getRegistration() {
   const url = `/api/activity/sign/info`
   return http.get(url).then((res) => {
     if (res.error === ERR_OK) {
-      return Promise.resolve(res.data.data)
+      return Promise.resolve(res.data)
     }
   })
 }
@@ -27,9 +27,9 @@ export function setSingIn(data) {
   return http.post(url, data
   ).then((res) => {
     if (res.error === ERR_OK) {
-      return Promise.resolve(res.data.data)
-    } else {
       return Promise.resolve(res.data)
+    } else {
+      return Promise.resolve(res)
     }
   })
 }
@@ -43,7 +43,7 @@ export function remind(data) {
   return http.get(url, {
     params: data
   }).then((res) => {
-    return Promise.resolve(res.data)
+    return Promise.resolve(res)
   })
 }
 
@@ -57,7 +57,7 @@ export function drawPacket(data) {
   return http.post(url, parmas
   ).then((res) => {
     if (res.error === ERR_OK) {
-      return Promise.resolve(res.data.data)
+      return Promise.resolve(res.data)
     }
   })
 }
@@ -73,7 +73,7 @@ export function signLists(data) {
     params: data
   }).then((res) => {
     if (res.error === ERR_OK) {
-      return Promise.resolve(res.data.data)
+      return Promise.resolve(res.data)
     }
   })
 }

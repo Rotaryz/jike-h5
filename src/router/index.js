@@ -6,6 +6,7 @@ Vue.use(Router)
 const Wheel = () => import('pages/wheel/wheel')
 const QrCode = () => import('pages/qrCode/qrCode')
 const Registration = () => import('pages/registration/registration')
+const Activity = () => import('pages/activity/activity')
 
 export default new Router({
   routes: [
@@ -28,6 +29,12 @@ export default new Router({
       name: 'QrCode',
       meta: {title: '加赞播客服好友'},
       component: QrCode
+    },
+    {
+      path: '/activity',
+      name: 'Activity',
+      meta: {title: '异业联盟活动'},
+      component: Activity
     }
   ]
 })

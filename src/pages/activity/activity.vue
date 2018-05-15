@@ -3,10 +3,12 @@
       <img class="activity-img" src="./actviity.jpg" alt="">
       <div class="btn" :class="{'btn-action':hit}" @touchstart="btnActivity" @touchend="btnActivityEnd">
       </div>
+      <PostOrder ref="postOrder"></PostOrder>
     </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import PostOrder from 'base/post-order/post-order'
   export default {
     data () {
       return {
@@ -20,10 +22,15 @@
         this.hit = true
       },
       btnActivityEnd(e) {
+        console.log(this.$refs)
+        this.$refs.postOrder.shows(true)
         this.hit = false
         // 跳转小程序买单
         wx.miniProgram.navigateTo({url: '/pages/pay/pay'})
       }
+    },
+    components: {
+      PostOrder
     }
   }
 </script>

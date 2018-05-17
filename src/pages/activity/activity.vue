@@ -6,7 +6,6 @@
       <PostOrder ref="postOrder"></PostOrder>
     </div>
 </template>
-
 <script type="text/ecmascript-6">
   import PostOrder from 'base/post-order/post-order'
   import {ERR_OK} from 'api/config'

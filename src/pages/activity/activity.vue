@@ -9,24 +9,36 @@
 
 <script type="text/ecmascript-6">
   import PostOrder from 'base/post-order/post-order'
+  import {ERR_OK} from 'api/config'
+  import {getActivity} from 'api/activity'
   export default {
     data () {
       return {
         hit: false,
-        st: false
+        st: false,
+        orderInfo: ''
       }
     },
+    mounted () {
+      this._getActivity()
+    },
     methods: {
-      btnActivity(e) {
-        // 跳转小程序买单
+      _getActivity () {
+        getActivity().then(res => {
+          if (res.error === ERR_OK) {
+            this.orderInfo = res.data
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+        console.log(1)
+      },
+      btnActivity() {
         this.hit = true
       },
       btnActivityEnd(e) {
-        console.log(this.$refs)
-        this.$refs.postOrder.shows(true)
         this.hit = false
-        // 跳转小程序买单
-        wx.miniProgram.navigateTo({url: '/pages/pay/pay'})
+        this.$refs.postOrder.shows(this.orderInfo)
       }
     },
     components: {

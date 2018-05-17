@@ -1,19 +1,18 @@
 <template>
-  <transition name="fade">
-  <div class="post-order" @click="hide" v-if="show">
-    <div class="modal border-top-1px" :class="{post:show}">
+  <div class="post-order" @click="hide()" v-if="show">
+    <div class="modal border-top-1px" :class="{post:show}" @click.stop="">
       <div class="form-wrapper border-bottom-1px">
         <div class="label-control border-bottom-1px">
-          <div class="label">{{orderInfo.title}}</div>
-          <div class="content">{{orderInfo.price}}元</div>
+          <div class="label">{{title}}</div>
+          <div class="content">{{price}}元</div>
         </div>
         <div class="label-control border-bottom-1px">
           <div class="label">数量</div>
           <div class="content">
             <div class="number-control">
-              <div class="desc" @tap.stop="descCount">-</div>
+              <div class="desc" @click.stop="descCount()">-</div>
               <div class="number">{{count}}</div>
-              <div class="add" @tap.stop="addCount">+</div>
+              <div class="add" @click.stop="addCount()">+</div>
             </div>
           </div>
         </div>
@@ -26,48 +25,69 @@
         <div class="content">
           <div class="label">订单总价</div>
           <div class="price">
-            <text class="number">{{orderInfo.from === 'c_sharemoney' ? shareMoney : total}}</text>
-            <text class="yuan">元</text>
+            <div class="number">{{total}}</div>
+            <div class="yuan">元</div>
           </div>
         </div>
       </div>
-      <div class="post-btn"  @tap.stop="postOrder">
+      <div class="post-btn"  @click.stop="postOrder">
         提交订单
       </div>
     </div>
   </div>
-  </transition>
 </template>
 
 <script>
-  // import wepy from 'wepy'
-  // import {ERR_OK} from 'api/base'
-  // import Order from 'api/order'
-  // import base from 'common/mixins/base'
-  // import URIS from 'common/js/config'
-
   export default {
+    mounted () {
+      console.log(1)
+    },
     data() {
       return {
-        imageUri: '',
-        orderInfo: {},
         show: false,
-        maskAnimation: '',
-        modalAnimation: '',
         count: 1,
-        stock: 0,
-        peopleStock: -1,
         total: 0,
-        status: '',
-        goOnce: true
+        title: '',
+        price: '1.00',
+        stock: 4
       }
     },
     methods: {
       shows (obj) {
-        this.show = obj
+        this.show = true
+        if (obj) {
+          this.show = true
+          this.title = obj.name
+          this.price = obj.price
+          this.stock = obj.stock
+          this.total = (this.count * this.price).toFixed(2)
+        }
       },
       hide () {
         this.show = false
+      },
+      addCount() {
+        if (this.stock > 0) {
+          if (this.count < this.stock) {
+            this.count += 1
+          }
+        }
+        this.total = (this.count * this.price).toFixed(2)
+      },
+      descCount() {
+        if (this.count <= 1) {
+          this.count = 1
+        } else {
+          this.count -= 1
+        }
+        this.total = (this.count * this.price).toFixed(2)
+      },
+      postOrder() {
+        console.log(1)
+        console.log(window.__wxjs_environment === 'miniprogram')
+        console.log(1)
+        wx.miniProgram.postMessage({ data: {foo: 'bar'} })
+        // wx.miniProgram.navigateTo({url: '/path/to/page'})
       }
     }
 
@@ -87,7 +107,7 @@
     z-index: 1000
     background-color: $color-mask-bgc
     .modal
-      position: absolute
+      position: fixed
       height: 0px
       bottom: 0
       left: 0
@@ -151,6 +171,8 @@
             font-size: $font-size-medium
           .price
             color: $color-text-t
+            display: flex
+            align-items: center
             .number
               font-size: $font-size-large
             .yuan

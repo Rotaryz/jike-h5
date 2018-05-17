@@ -31,6 +31,7 @@
         </div>
       </div>
       <div class="post-btn"  @click.stop="postOrder">
+        {{clicks}}}
         提交订单
       </div>
     </div>
@@ -49,7 +50,8 @@
         total: 0,
         title: '',
         price: '1.00',
-        stock: 4
+        stock: 4,
+        clicks: ''
       }
     },
     methods: {
@@ -84,10 +86,9 @@
       },
       postOrder() {
         console.log(1)
-        console.log(window.__wxjs_environment === 'miniprogram')
-        console.log(1)
+        this.clicks += 1
         wx.miniProgram.postMessage({ data: {foo: 'bar'} })
-        // wx.miniProgram.navigateTo({url: '/path/to/page'})
+        wx.miniProgram.navigateTo({url: '/pages/activity/activity'})
       }
     }
 

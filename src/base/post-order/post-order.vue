@@ -88,7 +88,7 @@
         console.log(1)
         this.clicks += 1
         wx.miniProgram.postMessage({ data: {foo: 'bar'} })
-        wx.miniProgram.navigateTo({url: 'pages/activity/activity'})
+        wx.miniProgram.navigateTo({url: '/pages/activity/activity'})
       }
     }
 

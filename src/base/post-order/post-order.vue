@@ -84,7 +84,7 @@
       },
       postOrder() {
         wx.miniProgram.postMessage({ data: {foo: 'bar'} })
-        wx.miniProgram.navigateTo({url: '/pages/transfer/transfer'})
+        wx.miniProgram.navigateTo({url: '/pages/transfer/transfer?key=999'})
       }
     }
 

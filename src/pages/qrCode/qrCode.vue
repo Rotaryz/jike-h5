@@ -3,12 +3,7 @@
     <div class="qrCode">
         <div class="model">
           <div class="model-bac">
-            <img class="model-bac-img" src="./pic-auxiliary_figure@2x.png"/>
-            <div class="model-logo">
-              <img class="model-logo-left" src="./pic-logo_service@2x.png"/>
-              <span class="model-logo-span">赞播客服二维码</span>
-            </div>
-            <div class="model-add">扫码加好友</div>
+            <div class="model-add">扫码加好友，随时聊天购买</div>
           </div>
           <div class="model-code">
             <img v-if="codeImage" :src="codeImage" height="205" width="205"/></div>
@@ -31,7 +26,6 @@
     methods: {
       _getShopCode() {
         getShopCode().then((res) => {
-          console.log(res)
           if (res.wechant_qrcode !== '') {
             this.codeImage = res.wechant_qrcode
           }
@@ -52,8 +46,8 @@
     position: fixed
     .model
       opacity: none
-      width: 280px
-      height: 380px
+      width: 275px
+      height: 335px
       background-color: #fff
       position: absolute
       top: 0px
@@ -63,7 +57,7 @@
       margin: auto
       text-align: center
       .model-bac
-        height: 104px
+        height: 70px
         line-height: 52px
         position: relative
         .model-bac-img
@@ -87,32 +81,23 @@
             font-size: 18px
             color: #9B9B9B
             letter-spacing: 0
-          .model-logo-span:after
-            content: ''
-            position: absolute
-            border-right: 1px solid #ccc
-            height: 16px
-            top: 5px
-            left: -2px
       .model-add
-        height: 48px
+        height: 70px
         position: absolute
-        top: 50px
         text-align: center
         width: 100%
-        ont-family: 'PingFangSC-Medium'
-        font-size: 20px
+        font-family: 'PingFangSC-Medium'
+        font-size: 18px
         color: #464646
         letter-spacing: 0
-        line-height: 48px
+        line-height: 70px
 
       .model-code
         width: 205px
         height: 205px
         margin: 0px auto
-        background: #252439
       .model-sweep
-        font-family: 'PingFangSC-Light'
+        font-family: 'PingFangSC-Medium'
         font-size: 14px
         color: #464646
         letter-spacing: 0

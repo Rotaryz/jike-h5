@@ -3,45 +3,35 @@
       <img class="activity-img" src="./actviity.jpg" alt="">
       <div class="btn" :class="{'btn-action':hit}" @touchstart="btnActivity" @touchend="btnActivityEnd">
       </div>
-      <PostOrder ref="postOrder"></PostOrder>
     </div>
 </template>
 <script type="text/ecmascript-6">
-  import PostOrder from 'base/post-order/post-order'
-  import {ERR_OK} from 'api/config'
-  import {getActivity} from 'api/activity'
   export default {
     data () {
       return {
         hit: false,
         st: false,
-        orderInfo: ''
+        orderInfo: '',
+        m: '',
+        a: '',
+        e: ''
       }
     },
-    mounted () {
-      this._getActivity()
+    created() {
+      console.log(this)
+      console.log(this.$route)
+      this.m = this.$route.$mp.query.m
+      this.a = this.$route.$mp.query.a
+      this.e = this.$route.$mp.query.e
     },
     methods: {
-      _getActivity () {
-        getActivity().then(res => {
-          if (res.error === ERR_OK) {
-            this.orderInfo = res.data
-          }
-        }).catch(err => {
-          console.log(err)
-        })
-        console.log(1)
-      },
       btnActivity() {
         this.hit = true
       },
       btnActivityEnd(e) {
         this.hit = false
-        this.$refs.postOrder.shows(this.orderInfo)
+        wx.miniProgram.navigateTo({url: '/pages/activity-detail/activity-detail?m=' + this.m + '&a=' + this.a + '&e=' + this.a})
       }
-    },
-    components: {
-      PostOrder
     }
   }
 </script>

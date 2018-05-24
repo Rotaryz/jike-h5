@@ -20,9 +20,9 @@
     created() {
       console.log(this)
       console.log(this.$route)
-      this.m = this.$route.$mp.query.m
-      this.a = this.$route.$mp.query.a
-      this.e = this.$route.$mp.query.e
+      this.m = this.$route.query.m
+      this.a = this.$route.query.a
+      this.e = this.$route.query.e
     },
     methods: {
       btnActivity() {

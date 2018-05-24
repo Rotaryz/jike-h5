@@ -8,7 +8,6 @@ export function initAxios() {
   localStorage.setItem('merchantId', search.merchantId)
   localStorage.setItem('isBinding', search.isBinding)
   localStorage.setItem('id', search.id)
-  localStorage.setItem('employeeId', search.employeeId)
   localStorage.setItem('useType', search.useType)
   axios.defaults.baseURL = URIS.api
   axios.defaults.headers.common['Authorization'] = search.token

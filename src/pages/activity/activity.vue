@@ -55,9 +55,9 @@
       z-index: 1
       transition: all .2s
       border-radius: 3px
-      background: url("./botton.png") no-repeat center
+      /*background: url("./botton.png") no-repeat center*/
       background-size: 100%
     .btn.btn-action
-      background: url("./botton_hit.png") no-repeat center 1.5px
+      /*background: url("./botton_hit.png") no-repeat center 1.5px*/
       background-size: 100%
 </style>

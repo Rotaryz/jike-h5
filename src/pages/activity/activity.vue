@@ -18,8 +18,6 @@
       }
     },
     created() {
-      console.log(this)
-      console.log(this.$route)
       this.m = this.$route.query.m
       this.a = this.$route.query.a
       this.e = this.$route.query.e
@@ -37,13 +35,13 @@
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
-  body
-    overflow-y: auto
   .activity
     width: 100vw
     position: relative
+    min-height: 100vh
     .activity-img
       width: 100vw
+      margin-bottom: -20px
     .btn
       position: absolute
       bottom: 35px

@@ -29,6 +29,7 @@
       btnActivityEnd() {
         this.hit = false
         if (this.m !== 'y') {
+          /* eslint-disable */
           wx.miniProgram.navigateTo({url: '/pages/activity-detail/activity-detail?m=' + this.m + '&a=' + this.a + '&e=' + this.a})
         }
       }

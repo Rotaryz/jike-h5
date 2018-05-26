@@ -26,9 +26,11 @@
       btnActivity() {
         this.hit = true
       },
-      btnActivityEnd(e) {
+      btnActivityEnd() {
         this.hit = false
-        wx.miniProgram.navigateTo({url: '/pages/activity-detail/activity-detail?m=' + this.m + '&a=' + this.a + '&e=' + this.a})
+        if (this.m !== 'y') {
+          wx.miniProgram.navigateTo({url: '/pages/activity-detail/activity-detail?m=' + this.m + '&a=' + this.a + '&e=' + this.a})
+        }
       }
     }
   }

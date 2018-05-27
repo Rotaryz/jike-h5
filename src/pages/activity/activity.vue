@@ -14,21 +14,25 @@
         orderInfo: '',
         m: '',
         a: '',
-        e: ''
+        e: '',
+        type: ''
       }
     },
     created() {
       this.m = this.$route.query.m // 商家ID
       this.a = this.$route.query.a // 活动ID
       this.e = this.$route.query.e // 员工ID
+      this.type = this.$route.query.type // 活动类型
     },
     methods: {
       btnActivity() {
-        this.hit = true
+        if(this.type === 'y'){
+          this.hit = false
+        }
       },
       btnActivityEnd() {
-        this.hit = false
-        if (this.m !== 'y') {
+        if (this.type === 'y') {
+          this.hit = false
           /* eslint-disable */
           let url = `/pages/activity-detail/activity-detail?m=${this.m}&a=${this.a}&e=${this.e}`
           wx.miniProgram.navigateTo({url})
@@ -57,9 +61,9 @@
       z-index: 1
       transition: all .2s
       border-radius: 3px
-      /*background: url("./botton.png") no-repeat center*/
+      background: url("./botton.png") no-repeat center
       background-size: 100%
     .btn.btn-action
-      /*background: url("./botton_hit.png") no-repeat center 1.5px*/
+      background: url("./botton_hit.png") no-repeat center 1.5px
       background-size: 100%
 </style>

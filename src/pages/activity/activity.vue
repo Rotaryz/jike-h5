@@ -1,8 +1,14 @@
 <template>
-  <div class="activity">
-    <img class="activity-img" src="./actviity.jpg" alt="">
-    <!--<div class="btn" :class="{'btn-action':hit}" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>-->
-  </div>
+  <article class="activity">
+    <section class="content">
+      <img class="activity-img" src="./actviity.jpg" alt="">
+      <div class="btn-a1" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>
+    </section>
+    <!--<section class="content">-->
+    <!--<img class="activity-img" src="./actviity2.jpg" alt="">-->
+    <!--<div :class="['btn',hit?'btn-action':'']" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>-->
+    <!--</section>-->
+  </article>
 </template>
 <script type="text/ecmascript-6">
   export default {
@@ -26,11 +32,13 @@
     methods: {
       btnActivity() {
         if (this.type === 'y') {
-          this.hit = false
+          console.log(2)
+          this.hit = true
         }
       },
       btnActivityEnd() {
         if (this.type === 'y') {
+          console.log(3)
           this.hit = false
           /* eslint-disable */
           let url = `/pages/activity-detail/activity-detail?m=${this.m}&a=${this.a}&e=${this.e}`
@@ -43,26 +51,35 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .activity
-    width: 100vw
     position: relative
-    min-height: 100vh
-    .activity-img
-      width: 100vw
-      margin-bottom: -20px
-    .btn
-      position: absolute
-      bottom: 35px
-      left: 0px
-      right: 0px
-      height: 10vh
-      width: 90%
-      margin: auto
-      z-index: 1
-      transition: all .2s
-      border-radius: 3px
-      background: url("./botton.png") no-repeat center
-      background-size: 100%
-    .btn.btn-action
-      background: url("./botton_hit.png") no-repeat center 1.5px
-      background-size: 100%
+    .content
+      position: relative
+      .activity-img
+        margin-bottom: -20px
+        width: 100%
+      .btn
+        position: absolute
+        bottom: 0px
+        left: 0px
+        right: 0px
+        height: 10vh
+        margin: auto
+        width: 90%
+        z-index: 9
+        transition: all .2s
+        background: url("./botton.png") no-repeat center
+        background-size: cover
+        &.btn-action
+          background: url("./botton_hit.png") no-repeat center 1.5px
+          background-size: cover
+      .btn-a1
+        position: absolute
+        bottom: 0px
+        left: 0px
+        right: 0px
+        height: 13vh
+        margin: auto
+        width: 90%
+        z-index: 9
+        border: 1px solid red
 </style>

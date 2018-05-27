@@ -18,9 +18,9 @@
       }
     },
     created() {
-      this.m = this.$route.query.m
-      this.a = this.$route.query.a
-      this.e = this.$route.query.e
+      this.m = this.$route.query.m // 商家ID
+      this.a = this.$route.query.a // 活动ID
+      this.e = this.$route.query.e // 员工ID
     },
     methods: {
       btnActivity() {
@@ -30,9 +30,9 @@
         this.hit = false
         if (this.m !== 'y') {
           /* eslint-disable */
-          wx.miniProgram.navigateTo({url: '/pages/activity-detail/activity-detail?m=' + this.m + '&a=' + this.a + '&e=' + this.a})
+          let url = `/pages/activity-detail/activity-detail?m=${this.m}&a=${this.a}&e=${this.e}`
+          wx.miniProgram.navigateTo({url})
         }
-        wx.miniProgram.navigateTo({url: '/pages/activity-detail/activity-detail?m=' + this.m + '&a=' + this.a + '&e=' + this.e})
       }
     }
   }

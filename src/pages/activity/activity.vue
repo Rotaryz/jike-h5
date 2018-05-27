@@ -1,13 +1,12 @@
 <template>
-    <div class="activity">
-      <img class="activity-img" src="./actviity.jpg" alt="">
-      <div class="btn" :class="{'btn-action':hit}" @touchstart="btnActivity" @touchend="btnActivityEnd">
-      </div>
-    </div>
+  <div class="activity">
+    <img class="activity-img" src="./actviity.jpg" alt="">
+    <!--<div class="btn" :class="{'btn-action':hit}" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>-->
+  </div>
 </template>
 <script type="text/ecmascript-6">
   export default {
-    data () {
+    data() {
       return {
         hit: false,
         st: false,
@@ -26,7 +25,7 @@
     },
     methods: {
       btnActivity() {
-        if(this.type === 'y'){
+        if (this.type === 'y') {
           this.hit = false
         }
       },

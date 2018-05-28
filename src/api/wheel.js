@@ -36,7 +36,7 @@ export function getLuckyUsers(id) {
  */
 export function getLuckyNum(params) {
   const url = '/api/activity/lucky/num'
-  return http.get(url, {params}).then((res) => {
+  return http.get(url, params).then((res) => {
     if (res.error === ERR_OK) {
       return Promise.resolve(res.data)
     }
@@ -50,7 +50,7 @@ export function getLuckyNum(params) {
  */
 export function doLucky(params) {
   const url = '/api/activity/lucky/do-lucky'
-  return http.get(url, {params}).then((res) => {
+  return http.get(url, params).then((res) => {
     return Promise.resolve(res)
   })
 }

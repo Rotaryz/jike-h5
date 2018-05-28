@@ -24,8 +24,7 @@ export function getRegistration() {
 export function setSingIn(data) {
   const url = `/api/activity/sign`
   // const parmas = Object.assign({}, commonParams, data)
-  return http.post(url, data
-  ).then((res) => {
+  return http.post(url, data).then((res) => {
     if (res.error === ERR_OK) {
       return Promise.resolve(res.data)
     } else {
@@ -40,9 +39,7 @@ export function setSingIn(data) {
  */
 export function remind(data) {
   const url = `/api/activity/sign/openpush`
-  return http.get(url, {
-    params: data
-  }).then((res) => {
+  return http.get(url, data).then((res) => {
     return Promise.resolve(res)
   })
 }
@@ -69,9 +66,7 @@ export function drawPacket(data) {
  */
 export function signLists(data) {
   const url = `/api/activity/sign`
-  return http.get(url, {
-    params: data
-  }).then((res) => {
+  return http.get(url, data).then((res) => {
     if (res.error === ERR_OK) {
       return Promise.resolve(res.data)
     }

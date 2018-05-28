@@ -1,6 +1,8 @@
 <template>
     <div class="activity">
-      <img class="activity-img" src="./actviity.jpg" alt="">
+      <div class="scroll-activity">
+        <img class="activity-img" src="./actviity.jpg" alt="">
+      </div>
       <div class="btn" :class="{'btn-action':hit}" @touchstart="btnActivity" @touchend="btnActivityEnd">
       </div>
     </div>
@@ -18,6 +20,7 @@
       }
     },
     created() {
+      document.title = '异业联盟活动'
       this.m = this.$route.query.m
       this.a = this.$route.query.a
       this.e = this.$route.query.e
@@ -39,12 +42,15 @@
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .activity
+    height: 100vh
     width: 100vw
     position: relative
-    min-height: 100vh
-    .activity-img
-      width: 100vw
-      margin-bottom: -20px
+    -webkit-overflow-scrolling: touch
+    overflow-y: scroll
+    .scroll-activity
+      .activity-img
+        width: 100vw
+        margin-bottom: -20px
     .btn
       position: absolute
       bottom: 35px

@@ -95,6 +95,7 @@
   import PrizeModal from 'base/prize-modal/prize-modal'
   import Toast from 'base/toast/toast'
   import Load from 'base/load/load'
+  import AMap from 'AMap'
   let GEOLOCATION
 
   export default {
@@ -414,6 +415,7 @@
     },
     mounted() {
       document.title = '签到红包'
+      console.log(AMap)
       this.map = new AMap.Map('container', {
         resizeEnable: true,
         zoom: 16,

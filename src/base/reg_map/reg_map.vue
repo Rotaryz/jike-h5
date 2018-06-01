@@ -171,7 +171,7 @@
         regTitle: '不在签到范围内',
         showPeo: false,
         farPeo: true,
-        scope: '',
+        scope: ''
       }
     },
     created() {

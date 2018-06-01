@@ -6,7 +6,7 @@
     <!--</section>-->
     <section class="content">
       <img class="activity-img" src="./actviity2.jpg" alt="">
-      <div :class="['btn',hit?'btn-action':'']" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>
+      <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
   </article>
 </template>
@@ -24,20 +24,18 @@
       }
     },
     created() {
-      this.m = this.$route.query.m // 商家ID
-      this.a = this.$route.query.a // 活动ID
-      this.e = this.$route.query.e // 员工ID
-      this.type = this.$route.query.type // 活动类型
+      this.m = this.$route.query.m || '' // 商家ID
+      this.a = this.$route.query.a || ''// 活动ID
+      this.e = this.$route.query.e || ''// 员工ID
+      this.type = this.$route.query.type || ''// 活动类型
     },
     methods: {
-      btnActivity(e) {
-        e.preventDefault()
+      btnActivity() {
         if (this.type === 'y') {
           this.hit = true
         }
       },
-      btnActivityEnd(e) {
-        e.preventDefault()
+      btnActivityEnd() {
         if (this.type === 'y') {
           this.hit = false
           /* eslint-disable */

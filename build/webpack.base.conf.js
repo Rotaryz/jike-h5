@@ -10,6 +10,9 @@ function resolve (dir) {
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
+  externals: {
+    'AMap': 'AMap',
+  },
   entry: {
     app: './src/main.js'
   },

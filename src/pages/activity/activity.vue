@@ -50,7 +50,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .activity
     position: relative
-    -webkit-overflow-scrolling: touch
+    /*-webkit-overflow-scrolling: touch*/
     .content
       position: relative
       .activity-img

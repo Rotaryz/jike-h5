@@ -12,7 +12,7 @@
 </template>
 <script type="text/ecmascript-6">
   export default {
-    data() {
+    data () {
       return {
         hit: false,
         st: false,
@@ -23,19 +23,19 @@
         type: ''
       }
     },
-    created() {
+    created () {
       this.m = this.$route.query.m || '' // 商家ID
       this.a = this.$route.query.a || ''// 活动ID
       this.e = this.$route.query.e || ''// 员工ID
       this.type = this.$route.query.type || ''// 活动类型
     },
     methods: {
-      btnActivity() {
+      btnActivity () {
         if (this.type === 'y') {
           this.hit = true
         }
       },
-      btnActivityEnd() {
+      btnActivityEnd () {
         if (this.type === 'y') {
           this.hit = false
           /* eslint-disable */
@@ -50,6 +50,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   .activity
     position: relative
+    -webkit-overflow-scrolling: touch
     .content
       position: relative
       .activity-img

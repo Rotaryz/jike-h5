@@ -16,7 +16,7 @@
 //   B端api地址   https://backend-api.jkweixin.com
 //   C端api地址   https://wap-api.jkweixin.com
 
-const version = '/v1'
+const version = '/v2'
 
 const env = process.env
 
@@ -50,8 +50,8 @@ const PROD_URL = {
   api: 'https://wap-api.jkweixin.com' + version
 }
 
-// const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
-const URLS = TEST_URL
+const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
+// const URLS = TEST_URL
 const URIS = {
   image: URLS.image,
   login: URLS.login,

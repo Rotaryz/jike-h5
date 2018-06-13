@@ -172,7 +172,7 @@
         regTitle: '不在签到范围内',
         showPeo: false,
         farPeo: true,
-        scope: '',
+        scope: ''
       }
     },
     created() {
@@ -310,6 +310,7 @@
           address: ''
         }
         setSingIn(data).then((res) => {
+          console.log(res)
           if (res.error === 1) {
 //            签到失败提示
             this.$refs.toast.show(res.message)

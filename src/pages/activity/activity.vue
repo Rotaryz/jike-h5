@@ -31,7 +31,6 @@
     },
     methods: {
       btnActivity () {
-        console.log(222)
         if (this.type === 'y') {
           this.hit = true
         }

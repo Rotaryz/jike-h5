@@ -5,7 +5,7 @@
     <!--<div class="btn-a1" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>-->
     <!--</section>-->
     <section class="content">
-      <img class="activity-img" src="./actviity2.jpg" alt="">
+      <img class="activity-img" src="./actviity2.png" alt="">
       <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
   </article>
@@ -31,6 +31,7 @@
     },
     methods: {
       btnActivity () {
+        console.log(222)
         if (this.type === 'y') {
           this.hit = true
         }
@@ -54,24 +55,25 @@
     .content
       position: relative
       .activity-img
-        margin-bottom: -20px
         width: 100%
+        margin-bottom: -20px
       .btn
         position: absolute
-        bottom: 0px
+        bottom: 1%
         left: 0px
         right: 0px
-        height: 10vh
+        height: 17vh
         margin: auto
         width: 90%
+        border:1px solid blue
         z-index: 9
         transition: all .2s
-        background: url("./botton.png") no-repeat center
+        /*background: url("./botton.png") no-repeat center*/
         background-size: cover
         touch-action: none
-        &.btn-action
-          background: url("./botton_hit.png") no-repeat center 1.5px
-          background-size: cover
+        /*&.btn-action*/
+          /*background: url("./botton_hit.png") no-repeat center 1.5px*/
+          /*background-size: cover*/
       .btn-a1
         position: absolute
         bottom: 0px

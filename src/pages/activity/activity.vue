@@ -64,7 +64,6 @@
         height: 17vh
         margin: auto
         width: 90%
-        border:1px solid blue
         z-index: 9
         transition: all .2s
         /*background: url("./botton.png") no-repeat center*/

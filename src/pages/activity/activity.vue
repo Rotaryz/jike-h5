@@ -5,14 +5,14 @@
     <!--<div class="btn-a1" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>-->
     <!--</section>-->
     <section class="content">
-      <img class="activity-img" src="./actviity2.png" alt="">
+      <img class="activity-img" src="./activity_current.png" alt="">
       <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
   </article>
 </template>
 <script type="text/ecmascript-6">
   export default {
-    data () {
+    data() {
       return {
         hit: false,
         st: false,
@@ -20,28 +20,38 @@
         m: '',
         a: '',
         e: '',
-        type: ''
+        type: '',
+        enClick: true,
+        time: null
       }
     },
-    created () {
+    created() {
       this.m = this.$route.query.m || '' // 商家ID
       this.a = this.$route.query.a || ''// 活动ID
       this.e = this.$route.query.e || ''// 员工ID
       this.type = this.$route.query.type || ''// 活动类型
     },
     methods: {
-      btnActivity () {
+      btnActivity() {
         if (this.type === 'y') {
           this.hit = true
         }
       },
-      btnActivityEnd () {
-        if (this.type === 'y') {
-          this.hit = false
-          /* eslint-disable */
-          let url = `/pages/activity-detail/activity-detail?m=${this.m}&a=${this.a}&e=${this.e}`
-          wx.miniProgram.navigateTo({url})
+      btnActivityEnd() {
+        if (this.enClick) {
+          // console.log(11)
+          this.enClick = false
+          setTimeout(() => {
+            this.enClick = true
+          }, 500)
+          if (this.type === 'y') {
+            this.hit = false
+            /* eslint-disable */
+            let url = `/pages/activity-detail/activity-detail?m=${this.m}&a=${this.a}&e=${this.e}`
+            wx.miniProgram.navigateTo({url})
+          }
         }
+
       }
     }
   }
@@ -69,9 +79,9 @@
         /*background: url("./botton.png") no-repeat center*/
         background-size: cover
         touch-action: none
-        /*&.btn-action*/
-          /*background: url("./botton_hit.png") no-repeat center 1.5px*/
-          /*background-size: cover*/
+      /*&.btn-action*/
+      /*background: url("./botton_hit.png") no-repeat center 1.5px*/
+      /*background-size: cover*/
       .btn-a1
         position: absolute
         bottom: 0px

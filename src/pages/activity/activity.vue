@@ -11,6 +11,8 @@
   </article>
 </template>
 <script type="text/ecmascript-6">
+  import {getMerchantData} from 'api/merchant'
+
   export default {
     data() {
       return {
@@ -30,8 +32,20 @@
       this.a = this.$route.query.a || ''// 活动ID
       this.e = this.$route.query.e || ''// 员工ID
       this.type = this.$route.query.type || ''// 活动类型
+      this._getMerchantInfo()
     },
     methods: {
+      _getMerchantInfo() {
+        if (!this.m) {
+          return
+        }
+        getMerchantData(this.m).then(res => {
+          this._setTitle(res.shop_name)
+        })
+      },
+      _setTitle(title) {
+        document.title = title
+      },
       btnActivity() {
         if (this.type === 'y') {
           this.hit = true

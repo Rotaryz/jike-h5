@@ -52,8 +52,8 @@
         }
       },
       btnActivityEnd() {
+        // console.log('test-btn')
         if (this.enClick) {
-          // console.log(11)
           this.enClick = false
           setTimeout(() => {
             this.enClick = true

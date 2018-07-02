@@ -5,7 +5,7 @@
     <!--<div class="btn-a1" @touchstart="btnActivity" @touchend="btnActivityEnd"></div>-->
     <!--</section>-->
     <section class="content">
-      <img class="activity-img" src="0702.png" alt="">
+      <img class="activity-img" src="./activity_current.png" alt="">
       <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
   </article>

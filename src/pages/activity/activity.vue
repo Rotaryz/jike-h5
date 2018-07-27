@@ -1,7 +1,7 @@
 <template>
   <article class="activity" v-if="a">
     <section class="content" v-if="a*1 === ipcActiveList.HUANG_BIAN.id ">
-      <img class="activity-img" src="./activity-hb.jpg" alt="">
+      <img class="activity-img" src="./activity-hb.png" alt="">
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
     <section class="content" v-else>
@@ -53,7 +53,7 @@
         }
       },
       btnActivityEnd() {
-        console.log('test-btn')
+        // console.log('test-btn')
         if (this.enClick) {
           this.enClick = false
           setTimeout(() => {

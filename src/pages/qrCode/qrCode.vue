@@ -6,9 +6,10 @@
             <div class="model-add">扫码加好友，随时聊天购买</div>
           </div>
           <div class="model-code">
-            <img v-if="codeImage" :src="codeImage" height="205" width="205"/></div>
+            <img v-if="codeImage" src="./qr-code.jpeg" height="205" width="205"/></div>
           <div class="model-sweep">长按二维码 扫一扫</div>
         </div>
+      <!--<iframe class="test" src="http://weixin.qq.com/r/_C7L08vEb5YQrY_w93vq" frameborder="0"></iframe>-->
     </div>
 </template>
 
@@ -18,7 +19,7 @@
   export default {
     data() {
       return {
-        codeImage: ''
+        codeImage: './twoCode.png'
       }
     },
     created() {
@@ -39,6 +40,12 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
+
+  .test
+    width :100vw
+    height :400px
+    z-index :2
+
   .qrCode
 
     background-color: $color-mask-bgc

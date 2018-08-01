@@ -14,6 +14,7 @@
 
 <script type="text/ecmascript-6">
   import {getShopCode} from 'api/qrCode'
+
   export default {
     data() {
       return {

@@ -4,6 +4,10 @@
       <img class="activity-img" src="./activity-hb.png" alt="">
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
+    <section class="content" v-if="a*1 === ipcActiveList.HUI_QIAO_GO.id ">
+      <img class="activity-img" src="./activity-hq-go.png" alt="">
+      <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
+    </section>
     <section class="content" v-else>
       <img class="activity-img" src="./activity_current.png" alt="">
       <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
@@ -108,7 +112,7 @@
         z-index: 9
         touch-action: none
       .btn-hb
-        position :absolute
+        position: absolute
         bottom: 19vw
         left: 0px
         right: 0px

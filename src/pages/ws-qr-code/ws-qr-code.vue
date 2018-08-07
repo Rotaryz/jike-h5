@@ -1,19 +1,19 @@
-
 <template>
-    <div class="qrCode">
-        <div class="model">
-          <div class="model-bac">
-            <div class="model-add">扫码加好友，随时聊天购买</div>
-          </div>
-          <div class="model-code">
-            <img v-if="codeImage" :src="codeImage" height="205" width="205"/></div>
-          <div class="model-sweep">长按二维码 扫一扫</div>
-        </div>
+  <div class="qrCode">
+    <div class="model">
+      <div class="model-bac">
+        <div class="model-add">关注微信企业号</div>
+      </div>
+      <div class="model-code">
+        <img v-if="codeImage" :src="codeImage" height="205" width="205"/></div>
+      <div class="model-sweep">长按二维码 扫一扫</div>
     </div>
+  </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {getQrCode} from 'api/ws-qr-code'
+
   export default {
     data() {
       return {

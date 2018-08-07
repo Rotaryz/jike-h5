@@ -30,7 +30,8 @@ const env = process.env
 const DEV_URL = {
   image: 'http://img.jerryf.cn',
   login: 'http://dev.jike-jwt.jerryf.cn',
-  api: 'http://dev.jike-wap-api.jerryf.cn' + version
+  api: 'http://dev.jike-wap-api.jerryf.cn' + version,
+  wsApi: 'https://ws-api.jerryf.cn' // 微商
 }
 
 /**
@@ -40,7 +41,8 @@ const DEV_URL = {
 const TEST_URL = {
   image: 'https://img.jkweixin.net',
   login: 'https://jwt.jkweixin.net',
-  api: 'https://wap-api.jkweixin.net' + version
+  api: 'https://wap-api.jkweixin.net' + version,
+  wsApi: 'https://ws-api.jkweixin.net' // 微商
 }
 
 /**
@@ -50,7 +52,8 @@ const TEST_URL = {
 const PROD_URL = {
   image: 'https://img.jkweixin.com',
   login: 'https://jwt.jkweixin.com',
-  api: 'https://wap-api.jkweixin.com' + version
+  api: 'https://wap-api.jkweixin.com' + version,
+  wsApi: 'https://ws-api.jkweixin.com' // 微商
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
@@ -59,6 +62,7 @@ const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' 
 const URIS = {
   image: URLS.image,
   login: URLS.login,
-  api: URLS.api
+  api: URLS.api,
+  wsApi: URLS.wsApi
 }
 export default URIS

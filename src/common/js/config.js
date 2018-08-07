@@ -9,7 +9,8 @@ export function initAxios() {
   localStorage.setItem('isBinding', search.isBinding)
   localStorage.setItem('id', search.id)
   localStorage.setItem('useType', search.useType)
-  axios.defaults.baseURL = URIS.api
+  // localStorage.setItem('type', search.type)
+  axios.defaults.baseURL = search.type === 'ws' ? URIS.wsApi : URIS.api
   axios.defaults.headers.common['Authorization'] = search.token
   axios.defaults.headers.common['Current-merchant'] = search.merchantId
 }

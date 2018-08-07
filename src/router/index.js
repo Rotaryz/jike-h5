@@ -7,6 +7,7 @@ const Wheel = () => import('pages/wheel/wheel')
 const QrCode = () => import('pages/qrCode/qrCode')
 const Registration = () => import('pages/registration/registration')
 const Activity = () => import('pages/activity/activity')
+const WsQrCode = () => import('pages/ws-qr-code/ws-qr-code')
 
 export default new Router({
   routes: [
@@ -29,6 +30,12 @@ export default new Router({
       name: 'QrCode',
       meta: {title: '加好友，聊天购物'},
       component: QrCode
+    },
+    {
+      path: '/ws-qr-code',
+      name: 'WsQrCode',
+      meta: {title: '赞播微商'},
+      component: WsQrCode
     },
     {
       path: '/activity',

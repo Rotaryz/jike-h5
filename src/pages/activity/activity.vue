@@ -4,7 +4,7 @@
       <img class="activity-img" src="./activity-hb.png" alt="">
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
-    <section class="content" v-if="a*1 === ipcActiveList.HUI_QIAO_GO.id ">
+    <section class="content" v-else-if="a*1 === ipcActiveList.HUI_QIAO_GO.id ">
       <img class="activity-img" src="./activity-hq-go.png" alt="">
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>

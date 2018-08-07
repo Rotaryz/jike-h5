@@ -25,11 +25,9 @@
       this._getQrCode(id)
     },
     methods: {
-      _getQrCode() {
-        getQrCode().then((res) => {
-          if (res.wechant_qrcode !== '') {
-            this.codeImage = res.wechant_qrcode
-          }
+      _getQrCode(id) {
+        getQrCode(id).then((res) => {
+          this.codeImage = res.corp_wxqrcode
         })
       }
     }

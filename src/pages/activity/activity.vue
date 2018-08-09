@@ -8,6 +8,10 @@
       <img class="activity-img" src="./activity-hq-go.png" alt="">
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
+    <section class="content" v-else-if="a*1 === ipcActiveList.REN_HE_GO.id ">
+      <img class="activity-img" src="./activity-rh-go.png" alt="">
+      <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
+    </section>
     <section class="content" v-else>
       <img class="activity-img" src="./activity_current.png" alt="">
       <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
@@ -57,7 +61,7 @@
         }
       },
       btnActivityEnd() {
-        // console.log('test-btn')
+        console.log('test-btn')
         if (this.enClick) {
           this.enClick = false
           setTimeout(() => {

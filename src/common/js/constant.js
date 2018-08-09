@@ -4,5 +4,8 @@ export const IPC_ACTIVE_LIST = {
   },
   HUI_QIAO_GO: {
     id: 37
+  },
+  REN_HE_GO: {
+    id: 42
   }
 }

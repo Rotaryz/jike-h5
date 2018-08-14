@@ -1,20 +1,8 @@
 <template>
-  <article class="activity" v-if="a">
-    <section class="content" v-if="a*1 === ipcActiveList.HUANG_BIAN.id ">
-      <img class="activity-img" src="./activity-hb.png" alt="">
+  <article class="activity" v-if="a && currentActive">
+    <section class="content">
+      <img class="activity-img" :src="currentActive.imgUrl" alt="">
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
-    </section>
-    <section class="content" v-else-if="a*1 === ipcActiveList.HUI_QIAO_GO.id ">
-      <img class="activity-img" src="./activity-hq-go.png" alt="">
-      <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
-    </section>
-    <section class="content" v-else-if="a*1 === ipcActiveList.REN_HE_GO.id ">
-      <img class="activity-img" src="./activity-rh-go.png" alt="">
-      <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
-    </section>
-    <section class="content" v-else>
-      <img class="activity-img" src="./activity_current.png" alt="">
-      <div :class="['btn',hit?'btn-action':'']" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
   </article>
 </template>
@@ -78,8 +66,9 @@
       }
     },
     computed: {
-      ipcActiveList() {
-        return IPC_ACTIVE_LIST
+      currentActive() {
+        let node = IPC_ACTIVE_LIST.find(val=>val.id === +this.a)
+        return node || IPC_ACTIVE_LIST[0]
       }
     }
   }

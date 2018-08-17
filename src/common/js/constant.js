@@ -23,5 +23,10 @@ export const IPC_ACTIVE_LIST = [
     name: '京溪',
     id: 47,
     imgUrl: '/yylm/activity-jx-go.png'
+  },
+  {
+    name: '永泰',
+    id: 49,
+    imgUrl: '/yylm/activty_yt_go.png'
   }
 ]

@@ -8,6 +8,7 @@ const QrCode = () => import('pages/qrCode/qrCode')
 const Registration = () => import('pages/registration/registration')
 const Activity = () => import('pages/activity/activity')
 const WsQrCode = () => import('pages/ws-qr-code/ws-qr-code')
+const ZdQrCode = () => import('pages/zd-qr-code/zd-qr-code')
 
 export default new Router({
   routes: [
@@ -42,6 +43,12 @@ export default new Router({
       name: 'Activity',
       meta: {title: '异业联盟活动'},
       component: Activity
+    },
+    {
+      path: '/zd-qr-code',
+      name: 'ZdQrCode',
+      meta: {title: '关注公众号'},
+      component: ZdQrCode
     }
   ]
 })

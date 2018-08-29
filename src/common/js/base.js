@@ -31,7 +31,8 @@ const DEV_URL = {
   image: 'http://img.jerryf.cn',
   login: 'http://dev.jike-jwt.jerryf.cn',
   api: 'http://dev.jike-wap-api.jerryf.cn' + version,
-  wsApi: 'https://ws-api.jerryf.cn' // 微商
+  wsApi: 'https://ws-api.jerryf.cn', // 微商
+  zdApi: 'https://ws-api.jerryf.cn' // 智店铺
 }
 
 /**
@@ -42,7 +43,8 @@ const TEST_URL = {
   image: 'https://img.jkweixin.net',
   login: 'https://jwt.jkweixin.net',
   api: 'https://wap-api.jkweixin.net' + version,
-  wsApi: 'https://ws-api.jkweixin.net' // 微商
+  wsApi: 'https://ws-api.jkweixin.net', // 微商
+  zdApi: 'https://ws-api.jkweixin.net' // 智店铺
 }
 
 /**
@@ -53,7 +55,8 @@ const PROD_URL = {
   image: 'https://img.jkweixin.com',
   login: 'https://jwt.jkweixin.com',
   api: 'https://wap-api.jkweixin.com' + version,
-  wsApi: 'https://ws-api.jkweixin.com' // 微商
+  wsApi: 'https://ws-api.jkweixin.com', // 微商
+  zdApi: 'https://ws-api.jkweixin.com' // 智店铺
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
@@ -63,6 +66,7 @@ const URIS = {
   image: URLS.image,
   login: URLS.login,
   api: URLS.api,
-  wsApi: URLS.wsApi
+  wsApi: URLS.wsApi,
+  zdApi: URLS.zdApi
 }
 export default URIS

@@ -21,6 +21,8 @@ export function getGroupQrCode(id) {
   return http.get(url).then((res) => {
     if (res.error === ERR_OK) {
       return Promise.resolve(res.data)
+    } else {
+      return Promise.reject(res)
     }
   })
 }

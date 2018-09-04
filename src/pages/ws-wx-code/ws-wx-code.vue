@@ -84,7 +84,8 @@
   .ws-wx-code
     background: #20202E
     min-height: 100vh
-    padding: 124px 22px 0
+    padding: 33vw 22px 0
+    box-sizing :border-box
     .content
       display: flex
       flex-direction: column

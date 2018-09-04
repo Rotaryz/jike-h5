@@ -9,6 +9,7 @@ const Registration = () => import('pages/registration/registration')
 const Activity = () => import('pages/activity/activity')
 const WsQrCode = () => import('pages/ws-qr-code/ws-qr-code')
 const ZdQrCode = () => import('pages/zd-qr-code/zd-qr-code')
+const WsWxCode = () => import('pages/ws-wx-code/ws-wx-code')
 
 export default new Router({
   routes: [
@@ -37,6 +38,12 @@ export default new Router({
       name: 'WsQrCode',
       meta: {title: '赞播微商'},
       component: WsQrCode
+    },
+    {
+      path: '/ws-wx-code',
+      name: 'WsWxCode',
+      meta: {title: ''},
+      component: WsWxCode
     },
     {
       path: '/activity',

@@ -23,7 +23,6 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
   .qrCode
-
     background-color: $color-mask-bgc
     width: 100%
     height: 100%

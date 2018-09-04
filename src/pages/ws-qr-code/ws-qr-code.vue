@@ -12,7 +12,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import {getQrCode, getGroupQrCode, getPersonalQrCode} from 'api/ws-qr-code'
+  import {getQrCode} from 'api/ws-qr-code'
 
   export default {
     data() {
@@ -21,40 +21,14 @@
       }
     },
     created() {
-      this.getParams()
+      let id = this.$route.query.employee_id
+      this._getQrCode(id)
     },
     methods: {
       _getQrCode(id) {
         getQrCode(id).then((res) => {
           this.codeImage = res.corp_wxqrcode
         })
-      },
-      _getGroupCode(id) {
-        getGroupQrCode(id).then(res => {
-          console.log(res)
-          this.codeImage = res.wx_group_qrcode
-        })
-      },
-      _getPersonalQrCode(id) {
-        getPersonalQrCode(id).then(res => {
-          console.log(res)
-          this.codeImage = res.personal_qr_image
-        })
-      },
-      getParams() {
-        let type = this.$route.query.type
-        let id = this.$route.query.employee_id
-        switch (type) {
-          case 'wx_group':
-            this._getGroupCode(id)
-            break
-          case 'request_friend':
-            this._getPersonalQrCode(id)
-            break
-          default:
-            this._getQrCode(id)
-            break
-        }
       }
     }
   }

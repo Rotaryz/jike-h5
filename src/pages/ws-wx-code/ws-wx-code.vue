@@ -3,12 +3,12 @@
     <section class="content" v-if="info">
       <div class="title-wrapper">
         <div class="logo">
-          <img class="img-logo" :src="info.qr_image"/>
+          <img class="img-logo" :src="info.shop_image"/>
         </div>
         <div class="title">{{info.shop_name}}</div>
       </div>
       <div class="qr-code">
-        <img class="img-qr-code" :src="info.shop_image"/>
+        <img class="img-qr-code" :src="info.qr_image"/>
       </div>
       <div class="explain">长按识别二维码{{type==='wx_group'?'进群':'添加好友'}}</div>
     </section>

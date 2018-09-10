@@ -53,7 +53,7 @@
             return
           }
           if (!res.qr_image) {
-            this.$refs.toast.show('人数已满')
+            this.$refs.toast.show('商家暂未上传二维码')
           }
           this.info = res
         })

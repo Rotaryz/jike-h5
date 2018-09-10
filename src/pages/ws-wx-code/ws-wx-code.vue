@@ -38,6 +38,10 @@
         getGroupQrCode(id).then(res => {
           if (!res) {
             this.$refs.toast.show('系统异常')
+            return
+          }
+          if (!res.qr_image) {
+            this.$refs.toast.show('人数已满')
           }
           this.info = res
         })
@@ -46,6 +50,10 @@
         getPersonalQrCode(id).then(res => {
           if (!res) {
             this.$refs.toast.show('系统异常')
+            return
+          }
+          if (!res.qr_image) {
+            this.$refs.toast.show('人数已满')
           }
           this.info = res
         })

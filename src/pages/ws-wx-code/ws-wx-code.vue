@@ -34,8 +34,8 @@
       this.getParams()
     },
     methods: {
-      _getGroupCode(id) {
-        getGroupQrCode(id).then(res => {
+      _getGroupCode(id, currentCorp) {
+        getGroupQrCode(id, currentCorp).then(res => {
           if (!res) {
             this.$refs.toast.show('系统异常')
             return
@@ -46,8 +46,8 @@
           this.info = res
         })
       },
-      _getPersonalQrCode(id) {
-        getPersonalQrCode(id).then(res => {
+      _getPersonalQrCode(id, currentCorp) {
+        getPersonalQrCode(id, currentCorp).then(res => {
           if (!res) {
             this.$refs.toast.show('系统异常')
             return
@@ -68,14 +68,15 @@
       getParams() {
         let type = this.$route.query.type
         let id = this.$route.query.employee_id
+        let currentCorp = this.$route.query.current_corp
         this.type = type
         this._setTitle(type)
         switch (type) {
           case 'wx_group':
-            this._getGroupCode(id)
+            this._getGroupCode(id, currentCorp)
             break
           case 'request_friend':
-            this._getPersonalQrCode(id)
+            this._getPersonalQrCode(id, currentCorp)
             break
           default:
             break

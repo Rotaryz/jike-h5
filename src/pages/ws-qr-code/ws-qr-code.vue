@@ -22,11 +22,12 @@
     },
     created() {
       let id = this.$route.query.employee_id
-      this._getQrCode(id)
+      let currentCorp = this.$route.query.current_corp
+      this._getQrCode(id, currentCorp)
     },
     methods: {
-      _getQrCode(id) {
-        getQrCode(id).then((res) => {
+      _getQrCode(id, currentCorp) {
+        getQrCode(id, currentCorp).then((res) => {
           this.codeImage = res.corp_wxqrcode
         })
       }

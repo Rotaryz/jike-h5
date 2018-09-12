@@ -72,9 +72,6 @@
         allow: true
       }
     },
-    mounted() {
-      // this.$refs.loading.show()
-    },
     methods: {
       submit() {
         let flag = this.checkShopName() && this.checkMobile() && this.allow
@@ -97,7 +94,7 @@
       },
       toSuccessPage() {
         const path = '/ws-pay-success'
-        this.$router.replace(path)
+        this.$router.push(path)
       },
       checkShopName() {
         if (!this.shopName) {

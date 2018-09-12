@@ -32,7 +32,8 @@ const DEV_URL = {
   login: 'http://dev.jike-jwt.jerryf.cn',
   api: 'http://dev.jike-wap-api.jerryf.cn' + version,
   wsApi: 'https://ws-api.jerryf.cn', // 微商
-  zdApi: 'https://ws-api.jerryf.cn' // 智店铺
+  zdApi: 'https://ws-api.jerryf.cn', // 智店铺
+  sassApi: 'https://ws-service-api.jkweixin.com' // sass平台
 }
 
 /**
@@ -44,7 +45,8 @@ const TEST_URL = {
   login: 'https://jwt.jkweixin.net',
   api: 'https://wap-api.jkweixin.net' + version,
   wsApi: 'https://ws-api.jkweixin.net', // 微商
-  zdApi: 'https://ws-api.jkweixin.net' // 智店铺
+  zdApi: 'https://ws-api.jkweixin.net', // 智店铺
+  sassApi: 'https://ws-service-api.jkweixin.com' // sass平台
 }
 
 /**
@@ -56,7 +58,8 @@ const PROD_URL = {
   login: 'https://jwt.jkweixin.com',
   api: 'https://wap-api.jkweixin.com' + version,
   wsApi: 'https://ws-api.jkweixin.com', // 微商
-  zdApi: 'https://ws-api.jkweixin.com' // 智店铺
+  zdApi: 'https://ws-api.jkweixin.com', // 智店铺
+  sassApi: 'https://ws-service-api.jkweixin.com' // sass平台
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
@@ -67,6 +70,7 @@ const URIS = {
   login: URLS.login,
   api: URLS.api,
   wsApi: URLS.wsApi,
-  zdApi: URLS.zdApi
+  zdApi: URLS.zdApi,
+  sassApi: URLS.sassApi
 }
 export default URIS

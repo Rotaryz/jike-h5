@@ -21,6 +21,8 @@ function chooseProject(type) {
       return URIS.wsApi
     case 'zd' :
       return URIS.zdApi
+    case 'sass' :
+      return URIS.sassApi
     default:
       return URIS.api
   }

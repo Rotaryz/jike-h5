@@ -1,6 +1,6 @@
 <template>
-  <div class="load-box" v-if="isLoad">
-    <div class="load">
+  <div class="load-box" v-if="isLoad" @click.stop>
+    <div class="load" >
       <img class="load-img" src="./loading.gif">
       <div class="load-text">加载中</div>
     </div>

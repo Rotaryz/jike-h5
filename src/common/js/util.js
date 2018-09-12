@@ -1,3 +1,13 @@
+const REGPASS = /^[a-zA-Z0-9]{6,18}$/
+const REGPHONE = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/
+
+export function checkIsPhoneNumber(phoneNum) {
+  return REGPHONE.test(phoneNum)
+}
+export function checkPassWord(password) {
+  return REGPASS.test(password)
+}
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min)
 }

@@ -10,6 +10,8 @@ const Activity = () => import('pages/activity/activity')
 const WsQrCode = () => import('pages/ws-qr-code/ws-qr-code')
 const ZdQrCode = () => import('pages/zd-qr-code/zd-qr-code')
 const WsWxCode = () => import('pages/ws-wx-code/ws-wx-code')
+const WsPaySever = () => import('pages/ws-pay-server/ws-pay-server')
+const WsPaySuccess = () => import('pages/ws-pay-server/ws-pay-success')
 
 export default new Router({
   routes: [
@@ -56,6 +58,18 @@ export default new Router({
       name: 'ZdQrCode',
       meta: {title: '关注公众号'},
       component: ZdQrCode
+    },
+    {
+      path: '/ws-pay-success',
+      name: 'WsPaySuccess',
+      meta: {title: '支付成功'},
+      component: WsPaySuccess
+    },
+    {
+      path: '/ws-pay-server',
+      name: 'WsPaySever',
+      meta: {title: '购买微店'},
+      component: WsPaySever
     }
   ]
 })

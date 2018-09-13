@@ -274,7 +274,7 @@
           box-shadow: 0 4px 16px 0 rgba(249, 76, 95, 0.30);
           border-radius: 100px;
           height: 45px
-          margin: 44.5px 20px
+          margin: 44.5px 0
           font-family: PingFangSC-Regular;
           font-size: 16px
           color: #FFFFFF;

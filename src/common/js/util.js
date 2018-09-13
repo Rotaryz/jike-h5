@@ -2,7 +2,13 @@ const REGPASS = /^[a-zA-Z0-9]{6,18}$/
 const REGPHONE = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/
 
 /* eslint-disable */
-function onBridgeReady(params) {
+export function wxPay(params) {
+  if (document.addEventListener) {
+    document.addEventListener('WeixinJSBridgeReady', wxPay, false)
+  } else if (document.attachEvent) {
+    document.attachEvent('WeixinJSBridgeReady', wxPay)
+    document.attachEvent('onWeixinJSBridgeReady', wxPay)
+  }
   const {appId, timeStamp, nonceStr, packAge, signType, paySign} = params
   return new Promise((resolve, reject) => {
     WeixinJSBridge.invoke(
@@ -16,10 +22,13 @@ function onBridgeReady(params) {
       },
       function (res) {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
-          resolve('get_brand_wcpay_request:ok')
+          resolve(res)
         } else {
-          reject()
+          reject(res)
         }
+      },
+      function (err) {
+        reject(err)
       })
   })
   // WeixinJSBridge.invoke(
@@ -39,18 +48,18 @@ function onBridgeReady(params) {
   //   })
 }
 
-export function wxPay(params) {
-  if (typeof WeixinJSBridge === 'undefined') {
-    if (document.addEventListener) {
-      document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false)
-    } else if (document.attachEvent) {
-      document.attachEvent('WeixinJSBridgeReady', onBridgeReady)
-      document.attachEvent('onWeixinJSBridgeReady', onBridgeReady)
-    }
-  } else {
-    onBridgeReady(params)
-  }
-}
+// export async function wxPay(params) {
+//   if (typeof WeixinJSBridge === 'undefined') {
+//     if (document.addEventListener) {
+//       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false)
+//     } else if (document.attachEvent) {
+//       document.attachEvent('WeixinJSBridgeReady', onBridgeReady)
+//       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady)
+//     }
+//   } else {
+//     await onBridgeReady(params)
+//   }
+// }
 /* eslint-disable */
 
 export function checkIsPhoneNumber(phoneNum) {

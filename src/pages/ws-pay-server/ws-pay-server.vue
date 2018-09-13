@@ -104,13 +104,13 @@
             signType: data.signType,
             paySign: data.paySign
           })
-          if (res.errMsg !== 'get_brand_wcpay_request:ok') {
+          if (res.err_msg !== 'get_brand_wcpay_request:ok') {
             return this.$refs.toast.show('支付失败')
           }
           this.toSuccessPage()
         } catch (e) {
           console.error(e)
-          alert(e)
+          return this.$refs.toast.show('支付失败')
         }
       },
       showLoading() {

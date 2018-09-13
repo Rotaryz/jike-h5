@@ -96,7 +96,7 @@
             return this.$refs.toast.show(res.message)
           }
           let data = res.data
-          res = Util.wxPay({
+          res = await Util.wxPay({
             appId: data.appId,
             timeStamp: data.timestamp,
             nonceStr: data.nonceStr,

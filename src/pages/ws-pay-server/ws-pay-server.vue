@@ -81,6 +81,7 @@
     methods: {
       getParams() {
         this.token = this.$route.query.token
+        document.title = '支付'
       },
       async submit() {
         let flag = this.checkShopName() && this.checkMobile() && this.allow

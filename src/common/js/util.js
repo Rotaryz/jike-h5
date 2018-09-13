@@ -1,9 +1,9 @@
 const REGPASS = /^[a-zA-Z0-9]{6,18}$/
 const REGPHONE = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/
 
+/* eslint-disable */
 function onBridgeReady(params) {
   const {appId, timeStamp, nonceStr, packAge, signType, paySign} = params
-  const {WeixinJSBridge} = require('./wx')
   return new Promise((resolve, reject) => {
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', {
@@ -51,6 +51,7 @@ export function wxPay(params) {
     onBridgeReady(params)
   }
 }
+/* eslint-disable */
 
 export function checkIsPhoneNumber(phoneNum) {
   return REGPHONE.test(phoneNum)

@@ -14,7 +14,11 @@
 </template>
 
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    created() {
+      document.title = '支付成功'
+    }
+  }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">

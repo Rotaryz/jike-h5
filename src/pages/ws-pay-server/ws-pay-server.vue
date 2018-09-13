@@ -236,10 +236,10 @@
         .input-wrapper
           margin-top: 4.5px
           .input-content
-            height: 34.5px
             display: flex
             flex-direction: row
             padding-top: 20.5px
+            padding-bottom :19.5px
             .option
               font-family: PingFang-SC-Medium;
               font-size: 3.7vw;
@@ -259,15 +259,19 @@
               &::-webkit-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                line-height :4vw
               &:-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                line-height :4vw
               &::-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                line-height :4vw
               &:-ms-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                line-height :4vw
 
         .button
           background: #F94C5F;

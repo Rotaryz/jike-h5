@@ -239,15 +239,14 @@
             display: flex
             flex-direction: row
             padding-top: 20.5px
-            padding-bottom :19.5px
+            padding-bottom: 19.5px
+            align-items: center
             .option
               font-family: PingFang-SC-Medium;
               font-size: 3.7vw;
               color: #828AA2;
               letter-spacing: 0.6px;
-              line-height: 1.1
               margin-right: 4.4vw
-              margin-top: 0vw
             .input-box
               flex: 1
               font-family: PingFangSC-Regular;
@@ -255,23 +254,23 @@
               color: #374B63
               letter-spacing: 0;
               height: 4vw;
-              line-height :4vw
+              line-height: 4vw
               &::-webkit-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                line-height :4vw
+                line-height: 4vw
               &:-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                line-height :4vw
+                line-height: 4vw
               &::-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                line-height :4vw
+                line-height: 4vw
               &:-ms-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                line-height :4vw
+                line-height: 4vw
 
         .button
           background: #F94C5F;

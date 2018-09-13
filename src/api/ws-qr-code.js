@@ -38,3 +38,13 @@ export function getPersonalQrCode(id, corp) {
     }
   })
 }
+/**
+ * 调用微信支付订单
+ * @returns {Promise.<TResult>}
+ */
+export function getWxPayParams(token, shopName, mobile) {
+  const url = `/user-open-service?token=${token}&shop_name=${shopName}&mobile=${mobile}`
+  return http.post(url).then((res) => {
+    return Promise.resolve(res)
+  })
+}

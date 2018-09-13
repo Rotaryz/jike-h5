@@ -16,7 +16,7 @@ function onBridgeReady(params) {
       },
       function (res) {
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
-          resolve()
+          resolve('get_brand_wcpay_request:ok')
         } else {
           reject()
         }
@@ -39,7 +39,7 @@ function onBridgeReady(params) {
   //   })
 }
 
-export function f() {
+export function wxPay(params) {
   if (typeof WeixinJSBridge === 'undefined') {
     if (document.addEventListener) {
       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false)
@@ -48,7 +48,7 @@ export function f() {
       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady)
     }
   } else {
-    onBridgeReady()
+    onBridgeReady(params)
   }
 }
 

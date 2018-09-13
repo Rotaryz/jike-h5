@@ -31,7 +31,7 @@ const DEV_URL = {
   image: 'http://img.jerryf.cn',
   login: 'http://dev.jike-jwt.jerryf.cn',
   api: 'http://dev.jike-wap-api.jerryf.cn' + version,
-  wsApi: 'https://ws-api.jerryf.cn', // 微商
+  wsApi: 'https://ws-api.jkweixin.net', // 微商
   zdApi: 'https://ws-api.jerryf.cn', // 智店铺
   sassApi: 'https://ws-service-api.jkweixin.com' // sass平台
 }

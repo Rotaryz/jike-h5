@@ -59,6 +59,8 @@
   import Loading from 'base/load/load'
   import Toast from 'base/toast/toast'
   import * as Util from 'common/js/util'
+  import { getWxPayParams } from 'api/ws-qr-code'
+  import { ERR_OK } from '../../api/config'
 
   export default {
     components: {
@@ -67,24 +69,47 @@
     },
     data() {
       return {
-        shopName: '',
-        mobile: '',
-        allow: true
+        shopName: 'jtr',
+        mobile: '15197865308',
+        allow: true,
+        token: ''
       }
     },
+    created() {
+      this.getParams()
+    },
     methods: {
-      submit() {
+      getParams() {
+        this.token = this.$route.query.token
+      },
+      async submit() {
         let flag = this.checkShopName() && this.checkMobile() && this.allow
         if (!flag) return
-        console.log(66666666666)
         this.allow = false
         this.showLoading()
-        setTimeout(() => {
+        try {
+          let res = await getWxPayParams(this.token, this.shopName, this.mobile)
           this.hideLoading()
           this.allow = true
-          console.log(2)
+          if (res.error !== ERR_OK) {
+            return this.$refs.toast.show(res.message)
+          }
+          let data = res.data
+          res = Util.wxPay({
+            appId: data.appId,
+            timeStamp: data.timestamp,
+            nonceStr: data.nonceStr,
+            packAge: data.package,
+            signType: data.signType,
+            paySign: data.paySign
+          })
+          if (!res) {
+            return this.$refs.toast.show('支付失败')
+          }
           this.toSuccessPage()
-        }, 2000)
+        } catch (e) {
+          console.error(e)
+        }
       },
       showLoading() {
         this.$refs.loading.show()
@@ -94,7 +119,7 @@
       },
       toSuccessPage() {
         const path = '/ws-pay-success'
-        this.$router.push(path)
+        this.$router.replace(path)
       },
       checkShopName() {
         if (!this.shopName) {

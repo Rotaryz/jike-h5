@@ -253,28 +253,20 @@
               font-size: 3.7vw;
               color: #374B63
               letter-spacing: 0;
-              height: 4vw;
-              line-height: 4vw
+              height: 6vw;
+              line-height: 6vw
               &::-webkit-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                height :4vw
-                line-height: 4vw
               &:-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                height :4vw
-                line-height: 4vw
               &::-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                height :4vw
-                line-height: 4vw
               &:-ms-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
-                height :4vw
-                line-height: 4vw
 
         .button
           background: #F94C5F;

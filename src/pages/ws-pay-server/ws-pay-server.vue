@@ -246,13 +246,14 @@
               letter-spacing: 0.6px;
               line-height: 1.1
               margin-right: 4.4vw
+              margin-top: 0.3vw
             .input-box
               flex: 1
               font-family: PingFangSC-Regular;
               font-size: 3.7vw;
               color: #374B63
               letter-spacing: 0;
-              height: 3.7vw;
+              height: 4.07vw;
               &::-webkit-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;

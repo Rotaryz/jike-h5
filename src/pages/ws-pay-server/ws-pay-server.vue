@@ -258,18 +258,22 @@
               &::-webkit-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height :4vw
                 line-height: 4vw
               &:-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height :4vw
                 line-height: 4vw
               &::-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height :4vw
                 line-height: 4vw
               &:-ms-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height :4vw
                 line-height: 4vw
 
         .button

@@ -251,26 +251,22 @@
             .input-box
               flex: 1
               font-family: PingFangSC-Regular;
-              font-size: 3.7vw;
+              font-size: 4.07vw;
               color: #374B63
               letter-spacing: 0;
               height: 4.07vw;
               &::-webkit-input-placeholder
-                font-size: 3.7vw;
+                font-size: 4.07vw;
                 color: #CCCCCC;
-                height: 1.1
               &:-moz-placeholder
-                font-size: 3.7vw;
+                font-size: 4.07vw;
                 color: #CCCCCC;
-                height: 1.1
               &::-moz-placeholder
-                font-size: 3.7vw;
+                font-size: 4.07vw;
                 color: #CCCCCC;
-                height: 1.1
               &:-ms-input-placeholder
-                font-size: 3.7vw;
+                font-size: 4.07vw;
                 color: #CCCCCC;
-                height: 1.1
 
         .button
           background: #F94C5F;

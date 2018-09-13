@@ -109,6 +109,7 @@
           this.toSuccessPage()
         } catch (e) {
           console.error(e)
+          alert(e)
         }
       },
       showLoading() {
@@ -255,15 +256,19 @@
               &::-webkit-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height: 1.1
               &:-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height: 1.1
               &::-moz-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height: 1.1
               &:-ms-input-placeholder
                 font-size: 3.7vw;
                 color: #CCCCCC;
+                height: 1.1
 
         .button
           background: #F94C5F;

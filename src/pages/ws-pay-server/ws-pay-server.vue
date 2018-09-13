@@ -69,8 +69,8 @@
     },
     data() {
       return {
-        shopName: 'jtr',
-        mobile: '15197865308',
+        shopName: '',
+        mobile: '',
         allow: true,
         token: ''
       }

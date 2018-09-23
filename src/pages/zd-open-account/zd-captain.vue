@@ -20,13 +20,6 @@
         <section class="btn" @click="submit">
           <div class="txt">加入</div>
         </section>
-        <!--<section class="input-wrapper border-bottom-1px">-->
-        <!--<div class="option">验证码</div>-->
-        <!--<input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">-->
-        <!--</section>-->
-        <!--<div class="btn-login" @click="login">-->
-        <!--<span>登录</span>-->
-        <!--</div>-->
       </form>
     </section>
     <toast ref="toast"></toast>
@@ -38,8 +31,8 @@
   import { checkIsPhoneNumber } from 'common/js/util'
   import Loading from 'base/loading-css/loading-css'
   import Toast from 'base/toast/toast'
-  import {register} from 'api/zd-open-account'
-  import {ERR_OK} from 'api/config'
+  import { register } from 'api/zd-open-account'
+  import { ERR_OK } from 'api/config'
 
   export default {
     components: {
@@ -56,7 +49,7 @@
       }
     },
     methods: {
-      _showToast (msg) {
+      _showToast(msg) {
         msg && this.$refs.toast && this.$refs.toast.show(msg)
       },
       _showLoading() {
@@ -164,19 +157,19 @@
         font-size: 16px
         color: #1F1F1F
         letter-spacing: 0.6px
-        padding : 59px 29px 0
+        padding: 59px 29px 0
         .option
-          width :14px
+          width: 14px
           height: 17px
-          background : #f00
-          margin-right : 8px
+          background: #f00
+          margin-right: 8px
         .input-wrapper
           height: 64px
           layout(row, block, nowrap)
           align-items: center
           .get-code
-            height : 29px
-            width :97px
+            height: 29px
+            width: 97px
             background: #FFFFFF
             border-1px(#E63232, 30px)
             font-size: 14px
@@ -187,26 +180,27 @@
               color: #B1B1B1
               border-1px(#D2D2D2, 30px)
         .btn
-          margin :49px 10px 0
-          height :45px
-          background-image: linear-gradient(-90deg, #EB5C5C 0%, #D32F2F 100%)
+          margin: 49px 10px 0
+          height: 45px
+          background-image: linear-gradient(90deg, #EB5C5C 0%, #D32F2F 100%)
           border-radius: 54.5px
-          layout(row,block,nowrap)
-          align-items :center
-          justify-content :center
+          layout(row, block, nowrap)
+          align-items: center
+          justify-content: center
           .txt
             font-family: PingFangSC-Medium
             font-size: 18px
-            color: #FFFFFF;
+            color: #FFFFFF
             letter-spacing: 0.8px
+
   .input
     height: 40px
     flex: 1
     font-size: 16px
     color: #1F1F1F
     letter-spacing: 0.6px
-    outline :none
-    margin-right :10px
+    outline: none
+    margin-right: 10px
     &::-webkit-input-placeholder
       color: #99A0AA
       font-size: 16px

@@ -12,6 +12,8 @@ const ZdQrCode = () => import('pages/zd-qr-code/zd-qr-code')
 const WsWxCode = () => import('pages/ws-wx-code/ws-wx-code')
 const WsPaySever = () => import('pages/ws-pay-server/ws-pay-server')
 const WsPaySuccess = () => import('pages/ws-pay-server/ws-pay-success')
+const ZdOpenAccount = () => import('pages/zd-open-account/zd-open-account')
+const ZdCaptain = () => import('pages/zd-open-account/zd-captain')
 
 export default new Router({
   routes: [
@@ -70,6 +72,18 @@ export default new Router({
       name: 'WsPaySever',
       meta: {title: '购买微店'},
       component: WsPaySever
+    },
+    {
+      path: '/zd-open-account',
+      name: 'ZdOpenAccount',
+      meta: {title: '赞播智店'},
+      component: ZdOpenAccount
+    },
+    {
+      path: '/zd-captain',
+      name: 'ZdCaptain',
+      meta: {title: '赞播智店'},
+      component: ZdCaptain
     }
   ]
 })

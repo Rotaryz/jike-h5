@@ -16,6 +16,16 @@
     <!--</div>-->
     <!--</swiper>-->
     <!--</div>-->
+    <!--<section class="broadcast-wrapper">-->
+      <!--<swiper :options="options" :not-next-tick="options.notNextTick">-->
+        <!--<swiper-slide v-for="item in items" :key="item.href">-->
+          <!--<div class="slide-image">-->
+            <!--<img :src="item.src" alt="">-->
+          <!--</div>-->
+        <!--</swiper-slide>-->
+        <!--&lt;!&ndash;<div class="swiper-pagination" v-if="options.pagination" slot="pagination"/>&ndash;&gt;-->
+      <!--</swiper>-->
+    <!--</section>-->
     <ul class="slider-dots">
       <li class="dot" v-for="(item,index) in sliderInfo" :key="index" :class="sliderIndex===index?'active':''"></li>
     </ul>
@@ -38,27 +48,18 @@
       <div class="title-two">（三步完成开店，轻松体验赞播微商神器）</div>
       <img class="step" src="./open-shop/pic-first.png" alt=""/>
       <img class="step" src="./open-shop/pic-two.png" alt=""/>
-      <!--<img class="step" src="./open-shop/pic-three@2x.png" alt="" />-->
     </section>
     <section class="btn-wrapper">
       <div class="btn" @click="toOpenShop">我要开店(仅剩100个名额)</div>
-      <!--<div class="btn step-one" v-if="true">-->
-      <!--<img class="step" src="./open-shop/pic-on_button@2x.png" alt="" />-->
-      <!--</div>-->
-      <!--<div class="btn step-two" v-else>-->
-      <!--<img class="btn" src="./open-shop/pic-two_button@2x.png" alt="" />-->
-      <!--</div>-->
     </section>
     <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  // import { deviceInfo } from 'common/js/contants'
-  // import * as wechat from 'common/js/wechat'
-  // import { OpenAccount } from 'api'
   import Toast from 'base/toast/toast'
   import URLS from 'common/js/base'
+  // import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
   const vw = document.documentElement.clientWidth / 100
   const sliderInfo = [{
@@ -94,6 +95,8 @@
   export default {
     components: {
       Toast
+      // swiper,
+      // swiperSlide
     },
     data() {
       return {
@@ -106,10 +109,28 @@
         sliderIndex: 0,
         circular: true,
         whyInfo,
-        // employeeId: wx.getStorageSync('employeeId'),
         fromId: '',
         openType: 0,
-        accountInfo: {}
+        accountInfo: {},
+        options: {
+          type: Object,
+          default() {
+            return {
+              autoplay: false,
+              loop: true,
+              pagination: {
+                el: '.swiper-pagination'
+              },
+              notNextTick: false
+            }
+          }
+        },
+        items: {
+          type: Array,
+          default() {
+            return []
+          }
+        }
       }
     },
     created() {
@@ -128,60 +149,6 @@
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`
         }
-      },
-      getPhoneNumber(event) {
-        // const e = event.mp
-        // if (e.detail.errMsg !== 'getPhoneNumber:ok') {
-        //   return
-        // }
-        // const iv = e.detail.iv
-        // const encryptedData = e.detail.encryptedData
-        // // const id = this.fromId todo
-        // const data = { iv, encryptedData, code: this.code, weixin: 'jike-weishang', share_employee_id: this.employeeId, open_type: this.openType }
-        // this._rqBindMobile(data)
-      },
-      _getFromId() {
-        // const userInfo = wx.getStorageSync('userInfo')
-        // this.fromId = userInfo.id
-        // this.employeeId = wx.getStorageSync('employeeId')
-      },
-      _login() {
-        // wechat.login().then(res => {
-        //   if (res.errMsg === 'login:ok') {
-        //     this.code = res.code
-        //   } else {
-        //     // this.$refs.toast.show('手机授权失败，请重新授权！')
-        //   }
-        // })
-      },
-      _rqCheckMobile() {
-        // OpenAccount.checkMobile().then(res => {
-        //   wechat.hideLoading()
-        //   if (res.error !== ERR_OK) {
-        //     return
-        //   }
-        //   this.hasPhoneNumber = !!res.data.mobile_check
-        //   this.hasAttention = !!res.data.employee_status
-        //   if (this.hasPhoneNumber && this.hasAttention) {
-        //     wx.setStorageSync('myShopId', res.data.employee_id)
-        //     getApp().globalData.openShop = true
-        //     wx.switchTab({
-        //       url: '/pages/poster/poster'
-        //     })
-        //   }
-        // })
-      },
-      _rqBindMobile(data) {
-        // OpenAccount.bindMobile(data).then(res => {
-        //   if (res.error === ERR_OK) {
-        //     wechat.hideLoading()
-        //     wechat.tipSuccess('绑定成功')
-        //     this.hasPhoneNumber = true
-        //   } else {
-        //     wechat.hideLoading()
-        //     this.$refs.toast.show(res.message)
-        //   }
-        // })
       }
     }
   }
@@ -291,6 +258,7 @@
       align-items: center
       font-family: $font-family-regular
       color: #374B63
+      margin-bottom: 16.866vw
       .step
         width: 100%
       .title
@@ -312,22 +280,22 @@
       bottom: 0
       width: 100%
       height: 16.866vw
-      line-height :16.866vw
+      line-height: 16.866vw
       background: #FFFFFF
       box-shadow: 0 0 20px 0 rgba(74, 74, 74, 0.15)
       layout()
-      justify-content :center
-      align-items :center
+      justify-content: center
+      align-items: center
       .btn
-        display :block
+        display: block
         height: 13.33vw
-        width :84.6%
-        box-sizing :border-box
+        width: 84.6%
+        box-sizing: border-box
         background-image: linear-gradient(90deg, #EB5C5C 0%, #D32F2F 100%)
         border-radius: 14.53vw
         font-family: PingFangSC-Semibold
         font-size: 20px
         color: #FFFFFF
-        text-align :center
-        line-height :13.33vw
+        text-align: center
+        line-height: 13.33vw
 </style>

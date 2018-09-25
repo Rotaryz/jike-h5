@@ -31,7 +31,9 @@
         <div>关注公众号</div>
       </div>
       <div class="content qr-code">
-        <section class="qr-code-wrapper"></section>
+        <section class="qr-code-wrapper">
+          <img style="width: 100%;height: 100%" src="./join/zhidian-qrcode.jpg" alt="">
+        </section>
         <section class="txt-qr-code">关注公众号，查看店铺</section>
       </div>
     </section>
@@ -54,7 +56,7 @@
     },
     data() {
       return {
-        phoneNumber: '15197865308', // todo
+        phoneNumber: '',
         authCode: '',
         allowGetCode: true,
         codeSeconds: 59,
@@ -145,7 +147,7 @@
 
   .zd-captain
     height: 100vh
-    layout()
+    layout(column, block, nowrap)
     .head-img
       position: absolute
       top: 0
@@ -154,6 +156,7 @@
       height: 141.6vw
     .mask
       flex: 1
+      overflow: hidden
       background: #000
       opacity: 0.5
     .contain
@@ -189,7 +192,6 @@
           layout()
           align-items: center
         .qr-code-wrapper
-          margin-top: 30px
           width: 180px
           height: 180px
           background: #ccc

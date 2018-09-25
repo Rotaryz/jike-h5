@@ -11,8 +11,10 @@ const NOFOUND_OUT = 10004 // 内容被下线
 
 axios.interceptors.request.use(config => {
   // 请求数据前的拦截
+  alert(JSON.stringify(config) + 'req+config')
   return config
 }, error => {
+  alert(JSON.stringify(error) + 'req-error')
   return Promise.reject(error)
 })
 

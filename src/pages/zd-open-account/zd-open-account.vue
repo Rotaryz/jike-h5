@@ -114,6 +114,7 @@
     created() {
       console.log(this.$route)
       this._getParams()
+      alert(`http://zhidian-api.jkweixin.net/wechat/oauth?type=${this.accountInfo.user_type}`)
     },
     // onLoad(option) {
     //   if (option.employeeId) {

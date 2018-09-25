@@ -91,10 +91,10 @@
         register(data).then(res => {
           alert(JSON.stringify(res) + 'no1')
           this._hideLoading()
-          // if (res.error !== ERR_OK) {
-          //   this._showToast(res.message)
-          //   return
-          // }
+          if (res.error !== ERR_OK) {
+            this._showToast(res.message)
+            return
+          }
           this.showQrCode = true
         }).catch(e => {
           alert(JSON.stringify(e) + 'no2')

@@ -2,19 +2,19 @@
   <div class="poster-open-account">
     <img class="head-img" src="./open-shop/pic-headimg.png" alt="">
     <!--<div class="broadcast-wrapper">-->
-      <!--<swiper class="broadcast"-->
-              <!--:previous-margin="sliderMargin"-->
-              <!--:next-margin="sliderMargin"-->
-              <!--:circular="circular"-->
-              <!--@change="sliderChange"-->
-      <!--&gt;-->
-        <!--<div v-for="(item,index) in sliderInfo" :key="index">-->
-          <!--<swiper-item class="broadcast-item">-->
-            <!--<image v-if="item.imgUrl" :src="item.imgUrl" class="slide-image"/>-->
-            <!--<div class="title">{{item.title}}</div>-->
-          <!--</swiper-item>-->
-        <!--</div>-->
-      <!--</swiper>-->
+    <!--<swiper class="broadcast"-->
+    <!--:previous-margin="sliderMargin"-->
+    <!--:next-margin="sliderMargin"-->
+    <!--:circular="circular"-->
+    <!--@change="sliderChange"-->
+    <!--&gt;-->
+    <!--<div v-for="(item,index) in sliderInfo" :key="index">-->
+    <!--<swiper-item class="broadcast-item">-->
+    <!--<image v-if="item.imgUrl" :src="item.imgUrl" class="slide-image"/>-->
+    <!--<div class="title">{{item.title}}</div>-->
+    <!--</swiper-item>-->
+    <!--</div>-->
+    <!--</swiper>-->
     <!--</div>-->
     <ul class="slider-dots">
       <li class="dot" v-for="(item,index) in sliderInfo" :key="index" :class="sliderIndex===index?'active':''"></li>
@@ -36,17 +36,17 @@
     <section class="step-wrapper">
       <div class="title">使用流程</div>
       <div class="title-two">（三步完成开店，轻松体验赞播微商神器）</div>
-      <img class="step" src="./open-shop/pic-first@2x.png" alt="" />
-      <img class="step" src="./open-shop/pic-two@2x.png" alt="" />
+      <img class="step" src="./open-shop/pic-first@2x.png" alt=""/>
+      <img class="step" src="./open-shop/pic-two@2x.png" alt=""/>
       <!--<img class="step" src="./open-shop/pic-three@2x.png" alt="" />-->
     </section>
     <section class="btn-wrapper">
       <div class="btn" @click="toOpenShop">我要开店（仅剩100个名额）</div>
       <!--<div class="btn step-one" v-if="true">-->
-        <!--<img class="step" src="./open-shop/pic-on_button@2x.png" alt="" />-->
+      <!--<img class="step" src="./open-shop/pic-on_button@2x.png" alt="" />-->
       <!--</div>-->
       <!--<div class="btn step-two" v-else>-->
-        <!--<img class="btn" src="./open-shop/pic-two_button@2x.png" alt="" />-->
+      <!--<img class="btn" src="./open-shop/pic-two_button@2x.png" alt="" />-->
       <!--</div>-->
     </section>
     <toast ref="toast"></toast>
@@ -113,6 +113,7 @@
     },
     created() {
       console.log(this.$route)
+      this._getParams()
     },
     // onLoad(option) {
     //   if (option.employeeId) {
@@ -134,8 +135,8 @@
       },
       _getParams() {
         this.accountInfo = this.$route.query
-        if (this.accountInfo.unionid || this.accountInfo.openid) {
-          window.location.herf = `http://zhidian-api.com/wechat/oauth?type=${this.accountInfo.type}`
+        if (!this.accountInfo.unionid || !this.accountInfo.openid) {
+          window.location.href = `http://zhidian-api.com/wechat/oauth?type=${this.accountInfo.type}`
         }
       },
       getPhoneNumber(event) {
@@ -321,16 +322,22 @@
       bottom: 0
       width: 100%
       height: 16.866vw
+      line-height :16.866vw
       background: #FFFFFF
       box-shadow: 0 0 20px 0 rgba(74, 74, 74, 0.15)
       layout()
-      justify-content: center
-      align-items: center
+      justify-content :center
+      align-items :center
       .btn
-        margin: 0 30px
-        background-image: linear-gradient(-90deg, #EB5C5C 0%, #D32F2F 100%)
-        border-radius: 54.5px
+        display :block
+        height: 13.33vw
+        width :84.6%
+        box-sizing :border-box
+        background-image: linear-gradient(90deg, #EB5C5C 0%, #D32F2F 100%)
+        border-radius: 14.53vw
         font-family: PingFangSC-Semibold
         font-size: 20px
         color: #FFFFFF
+        text-align :center
+        line-height :13.33vw
 </style>

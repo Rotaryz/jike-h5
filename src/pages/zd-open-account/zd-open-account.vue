@@ -328,6 +328,9 @@
       align-items: center
       .btn
         margin: 0 30px
-        box-shadow: 0 0px 37px 0 rgba(255, 45, 45, 0.20)
+        background-image: linear-gradient(-90deg, #EB5C5C 0%, #D32F2F 100%)
         border-radius: 54.5px
+        font-family: PingFangSC-Semibold
+        font-size: 20px
+        color: #FFFFFF
 </style>

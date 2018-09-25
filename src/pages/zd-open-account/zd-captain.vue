@@ -81,6 +81,7 @@
         this.showLoading = false
       },
       submit() {
+        this._showLoading()
         if (!this._check()) return
         this._showLoading()
         let data = Object.assign({}, this.accountInfo, {

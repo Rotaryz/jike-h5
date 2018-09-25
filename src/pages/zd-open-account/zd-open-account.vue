@@ -113,7 +113,7 @@
     },
     created() {
       console.log(this.$route)
-      // this._getParams()
+      this._getParams()
     },
     // onLoad(option) {
     //   if (option.employeeId) {
@@ -136,7 +136,7 @@
       _getParams() {
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `http://zhidian-api.com/wechat/oauth?type=${this.accountInfo.user_type}`
+          window.location.href = `http://zhidian-api.jkweixin.net/wechat/oauth?type=${this.accountInfo.user_type}`
         }
       },
       getPhoneNumber(event) {

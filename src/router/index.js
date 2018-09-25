@@ -14,6 +14,8 @@ const WsPaySever = () => import('pages/ws-pay-server/ws-pay-server')
 const WsPaySuccess = () => import('pages/ws-pay-server/ws-pay-success')
 const ZdOpenAccount = () => import('pages/zd-open-account/zd-open-account')
 const ZdCaptain = () => import('pages/zd-open-account/zd-captain')
+const ZdOPenStaff = () => import('pages/zd-open-account/zd-open-staff')
+const ZdStaff = () => import('pages/zd-open-account/zd-staff')
 
 export default new Router({
   routes: [
@@ -84,6 +86,24 @@ export default new Router({
       name: 'ZdCaptain',
       meta: {title: '赞播智店'},
       component: ZdCaptain
+    },
+    {
+      path: '/zd-captain',
+      name: 'ZdCaptain',
+      meta: {title: '赞播智店'},
+      component: ZdCaptain
+    },
+    {
+      path: '/zd-open-staff',
+      name: 'ZdOPenStaff',
+      meta: {title: '赞播智店'},
+      component: ZdOPenStaff
+    },
+    {
+      path: '/zd-staff',
+      name: 'ZdStaff',
+      meta: {title: '赞播智店'},
+      component: ZdStaff
     }
   ]
 })

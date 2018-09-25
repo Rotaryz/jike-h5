@@ -38,13 +38,13 @@
       </div>
     </section>
     <toast ref="toast"></toast>
-    <loading ref="loader"></loading>
+    <loading ref="loader" v-if="showLoading" title="加载中"></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import { checkIsPhoneNumber } from 'common/js/util'
-  import Loading from 'base/loading-css/loading-css'
+  import Loading from 'base/loading/loading'
   import Toast from 'base/toast/toast'
   import { register } from 'api/zd-open-account'
   import { ERR_OK } from 'api/config'
@@ -62,7 +62,8 @@
         codeSeconds: 59,
         timer: null,
         showQrCode: false,
-        accountInfo: {}
+        accountInfo: {},
+        showLoading: false
       }
     },
     created() {
@@ -74,10 +75,10 @@
         msg && this.$refs.toast && this.$refs.toast.show(msg)
       },
       _showLoading() {
-        this.$refs.loader && this.$refs.loader.show()
+        this.showLoading = true
       },
       _hideLoading() {
-        this.$refs.loader && this.$refs.loader.hide()
+        this.showLoading = false
       },
       submit() {
         if (!this._check()) return
@@ -92,9 +93,6 @@
             this._showToast(res.message)
             return
           }
-          // this._saveAuthInfo(res)
-          // this.$router.push({path: '/change-project', query: {isFromLogin: true}})
-          console.log(res)
           this.showQrCode = true
         })
       },

@@ -8,12 +8,16 @@
       </div>
       <form class="content">
         <section class="input-wrapper mobile border-bottom-1px">
-          <div class="option"></div>
-          <input class="input" type="number" placeholder="请输入手机号码" maxlength="11" v-model="phoneNumber">
+          <div class="left">
+            <div class="option phone"></div>
+            <input class="input" type="number" placeholder="请输入手机号码" maxlength="11" v-model="phoneNumber">
+          </div>
         </section>
         <section class="input-wrapper mobile border-bottom-1px">
-          <div class="option"></div>
-          <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
+          <div class="left">
+            <div class="option code"></div>
+            <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
+          </div>
           <div class="get-code" v-if="allowGetCode" @click="getCode">获取验证码</div>
           <div class="get-code coding" v-else>{{codeSeconds}}s</div>
         </section>
@@ -59,6 +63,10 @@
         accountInfo: {}
       }
     },
+    created() {
+      document.title = '赞播智店'
+      this._getParams()
+    },
     methods: {
       _showToast(msg) {
         msg && this.$refs.toast && this.$refs.toast.show(msg)
@@ -78,7 +86,6 @@
         })
         register(data).then(res => {
           this._hideLoading()
-          console.log(res)
           if (res.error !== ERR_OK) {
             this._showToast(res.message)
             return
@@ -191,15 +198,25 @@
           font-family: PingFangSC-Regular
           font-size: 15px
           color: #1F1F1F
-        .option
-          width: 14px
-          height: 17px
-          background: #f00
-          margin-right: 8px
         .input-wrapper
           height: 64px
-          layout(row, block, nowrap)
+          display: flex
+          flex-direction: row
+          flex-wrap: nowrap
           align-items: center
+          .left
+            layout(row, block, nowrap)
+            align-items: center
+            flex: 1
+            overflow: hidden
+            .option
+              width: 17px
+              height: 17px
+              margin-right: 8px
+              &.phone
+                icon-image('./join/icon-phone')
+              &.code
+                icon-image('./join/icon-code')
           .get-code
             height: 29px
             width: 97px
@@ -229,6 +246,7 @@
   .input
     height: 40px
     flex: 1
+    overflow: hidden
     font-size: 16px
     color: #1F1F1F
     letter-spacing: 0.6px

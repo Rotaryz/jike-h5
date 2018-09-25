@@ -41,7 +41,7 @@
       <!--<img class="step" src="./open-shop/pic-three@2x.png" alt="" />-->
     </section>
     <section class="btn-wrapper">
-      <div class="btn" @click="toOpenShop">我要开店（仅剩100个名额）</div>
+      <div class="btn" @click="toOpenShop">我要开店(仅剩100个名额)</div>
       <!--<div class="btn step-one" v-if="true">-->
       <!--<img class="step" src="./open-shop/pic-on_button@2x.png" alt="" />-->
       <!--</div>-->
@@ -58,6 +58,7 @@
   // import * as wechat from 'common/js/wechat'
   // import { OpenAccount } from 'api'
   import Toast from 'base/toast/toast'
+  import URLS from 'common/js/base'
 
   const vw = document.documentElement.clientWidth / 100
   const sliderInfo = [{
@@ -112,21 +113,9 @@
       }
     },
     created() {
-      console.log(this.$route)
+      document.title = '赞播智店'
       this._getParams()
-      alert(`http://zhidian-api.jkweixin.net/wechat/oauth?type=${this.accountInfo.user_type}`)
     },
-    // onLoad(option) {
-    //   if (option.employeeId) {
-    //     // wx.setStorageSync('employeeId', option.employeeId)
-    //   }
-    //   this.openType = option.ot || 0
-    // },
-    // onShow() {
-    //   this._getFromId()
-    //   this._login()
-    //   this._rqCheckMobile()
-    // },
     methods: {
       sliderChange(e) {
         // this.sliderIndex = e.target.current
@@ -137,7 +126,7 @@
       _getParams() {
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `http://zhidian-api.jkweixin.net/wechat/oauth?type=${this.accountInfo.user_type}`
+          window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`
         }
       },
       getPhoneNumber(event) {

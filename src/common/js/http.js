@@ -11,10 +11,8 @@ const NOFOUND_OUT = 10004 // 内容被下线
 
 axios.interceptors.request.use(config => {
   // 请求数据前的拦截
-  alert(JSON.stringify(config) + 'req+config')
   return config
 }, error => {
-  alert(JSON.stringify(error) + 'req-error')
   return Promise.reject(error)
 })
 
@@ -25,7 +23,6 @@ axios.interceptors.response.use(response => {
 })
 
 function checkStatus(response) {
-  alert(JSON.stringify(response) + 'req-status')
   // loading
   // 如果http状态码正常，则直接返回数据
   if (response && (response.status === 200 || response.status === 304 || response.status === 422)) {
@@ -40,7 +37,6 @@ function checkStatus(response) {
 }
 
 function checkCode(res) {
-  alert(JSON.stringify(res + 'req-code'))
   // 如果code异常(这里已经包括网络错误，服务器错误，后端抛出的错误)，可以弹出一个错误提示，告诉用户
   if (res.status === ERR_NO) {
     console.warn(res.msg)

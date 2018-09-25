@@ -2,7 +2,7 @@
   <div class="zd-captain">
     <img class="head-img" src="./open-shop/pic-headimg.png" alt="">
     <div class="mask"></div>
-    <section class="contain">
+    <section class="contain" v-if="!showQrCode">
       <div class="banner">
         <div>手机号验证</div>
       </div>
@@ -21,6 +21,15 @@
           <div class="txt">加入</div>
         </section>
       </form>
+    </section>
+    <section class="contain" v-else>
+      <div class="banner">
+        <div>关注公众号</div>
+      </div>
+      <div class="content qr-code">
+        <section class="qr-code-wrapper"></section>
+        <section class="txt-qr-code">关注公众号，查看店铺</section>
+      </div>
     </section>
     <toast ref="toast"></toast>
     <loading ref="loader"></loading>
@@ -41,11 +50,13 @@
     },
     data() {
       return {
-        phoneNumber: '',
+        phoneNumber: '15197865308', // todo
         authCode: '',
         allowGetCode: true,
         codeSeconds: 59,
-        timer: null
+        timer: null,
+        showQrCode: false,
+        accountInfo: {}
       }
     },
     methods: {
@@ -61,15 +72,21 @@
       submit() {
         if (!this._check()) return
         this._showLoading()
-        register(this.phoneNumber, this.authCode).then(res => {
+        let data = Object.assign({}, this.accountInfo, {
+          code: this.authCode,
+          mobile: this.phoneNumber
+        })
+        register(data).then(res => {
           this._hideLoading()
+          console.log(res)
           if (res.error !== ERR_OK) {
             this._showToast(res.message)
             return
           }
           // this._saveAuthInfo(res)
           // this.$router.push({path: '/change-project', query: {isFromLogin: true}})
-          console.log(123)
+          console.log(res)
+          this.showQrCode = true
         })
       },
       getCode() {
@@ -98,6 +115,9 @@
           return false
         }
         return true
+      },
+      _getParams() {
+        this.accountInfo = this.$route.query
       }
     },
     watch: {
@@ -158,6 +178,19 @@
         color: #1F1F1F
         letter-spacing: 0.6px
         padding: 59px 29px 0
+        &.qr-code
+          layout()
+          align-items: center
+        .qr-code-wrapper
+          margin-top: 30px
+          width: 180px
+          height: 180px
+          background: #ccc
+        .txt-qr-code
+          margin-top: 15px
+          font-family: PingFangSC-Regular
+          font-size: 15px
+          color: #1F1F1F
         .option
           width: 14px
           height: 17px

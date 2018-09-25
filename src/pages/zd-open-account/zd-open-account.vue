@@ -41,6 +41,7 @@
       <!--<img class="step" src="./open-shop/pic-three@2x.png" alt="" />-->
     </section>
     <section class="btn-wrapper">
+      <div class="btn" @click="toOpenShop">我要开店（仅剩100个名额）</div>
       <!--<div class="btn step-one" v-if="true">-->
         <!--<img class="step" src="./open-shop/pic-on_button@2x.png" alt="" />-->
       <!--</div>-->
@@ -106,7 +107,8 @@
         whyInfo,
         // employeeId: wx.getStorageSync('employeeId'),
         fromId: '',
-        openType: 0
+        openType: 0,
+        accountInfo: {}
       }
     },
     created() {
@@ -126,6 +128,15 @@
     methods: {
       sliderChange(e) {
         // this.sliderIndex = e.target.current
+      },
+      toOpenShop() {
+        this.$router.push(`/zd-captain?unionid=${this.accountInfo.unionid}&openid=${this.accountInfo.openid}`)
+      },
+      _getParams() {
+        this.accountInfo = this.$route.query
+        if (this.accountInfo.unionid || this.accountInfo.openid) {
+          window.location.herf = `http://zhidian-api.com/wechat/oauth?type=${this.accountInfo.type}`
+        }
       },
       getPhoneNumber(event) {
         // const e = event.mp
@@ -316,6 +327,7 @@
       justify-content: center
       align-items: center
       .btn
+        margin: 0 30px
         box-shadow: 0 0px 37px 0 rgba(255, 45, 45, 0.20)
         border-radius: 54.5px
 </style>

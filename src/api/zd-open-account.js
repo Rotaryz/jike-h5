@@ -1,11 +1,19 @@
 import http from 'common/js/http'
+import {ERR_OK} from 'api/config'
+
 /**
  * 获取商家二维码
  * @returns {Promise.<TResult>}
  */
 export function register(data) {
   const url = `/api/jwt/merchant/register`
-  return http.post(url, data)
+  return http.get(url).then((res) => {
+    if (res.error === ERR_OK) {
+      return Promise.resolve(res.data)
+    } else {
+      return Promise.reject(res)
+    }
+  })
 }
 // /**
 //  * 获取店家群二维码

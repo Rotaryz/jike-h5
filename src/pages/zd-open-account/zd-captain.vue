@@ -1,6 +1,6 @@
 <template>
   <div class="zd-captain">
-    <img class="head-img" src="./open-shop/pic-headimg.png" alt="">
+    <img class="head-img" src="./open-shop/pic-head@1x.png" alt="">
     <div class="mask"></div>
     <section class="contain" v-if="!showQrCode">
       <div class="banner">

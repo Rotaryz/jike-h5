@@ -1,6 +1,6 @@
 <template>
   <div class="poster-open-account">
-    <img class="head-img" src="./open-shop/pic-headimg.png" alt="">
+    <img class="head-img" src="./open-shop/pic-head@1x.png" alt="">
     <!--<div class="broadcast-wrapper">-->
     <!--<swiper class="broadcast"-->
     <!--:previous-margin="sliderMargin"-->
@@ -36,8 +36,8 @@
     <section class="step-wrapper">
       <div class="title">使用流程</div>
       <div class="title-two">（三步完成开店，轻松体验赞播微商神器）</div>
-      <img class="step" src="./open-shop/pic-first@2x.png" alt=""/>
-      <img class="step" src="./open-shop/pic-two@2x.png" alt=""/>
+      <img class="step" src="./open-shop/pic-first.png" alt=""/>
+      <img class="step" src="./open-shop/pic-two.png" alt=""/>
       <!--<img class="step" src="./open-shop/pic-three@2x.png" alt="" />-->
     </section>
     <section class="btn-wrapper">
@@ -61,32 +61,32 @@
 
   const vw = document.documentElement.clientWidth / 100
   const sliderInfo = [{
-    imgUrl: './open-shop/pic-broadcast_ai@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_ai@2x.png',
     title: 'AI雷达'
   }, {
-    imgUrl: './open-shop/pic-broadcast_kanpin@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_kanpin@2x.png',
     title: '砍价/拼团'
   }, {
-    imgUrl: './open-shop/pic-broadcast_data@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_data@2x.png',
     title: '数据分析'
   }, {
-    imgUrl: './open-shop/pic-broadcast_customer@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_customer@2x.png',
     title: '行为追踪'
   }]
   const whyInfo = [{
-    icon: './open-shop/pic-toker@2x.png',
+    icon: '/zd-img/open-shop/pic-toker@2x.png',
     title: '拓客神器',
     txt: '砍价抢购，火爆拼团，快速裂变营销。'
   }, {
-    icon: './open-shop/pic-deal@2x.png',
+    icon: '/zd-img/open-shop/pic-deal@2x.png',
     title: '成交神器',
     txt: 'AI雷达，行为追踪，精准个人营销。'
   }, {
-    icon: './open-shop/pic-recruit@2x.png',
+    icon: '/zd-img/open-shop/pic-recruit@2x.png',
     title: '招商神器',
     txt: '转发赚钱，转发商品，单兵和团队营销。'
   }, {
-    icon: './open-shop/pic-administration@2x.png',
+    icon: '/zd-img/open-shop/pic-administration@2x.png',
     title: '管理神器',
     txt: '能力模型，评测系统，精准识别员工价值。'
   }]
@@ -113,7 +113,7 @@
     },
     created() {
       console.log(this.$route)
-      this._getParams()
+      // this._getParams()
     },
     // onLoad(option) {
     //   if (option.employeeId) {
@@ -136,7 +136,7 @@
       _getParams() {
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `http://zhidian-api.com/wechat/oauth?type=${this.accountInfo.type}`
+          window.location.href = `http://zhidian-api.com/wechat/oauth?type=${this.accountInfo.user_type}`
         }
       },
       getPhoneNumber(event) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="zd-staff">
+  <div class="zd-captain">
     <img class="head-img" src="./open-staff/pic-openshop@1x.png" alt="">
     <div class="mask"></div>
     <section class="contain" v-if="!showQrCode">
@@ -18,10 +18,10 @@
             <div class="option code"></div>
             <input class="input" type="number" placeholder="请输入验证码" maxlength="11" v-model="authCode">
           </div>
-          <div class="get-code" v-if="allowGetCode" @click="getCode">获取验证码</div>
+          <div class="get-code" :class="codeStyle? 'coding' : ''" v-if="allowGetCode" @click="getCode">获取验证码</div>
           <div class="get-code coding" v-else>{{codeSeconds}}s</div>
         </section>
-        <section class="btn" @click="submit">
+        <section class="btn" :class="btnStyle || codeStyle?'unable':''" @click="submit">
           <div class="txt">加入</div>
         </section>
       </form>
@@ -38,17 +38,16 @@
       </div>
     </section>
     <toast ref="toast"></toast>
-    <loading ref="loader" v-if="showLoading" title="加载中"></loading>
+    <loading ref="loader"></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import { checkIsPhoneNumber } from 'common/js/util'
-  import Loading from 'base/loading/loading'
+  import Loading from 'base/loading-css/loading-css'
   import Toast from 'base/toast/toast'
-  import { register } from 'api/zd-open-account'
+  import { register, getSms } from 'api/zd-open-account'
   import { ERR_OK } from 'api/config'
-
   export default {
     components: {
       Toast,
@@ -63,7 +62,8 @@
         timer: null,
         showQrCode: false,
         accountInfo: {},
-        showLoading: false
+        codeStyle: true,
+        btnStyle: true
       }
     },
     created() {
@@ -75,10 +75,10 @@
         msg && this.$refs.toast && this.$refs.toast.show(msg)
       },
       _showLoading() {
-        this.showLoading = true
+        this.$refs.loader && this.$refs.loader.show()
       },
       _hideLoading() {
-        this.showLoading = false
+        this.$refs.loader && this.$refs.loader.hide()
       },
       submit() {
         if (!this._check()) return
@@ -94,6 +94,8 @@
             return
           }
           this.showQrCode = true
+        }).catch(e => {
+          console.error(e)
         })
       },
       getCode() {
@@ -106,11 +108,14 @@
         this.timer = setInterval(() => {
           --this.codeSeconds
         }, 1000)
-        // Jwt.getCode(this.phoneNumber).then(res => {
-        //   if (res.error !== ERR_OK) {
-        //     this.$refs.toast.show(res.message)
-        //   }
-        // })
+        this._showLoading()
+        getSms({mobile: this.phoneNumber}).then(res => {
+          this._hideLoading()
+          if (res.error !== ERR_OK) {
+            this._showToast(res.message)
+          }
+          this._showToast('验证码已发送，请注意查收')
+        })
       },
       _check() {
         if (!checkIsPhoneNumber(this.phoneNumber)) {
@@ -134,6 +139,20 @@
           this.allowGetCode = true
           this.codeSeconds = 59
         }
+      },
+      phoneNumber(curVal) {
+        if (checkIsPhoneNumber(curVal)) {
+          this.codeStyle = false
+        } else {
+          this.codeStyle = true
+        }
+      },
+      authCode(curVal) {
+        if (curVal) {
+          this.btnStyle = false
+        } else {
+          this.btnStyle = true
+        }
       }
     }
   }
@@ -143,7 +162,7 @@
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
 
-  .zd-staff
+  .zd-captain
     height: 100vh
     layout(column, block, nowrap)
     .head-img
@@ -237,6 +256,8 @@
           layout(row, block, nowrap)
           align-items: center
           justify-content: center
+          &.unable
+            opacity :0.6
           .txt
             font-family: PingFangSC-Medium
             font-size: 18px

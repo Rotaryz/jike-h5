@@ -9,14 +9,31 @@
       </div>
     </section>
     <section class="btn-wrapper" @click="toStaff">我要开店(国颐堂的小店)</section>
+    <toast ref="toast"></toast>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
+  import URLS from 'common/js/base'
+  import Toast from 'base/toast/toast'
+
   export default {
+    components: {
+      Toast
+    },
+    created() {
+      document.title = '赞播智店'
+      this._getParams()
+    },
     methods: {
       toStaff() {
         this.$router.push('/zd-staff')
+      },
+      _getParams() {
+        this.accountInfo = this.$route.query
+        if (!this.accountInfo.unionid || !this.accountInfo.openid) {
+          window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`
+        }
       }
     }
   }

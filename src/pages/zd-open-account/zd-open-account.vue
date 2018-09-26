@@ -135,7 +135,7 @@
     },
     created() {
       document.title = '赞播智店'
-      // this._getParams()
+      this._getParams()
     },
     methods: {
       sliderChange(e) {

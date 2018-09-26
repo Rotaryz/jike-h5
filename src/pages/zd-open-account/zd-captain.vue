@@ -21,7 +21,7 @@
           <div class="get-code" :class="codeStyle? 'coding' : ''" v-if="allowGetCode" @click="getCode">获取验证码</div>
           <div class="get-code coding" v-else>{{codeSeconds}}s</div>
         </section>
-        <section class="btn" :class="btnStyle?'unable':''" @click="submit">
+        <section class="btn" :class="btnStyle || codeStyle?'unable':''" @click="submit">
           <div class="txt">注册</div>
         </section>
       </form>
@@ -142,10 +142,17 @@
         }
       },
       phoneNumber(curVal) {
-        if (checkIsPhoneNumber(this.phoneNumber)) {
+        if (checkIsPhoneNumber(curVal)) {
           this.codeStyle = false
         } else {
           this.codeStyle = true
+        }
+      },
+      authCode(curVal) {
+        if (curVal) {
+          this.btnStyle = false
+        } else {
+          this.btnStyle = true
         }
       }
     }

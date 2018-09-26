@@ -37,6 +37,16 @@
         <section class="txt-qr-code">关注公众号，查看店铺</section>
       </div>
     </section>
+    <section class="contain" v-if="false">
+      <div class="banner">
+        <div>手机号验证</div>
+      </div>
+      <div class="content error-code">
+        <section class="error-logo"></section>
+        <section class="txt-error">手机号验证错误</section>
+        <section class="txt-error">加入失败，请联系店长</section>
+      </div>
+    </section>
     <toast ref="toast"></toast>
     <loading ref="loader"></loading>
   </div>
@@ -48,6 +58,7 @@
   import Toast from 'base/toast/toast'
   import { register, getSms } from 'api/zd-open-account'
   import { ERR_OK } from 'api/config'
+
   export default {
     components: {
       Toast,
@@ -208,6 +219,21 @@
         &.qr-code
           layout()
           align-items: center
+        &.error-code
+          layout()
+          align-items: center
+          .error-logo
+            width: 86px
+            height: 86px
+            icon-image('./open-staff/pic-wrong')
+            margin-top: 32px
+            margin-bottom: 5px
+          .txt-error
+            font-family: PingFangSC-Regular
+            font-size: 16px
+            color: #1F1F1F
+            letter-spacing: 0.6px
+            margin-bottom: 10px
         .qr-code-wrapper
           width: 180px
           height: 180px
@@ -257,7 +283,7 @@
           align-items: center
           justify-content: center
           &.unable
-            opacity :0.6
+            opacity: 0.6
           .txt
             font-family: PingFangSC-Medium
             font-size: 18px

@@ -1,29 +1,20 @@
 <template>
   <div class="poster-open-account">
     <img class="head-img" src="./open-shop/pic-head@1x.png" alt="">
-    <!--<div class="broadcast-wrapper">-->
-    <!--<swiper class="broadcast"-->
-    <!--:previous-margin="sliderMargin"-->
-    <!--:next-margin="sliderMargin"-->
-    <!--:circular="circular"-->
-    <!--@change="sliderChange"-->
-    <!--&gt;-->
-    <!--<div v-for="(item,index) in sliderInfo" :key="index">-->
-    <!--<swiper-item class="broadcast-item">-->
-    <!--<image v-if="item.imgUrl" :src="item.imgUrl" class="slide-image"/>-->
-    <!--<div class="title">{{item.title}}</div>-->
-    <!--</swiper-item>-->
-    <!--</div>-->
-    <!--</swiper>-->
-    <!--</div>-->
     <section class="broadcast-wrapper">
-      <swiper :options="options" :not-next-tick="options.notNextTick">
-        <swiper-slide>
-          <div class="slide-image">
-            <img :src="item.src" alt="">
-          </div>
+      <swiper :options="options" class="broadcast" ref="mySwiper" @slideChange="slideChange">
+        <swiper-slide class="broadcast-item" id="slide-0" >
+          <img class="slide-image" src="./open-shop/pic-broadcast_ai.png" alt="">
+          <div class="title">砍价/拼团</div>
         </swiper-slide>
-        <!--<div class="swiper-pagination" v-if="options.pagination" slot="pagination"/>-->
+        <swiper-slide class="broadcast-item" id="slide-1">
+          <img class="slide-image" src="./open-shop/pic-broadcast_nlmx@1x.png" alt="">
+          <div class="title">数据分析</div>
+        </swiper-slide>
+        <swiper-slide class="broadcast-item" id="slide-2">
+          <img class="slide-image" src="./open-shop/pic-broadcast_xwzz@1x.png" alt="">
+          <div class="title">AI雷达</div>
+        </swiper-slide>
       </swiper>
     </section>
     <ul class="slider-dots">
@@ -63,17 +54,14 @@
 
   const vw = document.documentElement.clientWidth / 100
   const sliderInfo = [{
-    imgUrl: '/zd-img/open-shop/pic-broadcast_ai@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_xwzz@1x.png',
     title: 'AI雷达'
   }, {
-    imgUrl: '/zd-img/open-shop/pic-broadcast_kanpin@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_ai.png',
     title: '砍价/拼团'
   }, {
-    imgUrl: '/zd-img/open-shop/pic-broadcast_data@2x.png',
+    imgUrl: '/zd-img/open-shop/pic-broadcast_nlmx@1x.png',
     title: '数据分析'
-  }, {
-    imgUrl: '/zd-img/open-shop/pic-broadcast_customer@2x.png',
-    title: '行为追踪'
   }]
   const whyInfo = [{
     icon: '/zd-img/open-shop/pic-toker@2x.png',
@@ -113,24 +101,12 @@
         openType: 0,
         accountInfo: {},
         options: {
-          type: Object,
-          default() {
-            return {
-              autoplay: false,
-              loop: true,
-              pagination: {
-                el: '.swiper-pagination'
-              },
-              notNextTick: false
-            }
-          }
+          loop: true,
+          centeredSlides: true,
+          slidesPerView: 1.3
         },
-        items: {
-          type: Array,
-          default() {
-            return []
-          }
-        }
+        startIndex: 1,
+        endIndex: 1
       }
     },
     created() {
@@ -138,8 +114,14 @@
       this._getParams()
     },
     methods: {
-      sliderChange(e) {
-        // this.sliderIndex = e.target.current
+      slideChange() {
+        this.endIndex = this.$refs.mySwiper.swiper.activeIndex - 1
+        if (this.endIndex > this.sliderInfo.length - 1) {
+          this.endIndex = 0
+        } else if (this.endIndex < 0) {
+          this.endIndex = this.sliderInfo.length - 1
+        }
+        this.sliderIndex = this.endIndex
       },
       toOpenShop() {
         this.$router.push(`/zd-captain?unionid=${this.accountInfo.unionid}&openid=${this.accountInfo.openid}`)
@@ -157,6 +139,7 @@
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
   @import "~common/stylus/mixin"
+  @import "~swiper/dist/css/swiper.css"
 
   .poster-open-account
     min-height: 100vh
@@ -164,13 +147,10 @@
     padding-bottom: 16.866vw
     .head-img
       width: 100vw
-      height: 141.6vw
     .broadcast-wrapper
       margin-top: 20px
       width: 100%
-      height: 126.866vw
       .broadcast
-        width: 100%
         height: 100%
         .broadcast-item
           height: 100%
@@ -179,8 +159,6 @@
           align-items: center
           .slide-image
             width: 100%
-            height: 100%
-            flex: 1
           .title
             font-family: $font-family-regular
             font-size: 20px
@@ -189,7 +167,6 @@
             text-align: center
             line-height: 1
             height: @font-size
-
     .slider-dots
       height: 5.5px
       padding: 21.5px 0 50.5px
@@ -286,6 +263,7 @@
       layout()
       justify-content: center
       align-items: center
+      z-index: 120
       .btn
         display: block
         height: 13.33vw

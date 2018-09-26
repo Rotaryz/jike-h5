@@ -2,12 +2,12 @@
   <div class="weui_loading_toast" style="display: block" id="loading" v-show="isShow">
     <div class="weui_mask_transparent"></div>
     <div class="weui_toast">
-      <!--<div class="weui-loading-box">-->
-        <!--<div class="wrapper">-->
+      <div class="weui-loading-box">
+        <div class="wrapper">
           <!--<div class="weui-loading"></div>-->
-        <!--</div>-->
-      <!--</div>-->
-      <img width="38" height="38" src="./loading.gif">
+          <img width="38" height="38" src="./loading.gif">
+        </div>
+      </div>
       <p class="weui_toast_content">{{content}}</p>
     </div>
   </div>

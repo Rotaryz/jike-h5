@@ -28,5 +28,10 @@ export const IPC_ACTIVE_LIST = [
     name: '永泰',
     id: 49,
     imgUrl: '/yylm/activty_yt_go.png'
+  },
+  {
+    name: '新市',
+    id: 52,
+    imgUrl: '/yylm/acticity_xs_go.png'
   }
 ]

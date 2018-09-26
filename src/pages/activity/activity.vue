@@ -2,6 +2,7 @@
   <article class="activity" v-if="a && currentActive">
     <section class="content">
       <img class="activity-img" :src="currentActive.imgUrl" alt="">
+      <!--<img class="activity-img" src="/static/yylm/acticity_xs_go.png" alt="">-->
       <div class="btn-hb" @touchstart.prevent="btnActivity" @touchend.prevent="btnActivityEnd"></div>
     </section>
   </article>

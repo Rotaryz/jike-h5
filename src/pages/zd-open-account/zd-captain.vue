@@ -81,7 +81,6 @@
         this.$refs.loader && this.$refs.loader.hide()
       },
       submit() {
-        this._showLoading()
         if (!this._check()) return
         this._showLoading()
         let data = Object.assign({}, this.accountInfo, {

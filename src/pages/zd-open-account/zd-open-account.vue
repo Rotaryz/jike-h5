@@ -16,16 +16,16 @@
     <!--</div>-->
     <!--</swiper>-->
     <!--</div>-->
-    <!--<section class="broadcast-wrapper">-->
-      <!--<swiper :options="options" :not-next-tick="options.notNextTick">-->
-        <!--<swiper-slide v-for="item in items" :key="item.href">-->
-          <!--<div class="slide-image">-->
-            <!--<img :src="item.src" alt="">-->
-          <!--</div>-->
-        <!--</swiper-slide>-->
-        <!--&lt;!&ndash;<div class="swiper-pagination" v-if="options.pagination" slot="pagination"/>&ndash;&gt;-->
-      <!--</swiper>-->
-    <!--</section>-->
+    <section class="broadcast-wrapper">
+      <swiper :options="options" :not-next-tick="options.notNextTick">
+        <swiper-slide>
+          <div class="slide-image">
+            <img :src="item.src" alt="">
+          </div>
+        </swiper-slide>
+        <!--<div class="swiper-pagination" v-if="options.pagination" slot="pagination"/>-->
+      </swiper>
+    </section>
     <ul class="slider-dots">
       <li class="dot" v-for="(item,index) in sliderInfo" :key="index" :class="sliderIndex===index?'active':''"></li>
     </ul>
@@ -59,7 +59,7 @@
 <script type="text/ecmascript-6">
   import Toast from 'base/toast/toast'
   import URLS from 'common/js/base'
-  // import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
   const vw = document.documentElement.clientWidth / 100
   const sliderInfo = [{
@@ -94,9 +94,9 @@
   }]
   export default {
     components: {
-      Toast
-      // swiper,
-      // swiperSlide
+      Toast,
+      swiper,
+      swiperSlide
     },
     data() {
       return {

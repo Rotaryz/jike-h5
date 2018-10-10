@@ -9,11 +9,18 @@ export function register(data) {
   return http.post(url, data)
 }
 /**
+ * 员工加入
+ * @returns {Promise.<TResult>}
+ */
+export function staffJoin(data) {
+  const url = `/api/jwt/employee/login`
+  return http.post(url, data)
+}
+/**
  * 获取验证码
  * @returns {Promise.<TResult>}
  */
 export function getSms(data) {
-  console.log(data)
   const url = `/api/sms`
   return http.post(url, data)
 }

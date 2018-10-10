@@ -28,16 +28,18 @@
     },
     created() {
       document.title = '赞播智店'
-      // this._getParams()
+      this._getParams()
     },
     methods: {
       toStaff() {
-        this.$router.push('/zd-staff')
+        this.$router.push(`/zd-staff?unionid=${this.accountInfo.unionid}&openid=${this.accountInfo.openid}`)
       },
       _getParams() {
         this.accountInfo = this.$route.query
+        let redirectUrl = `${URLS.h5}/?type=zd#/zd-open-staff`
+        let type = `ai`
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`
+          window.location.href = `${URLS.zd}/wechat/oauth?redirect=${redirectUrl}&type=${type}`
         }
       }
     }

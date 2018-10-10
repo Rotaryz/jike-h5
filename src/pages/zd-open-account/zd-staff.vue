@@ -56,7 +56,7 @@
   import { checkIsPhoneNumber } from 'common/js/util'
   import Loading from 'base/loading-css/loading-css'
   import Toast from 'base/toast/toast'
-  import { register, getSms } from 'api/zd-open-account'
+  import { staffJoin, getSms } from 'api/zd-open-account'
   import { ERR_OK } from 'api/config'
 
   export default {
@@ -98,7 +98,7 @@
           code: this.authCode,
           mobile: this.phoneNumber
         })
-        register(data).then(res => {
+        staffJoin(data).then(res => {
           this._hideLoading()
           if (res.error !== ERR_OK) {
             this._showToast(res.message)

@@ -28,6 +28,7 @@ const env = process.env
  * @type {{image: string, login: string, api: string}}
  */
 const DEV_URL = {
+  h5: 'https://h5.jkweixin.net',
   image: 'http://img.jerryf.cn',
   login: 'http://dev.jike-jwt.jerryf.cn',
   api: 'http://dev.jike-wap-api.jerryf.cn' + version,
@@ -41,6 +42,7 @@ const DEV_URL = {
  * @type {{image: string, login: string, api: string}}
  */
 const TEST_URL = {
+  h5: 'https://h5.jkweixin.net',
   image: 'https://img.jkweixin.net',
   login: 'https://jwt.jkweixin.net',
   api: 'https://wap-api.jkweixin.net' + version,
@@ -54,6 +56,7 @@ const TEST_URL = {
  * @type {{image: string, login: string, api: string}}
  */
 const PROD_URL = {
+  h5: 'https://h5.jkweixin.com',
   image: 'https://img.jkweixin.com',
   login: 'https://jwt.jkweixin.com',
   api: 'https://wap-api.jkweixin.com' + version,

@@ -2,7 +2,7 @@
   <div class="qrCode">
     <div class="model">
       <div class="model-bac">
-        <div class="model-add">关注微信企业号</div>
+        <div class="model-add">关注微信公众号</div>
       </div>
       <div class="model-code">
         <img v-if="codeImage" :src="codeImage" height="205" width="205"/></div>

@@ -5,11 +5,11 @@
       <div class="logo" v-if="MerchantInfo.avatar" :style="{backgroundImage: 'url(' + MerchantInfo.avatar + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
       <div class="logo" v-else></div>
       <div class="content">
-        <div class="name">{{MerchantInfo.name}}</div>
-        <div class="tile">正在邀请您开通{{MerchantInfo.shop_name}}</div>
+        <div class="name" v-if="MerchantInfo.name">{{MerchantInfo.name}}</div>
+        <div class="tile" v-if="MerchantInfo.shop_name">正在邀请您开通{{MerchantInfo.shop_name}}</div>
       </div>
     </section>
-    <section class="btn-wrapper" @click="toStaff">我要开店{{MerchantInfo.shop_name?(MerchantInfo.shop_name):''}}</section>
+    <section class="btn-wrapper" @click="toStaff" v-if="MerchantInfo.shop_name">我要开店{{MerchantInfo.shop_name?(MerchantInfo.shop_name):''}}</section>
     <toast ref="toast"></toast>
     <loading ref="loader"></loading>
   </div>

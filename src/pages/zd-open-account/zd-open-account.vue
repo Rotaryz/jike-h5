@@ -41,7 +41,7 @@
       <img class="step" src="./open-shop/pic-two.png" alt=""/>
     </section>
     <section class="btn-wrapper">
-      <div class="btn" @click="toOpenShop">我要开店(仅剩100个名额)</div>
+      <div class="btn" @click="toOpenShop">我要开店(仅剩{{(~~(Math.random()*90)) + 10}}个名额)</div>
     </section>
     <toast ref="toast"></toast>
   </div>

@@ -2,33 +2,41 @@
   <div class="zd-open-staff">
     <img class="bg-img" src="./open-staff/pic-openshop@1x.png" alt="">
     <section class="banner">
-      <div class="logo"></div>
+      <div class="logo" v-if="MerchantInfo.avatar" :style="{backgroundImage: 'url(' + MerchantInfo.avatar + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
+      <div class="logo" v-else></div>
       <div class="content">
-        <div class="name">Peter</div>
-        <div class="tile">正在邀请您开通国颐堂的小店</div>
+        <div class="name">{{MerchantInfo.name}}</div>
+        <div class="tile">正在邀请您开通{{MerchantInfo.shop_name}}</div>
       </div>
     </section>
-    <section class="btn-wrapper" @click="toStaff">我要开店(国颐堂的小店)</section>
+    <section class="btn-wrapper" @click="toStaff">我要开店{{MerchantInfo.shop_name?(MerchantInfo.shop_name):''}}</section>
     <toast ref="toast"></toast>
+    <loading ref="loader"></loading>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import URLS from 'common/js/base'
   import Toast from 'base/toast/toast'
+  import Loading from 'base/loading-css/loading-css'
+  import { getMerchantInfo } from 'api/zd-open-account'
+  import { ERR_OK } from 'api/config'
 
   export default {
     components: {
-      Toast
+      Toast,
+      Loading
     },
     data() {
       return {
-        accountInfo: {}
+        accountInfo: {},
+        MerchantInfo: {}
       }
     },
     created() {
       document.title = '赞播智店'
       this._getParams()
+      this._getMerchantInfo()
     },
     methods: {
       toStaff() {
@@ -39,6 +47,29 @@
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
         }
+      },
+      _showToast(msg) {
+        msg && this.$refs.toast && this.$refs.toast.show(msg)
+      },
+      _showLoading() {
+        this.$refs.loader && this.$refs.loader.show()
+      },
+      _hideLoading() {
+        this.$refs.loader && this.$refs.loader.hide()
+      },
+      _getMerchantInfo() {
+        if (!this.accountInfo.merchant_id) return
+        getMerchantInfo({merchant_id: this.accountInfo.merchant_id}).then(res => {
+          this._hideLoading()
+          if (res.error !== ERR_OK) {
+            this._showToast(res.message)
+            return
+          }
+          console.log(res)
+          this.MerchantInfo = res.data
+        }).catch(e => {
+          console.error(e)
+        })
       }
     }
   }

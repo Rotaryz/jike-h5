@@ -39,7 +39,7 @@
         let redirectUrl = `${URLS.h5}/?type=zd#/zd-open-staff`
         let type = `ai`
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `${URLS.zd}/wechat/oauth?redirect=${redirectUrl}&type=${type}`
+          window.location.href = `${URLS.zd}/wechat/employee/oauth?redirect=${redirectUrl}&type=${type}`
         }
       }
     }

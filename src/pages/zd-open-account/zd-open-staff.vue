@@ -38,6 +38,10 @@
       this._getParams()
       this._getMerchantInfo()
     },
+    beforeUpdate() {
+      this._getParams()
+      this._getMerchantInfo()
+    },
     methods: {
       toStaff() {
         this.$router.push(`/zd-staff?unionid=${this.accountInfo.unionid}&openid=${this.accountInfo.openid}`)

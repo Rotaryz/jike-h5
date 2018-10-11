@@ -79,6 +79,7 @@
     },
     created() {
       document.title = '赞播智店'
+      alert(JSON.stringify(this.$route.query))
       this._getParams()
     },
     methods: {
@@ -142,7 +143,7 @@
       },
       _getParams() {
         this.accountInfo = this.$route.query
-        alert('##' + JSON.stringify(this.accountInfo))
+        // alert('##' + JSON.stringify(this.accountInfo))
       }
     },
     watch: {

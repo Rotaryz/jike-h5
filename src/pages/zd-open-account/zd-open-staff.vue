@@ -38,17 +38,16 @@
       this._getParams()
       this._getMerchantInfo()
     },
-    mounted() {
-      this._getParams()
-      this._getMerchantInfo()
+    beforeRouteLeave(to, from, next) {
+      Object.assign(to.query, this.$route.query)
+      next()
     },
     methods: {
       toStaff() {
-        this.$router.push(`/zd-staff?unionid=${this.accountInfo.unionid}&openid=${this.accountInfo.openid}`)
+        this.$router.push(`/zd-staff`)
       },
       _getParams() {
         this.accountInfo = this.$route.query
-        alert('#' + JSON.stringify(this.accountInfo))
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
         }
@@ -70,7 +69,6 @@
             this._showToast(res.message)
             return
           }
-          console.log(res)
           this.MerchantInfo = res.data
         }).catch(e => {
           console.error(e)

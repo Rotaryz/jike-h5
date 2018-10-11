@@ -38,7 +38,7 @@
       this._getParams()
       this._getMerchantInfo()
     },
-    beforeUpdate() {
+    mounted() {
       this._getParams()
       this._getMerchantInfo()
     },

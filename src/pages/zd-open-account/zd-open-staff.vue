@@ -9,7 +9,7 @@
         <div class="tile" v-if="MerchantInfo.shop_name">正在邀请您开通{{MerchantInfo.shop_name}}</div>
       </div>
     </section>
-    <section class="btn-wrapper" @click="toStaff" v-if="MerchantInfo.shop_name">我要开店{{MerchantInfo.shop_name?(MerchantInfo.shop_name):''}}</section>
+    <section class="btn-wrapper" @click="toStaff" v-if="MerchantInfo.shop_name">我要开店{{MerchantInfo.shop_name?'(' + MerchantInfo.shop_name + ')':''}}</section>
     <toast ref="toast"></toast>
     <loading ref="loader"></loading>
   </div>

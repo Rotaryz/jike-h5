@@ -44,6 +44,7 @@
       },
       _getParams() {
         this.accountInfo = this.$route.query
+        alert('#' + JSON.stringify(this.accountInfo))
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
         }

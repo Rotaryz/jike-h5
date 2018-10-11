@@ -113,6 +113,10 @@
       document.title = '赞播智店'
       this._getParams()
     },
+    beforeRouteLeave(to, from, next) {
+      Object.assign(to.query, this.$route.query)
+      next()
+    },
     methods: {
       slideChange() {
         this.endIndex = this.$refs.mySwiper.swiper.activeIndex - 1
@@ -124,7 +128,7 @@
         this.sliderIndex = this.endIndex
       },
       toOpenShop() {
-        this.$router.push(`/zd-captain?unionid=${this.accountInfo.unionid}&openid=${this.accountInfo.openid}`)
+        this.$router.push(`/zd-captain`)
       },
       _getParams() {
         this.accountInfo = this.$route.query

@@ -98,6 +98,7 @@
           code: this.authCode,
           mobile: this.phoneNumber
         })
+        alert(JSON.stringify(data))
         staffJoin(data).then(res => {
           this._hideLoading()
           if (res.error !== ERR_OK) {

@@ -36,7 +36,7 @@
     created() {
       document.title = '赞播智店'
       this._getParams()
-      this._getMerchantInfo()1
+      this._getMerchantInfo()
     },
     beforeRouteLeave(to, from, next) {
       Object.assign(to.query, this.$route.query)

@@ -36,7 +36,7 @@
     </section>
     <section class="step-wrapper">
       <div class="title">使用流程</div>
-      <div class="title-two">（三步完成开店，轻松体验赞播微商神器）</div>
+      <div class="title-two">（两步完成开店，轻松体验赞播智店神器）</div>
       <img class="step" src="./open-shop/pic-first.png" alt=""/>
       <img class="step" src="./open-shop/pic-two.png" alt=""/>
     </section>
@@ -74,7 +74,7 @@
   }, {
     icon: '/zd-img/open-shop/pic-recruit@2x.png',
     title: '招商神器',
-    txt: '转发赚钱，转发商品，单兵和团队营销。'
+    txt: '分享赚钱，分享商品，单兵和团队营销。'
   }, {
     icon: '/zd-img/open-shop/pic-administration@2x.png',
     title: '管理神器',

@@ -21,7 +21,7 @@
       <li class="dot" v-for="(item,index) in sliderInfo" :key="index" :class="sliderIndex===index?'active':''"></li>
     </ul>
     <section class="why">
-      <div class="title">为什么选择赞播微店</div>
+      <div class="title">为什么选择赞播智店</div>
       <ul class="content">
         <li class="item-wrapper" v-for="(item,index) in whyInfo" :key="index">
           <div class="right">

@@ -110,6 +110,7 @@
       }
     },
     created() {
+      alert(window.location.path)
       document.title = '赞播智店'
       this._getParams()
     },
@@ -133,6 +134,7 @@
       _getParams() {
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
+          alert(`##;${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`)
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`
         }
       }

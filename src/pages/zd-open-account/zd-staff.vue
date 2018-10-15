@@ -62,7 +62,7 @@
   export default {
     components: {
       Toast,
-      Loading,
+      Loading
     },
     data () {
       return {
@@ -74,7 +74,7 @@
         showQrCode: false,
         accountInfo: {},
         codeStyle: true,
-        btnStyle: true,
+        btnStyle: true
       }
     },
     created () {
@@ -170,8 +170,8 @@
         } else {
           this.btnStyle = true
         }
-      },
-    },
+      }
+    }
   }
 </script>
 

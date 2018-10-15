@@ -62,9 +62,9 @@
   export default {
     components: {
       Toast,
-      Loading
+      Loading,
     },
-    data() {
+    data () {
       return {
         phoneNumber: '',
         authCode: '',
@@ -74,24 +74,24 @@
         showQrCode: false,
         accountInfo: {},
         codeStyle: true,
-        btnStyle: true
+        btnStyle: true,
       }
     },
-    created() {
+    created () {
       document.title = '赞播智店'
       this._getParams()
     },
     methods: {
-      _showToast(msg) {
+      _showToast (msg) {
         msg && this.$refs.toast && this.$refs.toast.show(msg)
       },
-      _showLoading() {
+      _showLoading () {
         this.$refs.loader && this.$refs.loader.show()
       },
-      _hideLoading() {
+      _hideLoading () {
         this.$refs.loader && this.$refs.loader.hide()
       },
-      submit() {
+      submit () {
         if (!this._check()) return
         this._showLoading()
         let data = Object.assign({}, this.accountInfo, {
@@ -109,7 +109,7 @@
           console.error(e)
         })
       },
-      getCode() {
+      getCode () {
         if (!checkIsPhoneNumber(this.phoneNumber)) {
           this._showToast('请输入正确的手机号码')
           return
@@ -120,15 +120,20 @@
           --this.codeSeconds
         }, 1000)
         this._showLoading()
-        getSms({mobile: this.phoneNumber}).then(res => {
+        let data = Object.assign({}, this.accountInfo, {
+          mobile: this.phoneNumber,
+          employee_shop: 1
+        })
+        getSms(data).then(res => {
           this._hideLoading()
           if (res.error !== ERR_OK) {
+            this.authCode = ''
             this._showToast(res.message)
           }
           this._showToast('验证码已发送，请注意查收')
         })
       },
-      _check() {
+      _check () {
         if (!checkIsPhoneNumber(this.phoneNumber)) {
           this._showToast('请输入正确的手机号码')
           return false
@@ -139,34 +144,34 @@
         }
         return true
       },
-      _getParams() {
+      _getParams () {
         this.accountInfo = this.$route.query
         // alert('##' + JSON.stringify(this.accountInfo))
-      }
+      },
     },
     watch: {
-      'codeSeconds'(curVal) {
+      'codeSeconds' (curVal) {
         if (curVal <= 0) {
           this.timer && clearInterval(this.timer)
           this.allowGetCode = true
           this.codeSeconds = 59
         }
       },
-      phoneNumber(curVal) {
+      phoneNumber (curVal) {
         if (checkIsPhoneNumber(curVal)) {
           this.codeStyle = false
         } else {
           this.codeStyle = true
         }
       },
-      authCode(curVal) {
+      authCode (curVal) {
         if (curVal) {
           this.btnStyle = false
         } else {
           this.btnStyle = true
         }
-      }
-    }
+      },
+    },
   }
 </script>
 

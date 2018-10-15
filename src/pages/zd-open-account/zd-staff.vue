@@ -147,7 +147,7 @@
       _getParams () {
         this.accountInfo = this.$route.query
         // alert('##' + JSON.stringify(this.accountInfo))
-      },
+      }
     },
     watch: {
       'codeSeconds' (curVal) {

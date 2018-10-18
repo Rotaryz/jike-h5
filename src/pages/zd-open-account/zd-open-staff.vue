@@ -1,7 +1,7 @@
 <template>
   <div class="zd-open-staff">
     <img class="bg-img" src="./open-staff/pic-openshop@1x.png" alt="">
-    <section class="banner" v-if="MerchantInfo">
+    <section class="banner">
       <div class="logo" v-if="MerchantInfo.avatar" :style="{backgroundImage: 'url(' + MerchantInfo.avatar + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
       <div class="logo" v-else></div>
       <div class="content">
@@ -25,13 +25,13 @@
   export default {
     components: {
       Toast,
-      Loading,
+      Loading
     },
     data() {
       return {
         accountInfo: {},
-        MerchantInfo: null,
-        count: 0,
+        MerchantInfo: {},
+        count: 0
       }
     },
     created() {
@@ -50,6 +50,7 @@
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
+          window.location.reload()
         } else {
           this._getMerchantInfo()
         }
@@ -78,8 +79,8 @@
         }).catch(e => {
           alert(e)
         })
-      },
-    },
+      }
+    }
   }
 </script>
 

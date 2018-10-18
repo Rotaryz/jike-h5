@@ -2,14 +2,15 @@
   <div class="zd-open-staff">
     <img class="bg-img" src="./open-staff/pic-openshop@1x.png" alt="">
     <section class="banner">
-      <div class="logo" v-if="MerchantInfo.avatar" :style="{backgroundImage: 'url(' + MerchantInfo.avatar + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
+      <div class="logo" v-if="merchantInfo.avatar" :style="{backgroundImage: 'url(' + merchantInfo.avatar + ')',backgroundPosition: 'center',backgroundRepeat: 'no-repeat',backgroundSize: 'cover'}"></div>
       <div class="logo" v-else></div>
       <div class="content">
-        <div class="name" v-if="MerchantInfo.name">{{MerchantInfo.name}}</div>
-        <div class="tile" v-if="MerchantInfo.shop_name">正在邀请您开通{{MerchantInfo.shop_name}}</div>
+        <div class="name" v-if="merchantInfo.name">{{merchantInfo.name}}</div>
+        <div class="tile" v-if="merchantInfo.shop_name">正在邀请您开通{{merchantInfo.shop_name}}</div>
       </div>
     </section>
-    <section class="btn-wrapper" @click="toStaff" v-if="MerchantInfo.shop_name">我要开店{{MerchantInfo.shop_name?'(' + MerchantInfo.shop_name + ')':''}}</section>
+    <section class="btn-wrapper" @click="toStaff" v-if="merchantInfo.shop_name">我要开店{{'(' + merchantInfo.shop_name + ')'}}</section>
+    <section class="btn-wrapper" @click="toStaff" v-else>我要开店</section>
     <toast ref="toast"></toast>
     <loading ref="loader"></loading>
   </div>
@@ -30,8 +31,7 @@
     data() {
       return {
         accountInfo: {},
-        MerchantInfo: {},
-        count: 0,
+        merchantInfo: {}
       }
     },
     created() {
@@ -39,13 +39,11 @@
       this._getParams()
     },
     beforeMount() {
-      // this._getMerchantInfo()
     },
     mounted() {
       this._getMerchantInfo()
     },
     beforeUpdate() {
-      // this._getMerchantInfo()
     },
     beforeRouteLeave(to, from, next) {
       Object.assign(to.query, this.$route.query)
@@ -78,7 +76,7 @@
             this._showToast(res.message)
             return
           }
-          this.MerchantInfo = res.data
+          this.merchantInfo = res.data
         }).catch(e => {
           alert(e)
         })

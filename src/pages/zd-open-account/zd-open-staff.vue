@@ -51,7 +51,6 @@
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
         } else {
-          alert(2222)
           this._getMerchantInfo()
         }
       },
@@ -67,7 +66,6 @@
       _getMerchantInfo() {
         let merchantId = this.$route.query.merchant_id
         if (!merchantId) {
-          window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
           return
         }
         getMerchantInfo({merchant_id: merchantId}).then(res => {
@@ -76,14 +74,9 @@
             this._showToast(res.message)
             return
           }
-          if (res.data) {
-            this.MerchantInfo = res.data
-          } else if (this.count < 5) {
-            this._getMerchantInfo()
-            this.count++
-          }
+          this.MerchantInfo = res.data
         }).catch(e => {
-          console.error(e)
+          alert(e)
         })
       },
     },

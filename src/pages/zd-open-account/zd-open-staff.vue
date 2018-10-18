@@ -31,7 +31,7 @@
     data() {
       return {
         accountInfo: {},
-        merchantInfo: {}
+        merchantInfo: {},
       }
     },
     created() {
@@ -78,7 +78,7 @@
           }
           this.merchantInfo = res.data
         }).catch(e => {
-          alert(e)
+          console.error(e)
         })
       },
     },

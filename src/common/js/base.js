@@ -65,7 +65,9 @@ const PROD_URL = {
   sass: 'https://ws-service-api.jkweixin.com' // sass平台
 }
 
-const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test' ? TEST_URL : DEV_URL
+const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'
+  ? TEST_URL
+  : DEV_URL
 // const URLS = TEST_URL
 
 // const URIS = {

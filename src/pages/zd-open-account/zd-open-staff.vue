@@ -26,12 +26,16 @@
   export default {
     components: {
       Toast,
-      Loading,
+      Loading
     },
     data() {
       return {
         accountInfo: {},
-        merchantInfo: {},
+        merchantInfo: {
+          avatar: '',
+          name: '',
+          shop_name: ''
+        }
       }
     },
     created() {
@@ -80,8 +84,8 @@
         }).catch(e => {
           console.error(e)
         })
-      },
-    },
+      }
+    }
   }
 </script>
 

@@ -25,12 +25,12 @@
   export default {
     components: {
       Toast,
-      Loading
+      Loading,
     },
     data() {
       return {
         accountInfo: {},
-        MerchantInfo: {}
+        MerchantInfo: {},
       }
     },
     created() {
@@ -75,11 +75,12 @@
             return
           }
           this.MerchantInfo = res.data
+          alert(JSON.stringify(res.data))
         }).catch(e => {
           console.error(e)
         })
-      }
-    }
+      },
+    },
   }
 </script>
 

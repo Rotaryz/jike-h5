@@ -64,6 +64,7 @@
       },
       _getMerchantInfo() {
         let merchantId = this.$route.query.merchant_id
+        alert(merchantId)
         if (!merchantId) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
           return
@@ -75,7 +76,6 @@
             return
           }
           this.MerchantInfo = res.data
-          alert(JSON.stringify(res.data))
         }).catch(e => {
           console.error(e)
         })

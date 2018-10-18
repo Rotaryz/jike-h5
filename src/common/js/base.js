@@ -33,7 +33,7 @@ const DEV_URL = {
   login: 'http://dev.jike-jwt.jerryf.cn',
   api: 'http://dev.jike-wap-api.jerryf.cn' + version,
   ws: 'https://ws-api.jkweixin.net', // 微商
-  zd: 'https://zhidian-api.jkweixin.net', // 智店铺
+  zd: 'https://zhidian-api.jkweixin.com', // 智店铺
   sass: 'https://ws-service-api.jkweixin.net' // sass平台
 }
 

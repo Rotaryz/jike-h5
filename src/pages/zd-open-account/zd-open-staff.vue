@@ -25,18 +25,27 @@
   export default {
     components: {
       Toast,
-      Loading
+      Loading,
     },
     data() {
       return {
         accountInfo: {},
         MerchantInfo: {},
-        count: 0
+        count: 0,
       }
     },
     created() {
       document.title = '赞播智店'
       this._getParams()
+    },
+    beforeMount() {
+      // this._getMerchantInfo()
+    },
+    mounted() {
+      this._getMerchantInfo()
+    },
+    beforeUpdate() {
+      // this._getMerchantInfo()
     },
     beforeRouteLeave(to, from, next) {
       Object.assign(to.query, this.$route.query)
@@ -50,9 +59,6 @@
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
-          // window.location.reload()
-        } else {
-          this._getMerchantInfo()
         }
       },
       _showToast(msg) {
@@ -66,9 +72,6 @@
       },
       _getMerchantInfo() {
         let merchantId = this.$route.query.merchant_id
-        if (!merchantId) {
-          return
-        }
         getMerchantInfo({merchant_id: merchantId}).then(res => {
           this._hideLoading()
           if (res.error !== ERR_OK) {
@@ -79,8 +82,8 @@
         }).catch(e => {
           alert(e)
         })
-      }
-    }
+      },
+    },
   }
 </script>
 

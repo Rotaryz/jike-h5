@@ -16,6 +16,8 @@ const ZdOpenAccount = () => import('pages/zd-open-account/zd-open-account')
 const ZdCaptain = () => import('pages/zd-open-account/zd-captain')
 const ZdOPenStaff = () => import('pages/zd-open-account/zd-open-staff')
 const ZdStaff = () => import('pages/zd-open-account/zd-staff')
+const LegalRights = () => import('pages/legal-rights/legal-rights')
+const LegalRight = () => import('pages/legal-right/legal-right')
 
 export default new Router({
   routes: [
@@ -104,6 +106,18 @@ export default new Router({
       name: 'ZdStaff',
       meta: {title: '赞播智店'},
       component: ZdStaff
+    },
+    {
+      path: '/legal-rights',
+      name: 'LegalRights',
+      meta: {title: '售后维权'},
+      component: LegalRights
+    },
+    {
+      path: '/legal-right/:id',
+      name: 'LegalRight',
+      meta: {title: '售后维权'},
+      component: LegalRight
     }
   ]
 })

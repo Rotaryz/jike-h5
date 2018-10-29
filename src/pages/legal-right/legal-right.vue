@@ -96,11 +96,14 @@
         <p class="content">平台客服微信：weixin201220</p>
         <div class="copy" v-clipboard:copy="weixin" v-clipboard:success="copy">复制</div>
       </div>
+      <toast ref="toast"></toast>
     </div>
   </transition>
 </template>
 
 <script>
+  import Toast from 'base/toast/toast'
+
   const COMPONENT_NAME = 'legal-right'
 
   const LIST = [
@@ -131,8 +134,11 @@
     },
     methods: {
       copy() {
-        console.log('copy')
+        this.$refs.toast.show('复制成功')
       }
+    },
+    components: {
+      Toast
     }
   }
 </script>

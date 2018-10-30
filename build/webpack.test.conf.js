@@ -108,9 +108,18 @@ const webpackConfig = merge(baseWebpackConfig, {
     // copy custom static assets
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../static'),
+        from: path.resolve(__dirname, '../static/zd-img'),
         to: config.build.assetsPublicPath,
         ignore: ['.*']
+      },
+      {
+        from: path.resolve(__dirname, '../static/yylm'),
+        to: config.build.assetsSubDirectory,
+        ignore: ['.*']
+      },
+      {
+        from: path.resolve(__dirname, '../static/oauth'),
+        to: path.resolve(__dirname, '../dist')
       }
     ])
   ]

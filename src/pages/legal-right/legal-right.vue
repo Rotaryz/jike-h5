@@ -93,7 +93,7 @@
         </div>
       </div>
       <div class="platform-weixin">
-        <p class="content">平台客服微信：weixin201220</p>
+        <p class="content">平台客服微信：zanboweixin2018</p>
         <div class="copy" v-clipboard:copy="weixin" v-clipboard:success="copy">复制</div>
       </div>
       <toast ref="toast"></toast>
@@ -120,7 +120,7 @@
     data() {
       return {
         id: '',
-        weixin: 'weixin201220'
+        weixin: 'zanboweixin2018'
       }
     },
     computed: {

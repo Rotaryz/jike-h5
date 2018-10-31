@@ -32,7 +32,8 @@
       </div>
       <div class="content qr-code">
         <section class="qr-code-wrapper">
-          <img style="width: 100%;height: 100%" src="./join/zhidian-qrcode.jpg" alt="">
+          <img v-if="env" style="width: 100%;height: 100%" src="./join/zhidian-qrcode-net.png" alt="">
+          <img v-else style="width: 100%;height: 100%" src="./join/zhidian-qrcode.jpg" alt="">
         </section>
         <section class="txt-qr-code">关注公众号，查看店铺</section>
       </div>
@@ -63,7 +64,8 @@
         showQrCode: false,
         accountInfo: {},
         codeStyle: true,
-        btnStyle: true
+        btnStyle: true,
+        env: /(localhost|net)/.test(window.location.host)
       }
     },
     created() {

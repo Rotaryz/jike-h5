@@ -132,6 +132,7 @@
           if (res.error !== ERR_OK) {
             this.authCode = ''
             this._showToast(res.message)
+            return
           }
           this._showToast('验证码已发送，请注意查收')
         })

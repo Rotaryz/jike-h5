@@ -133,7 +133,7 @@
       _getParams() {
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `${URLS.zd}/wechat/oauth?type=${this.accountInfo.user_type}`
+          window.location.href = `${URLS.zdOauth}/wechat/oauth?type=${this.accountInfo.user_type}`
         }
       }
     }

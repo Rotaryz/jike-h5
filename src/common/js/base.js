@@ -35,6 +35,7 @@ const DEV_URL = {
   api: 'http://dev.jike-wap-api.jerryf.cn' + version,
   ws: 'https://ws-api.jkweixin.net', // 微商
   zd: 'https://zhidian-api.jkweixin.net' + versionZD, // 智店铺
+  zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.net' // sass平台
 }
 
@@ -49,6 +50,7 @@ const TEST_URL = {
   api: 'https://wap-api.jkweixin.net' + version,
   ws: 'https://ws-api.jkweixin.net', // 微商
   zd: 'https://zhidian-api.jkweixin.net' + versionZD, // 智店铺
+  zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.net' // sass平台
 }
 
@@ -63,6 +65,7 @@ const PROD_URL = {
   api: 'https://wap-api.jkweixin.com' + version,
   ws: 'https://ws-api.jkweixin.com', // 微商
   zd: 'https://zhidian-api.jkweixin.com' + versionZD, // 智店铺
+  zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.com' // sass平台
 }
 

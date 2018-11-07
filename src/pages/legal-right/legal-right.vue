@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="legal-right">
-      <navigation-bar title="售后维权" @customFn="customFn"></navigation-bar>
+      <!--<navigation-bar title="售后维权" @customFn="customFn"></navigation-bar>-->
       <div class="title">{{title}}</div>
       <div class="content-wrapper" v-if="id === 0">
         <p class="content">

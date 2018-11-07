@@ -1,7 +1,7 @@
 <template>
   <transition name="slide-leave">
     <div class="legal-rights">
-      <navigation-bar title="售后维权" @customFn="customFn"></navigation-bar>
+      <!--<navigation-bar title="售后维权" @customFn="customFn"></navigation-bar>-->
       <div class="container">
         <div class="title">常见问题</div>
         <div class="list-wrapper">

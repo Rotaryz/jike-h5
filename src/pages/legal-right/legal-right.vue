@@ -1,6 +1,7 @@
 <template>
   <transition name="slide">
     <div class="legal-right">
+      <navigation-bar title="售后维权" @customFn="customFn"></navigation-bar>
       <div class="title">{{title}}</div>
       <div class="content-wrapper" v-if="id === 0">
         <p class="content">
@@ -103,6 +104,7 @@
 
 <script>
   import Toast from 'base/toast/toast'
+  import NavigationBar from 'base/navigation-bar/navigation-bar'
 
   const COMPONENT_NAME = 'legal-right'
 
@@ -133,12 +135,16 @@
       console.log(this.id)
     },
     methods: {
+      customFn() {
+        this.$router.back()
+      },
       copy() {
         this.$refs.toast.show('复制成功')
       }
     },
     components: {
-      Toast
+      Toast,
+      NavigationBar
     }
   }
 </script>
@@ -148,7 +154,7 @@
 
   .legal-right
     min-height: 100vh
-    padding: 0 15px
+    padding: 44px 15px 0
     background-color: #ffffff
     .title
       padding-top: 15px

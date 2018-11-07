@@ -1,6 +1,7 @@
 <template>
   <transition name="slide-leave">
     <div class="legal-rights">
+      <navigation-bar title="售后维权" @customFn="customFn"></navigation-bar>
       <div class="container">
         <div class="title">常见问题</div>
         <div class="list-wrapper">
@@ -16,6 +17,8 @@
 </template>
 
 <script>
+  import NavigationBar from 'base/navigation-bar/navigation-bar'
+
   const COMPONENT_NAME = 'legal-rights'
 
   const LIST = [
@@ -33,6 +36,14 @@
       return {
         list: LIST
       }
+    },
+    methods: {
+      customFn() {
+        wx.miniProgram.navigateBack()
+      }
+    },
+    components: {
+      NavigationBar
     }
   }
 </script>

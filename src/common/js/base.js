@@ -65,7 +65,7 @@ const PROD_URL = {
   api: 'https://wap-api.jkweixin.com' + version,
   ws: 'https://ws-api.jkweixin.com', // 微商
   zd: 'https://zhidian-api.jkweixin.com' + versionZD, // 智店铺
-  zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
+  zdOauth: 'https://zhidian-api.jkweixin.com', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.com' // sass平台
 }
 

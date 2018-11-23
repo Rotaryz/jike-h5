@@ -20,7 +20,7 @@
 //   C端api地址   https://wap-api.jkweixin.com
 
 const version = '/v2' //
-const versionZD = '/v1' // 智店版本号
+const versionZD = '' // 智店版本号
 
 const env = process.env
 

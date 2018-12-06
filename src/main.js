@@ -11,6 +11,7 @@ import {initAxios} from 'common/js/config'
 import 'common/stylus/index.styl'
 /* eslint-disable no-unused-vars */
 // import vConsole from 'vconsole'
+import '@/utils/compatible'
 
 initAxios()
 

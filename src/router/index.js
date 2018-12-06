@@ -89,12 +89,12 @@ export default new Router({
       meta: {title: '赞播智店'},
       component: ZdCaptain
     },
-    {
-      path: '/zd-captain',
-      name: 'ZdCaptain',
-      meta: {title: '赞播智店'},
-      component: ZdCaptain
-    },
+    // {
+    //   path: '/zd-captain',
+    //   name: 'ZdCaptain',
+    //   meta: {title: '赞播智店'},
+    //   component: ZdCaptain
+    // },
     {
       path: '/zd-open-staff',
       name: 'ZdOPenStaff',

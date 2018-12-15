@@ -16,6 +16,8 @@ const ZdOpenAccount = () => import('pages/zd-open-account/zd-open-account')
 const ZdCaptain = () => import('pages/zd-open-account/zd-captain')
 const ZdOPenStaff = () => import('pages/zd-open-account/zd-open-staff')
 const ZdStaff = () => import('pages/zd-open-account/zd-staff')
+const ZdOPenStore = () => import('pages/zd-open-account/zd-open-store')
+const ZdStore = () => import('pages/zd-open-account/zd-store')
 const LegalRights = () => import('pages/legal-rights/legal-rights')
 const LegalRight = () => import('pages/legal-right/legal-right')
 
@@ -106,6 +108,18 @@ export default new Router({
       name: 'ZdStaff',
       meta: {title: '赞播智店'},
       component: ZdStaff
+    },
+    {
+      path: '/zd-open-store',
+      name: 'zd-open-store',
+      meta: {title: '赞播智店'},
+      component: ZdOPenStore
+    },
+    {
+      path: '/zd-store',
+      name: 'zd-store',
+      meta: {title: '赞播智店'},
+      component: ZdStore
     },
     {
       path: '/legal-rights',

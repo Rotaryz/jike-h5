@@ -2,7 +2,7 @@
   <div class="zd-captain">
     <img class="head-img" src="./open-staff/pic-openshop@1x.png" alt="">
     <div class="mask"></div>
-    <section class="contain" v-if="!showQrCode">
+    <section class="contain" v-if="showQrCode">
       <div class="banner">
         <div>手机号验证</div>
       </div>
@@ -33,8 +33,7 @@
       </div>
       <div class="content qr-code">
         <section class="qr-code-wrapper">
-          <img v-if="env" style="width: 100%;height: 100%" src="./join/zhidian-qrcode-net.png" alt="">
-          <img v-else style="width: 100%;height: 100%" src="./join/zhidian-qrcode.jpg" alt="">
+          <img v-if="qrCodeImg" style="width: 100%;height: 100%" :src="qrCodeImg" alt="">
         </section>
         <section class="txt-qr-code">关注公众号，查看店铺</section>
       </div>
@@ -55,11 +54,12 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { checkIsPhoneNumber } from 'common/js/util'
+  import { checkIsPhoneNumber, getSearch } from 'common/js/util'
   import Loading from 'base/loading-css/loading-css'
   import Toast from 'base/toast/toast'
   import { storeJoin, getSms } from 'api/zd-open-account'
   import { ERR_OK } from 'api/config'
+  import {ZD_QR_CODE_URL} from 'common/js/base'
 
   export default {
     components: {
@@ -77,14 +77,22 @@
         accountInfo: {},
         codeStyle: true,
         btnStyle: true,
-        env: /(localhost|net)/.test(window.location.host)
+        env: /(localhost|net)/.test(window.location.host),
+        qrCodeImg: ''
       }
     },
     created () {
       document.title = '赞播智店'
+      this._getQrCodeImgUrl()
       this._getParams()
     },
     methods: {
+      // 获取二维码图片
+      _getQrCodeImgUrl() {
+        const search = getSearch()
+        let key = search.type.replace(/\//g, '')
+        this.qrCodeImg = ZD_QR_CODE_URL[key]
+      },
       _showToast (msg) {
         msg && this.$refs.toast && this.$refs.toast.show(msg)
       },

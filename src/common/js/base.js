@@ -36,7 +36,8 @@ const DEV_URL = {
   ws: 'https://ws-api.jkweixin.net', // 微商
   zd: 'https://zhidian-api.jkweixin.net' + versionZD, // 智店铺
   zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
-  sass: 'https://ws-service-api.jkweixin.net' // sass平台
+  sass: 'https://ws-service-api.jkweixin.net', // sass平台
+  zdMeEra: 'https://zhidian-me-api.jerryf.cn' // me时代智店
 }
 
 /**
@@ -51,7 +52,8 @@ const TEST_URL = {
   ws: 'https://ws-api.jkweixin.net', // 微商
   zd: 'https://zhidian-api.jkweixin.net' + versionZD, // 智店铺
   zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
-  sass: 'https://ws-service-api.jkweixin.net' // sass平台
+  sass: 'https://ws-service-api.jkweixin.net', // sass平台
+  zdMeEra: 'https://zhidian-me-era-api.jkweixin.net' // me时代智店
 }
 
 /**
@@ -66,7 +68,8 @@ const PROD_URL = {
   ws: 'https://ws-api.jkweixin.com', // 微商
   zd: 'https://zhidian-api.jkweixin.com' + versionZD, // 智店铺
   zdOauth: 'https://zhidian-api.jkweixin.com', // 智店铺授权
-  sass: 'https://ws-service-api.jkweixin.com' // sass平台
+  sass: 'https://ws-service-api.jkweixin.com', // sass平台
+  zdMeEra: 'https://zhidian-me-era-api.jkweixin.com' // me时代智店
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'

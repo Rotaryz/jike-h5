@@ -2,7 +2,7 @@
   <div class="zd-captain">
     <img class="head-img" src="./open-staff/pic-openshop@1x.png" alt="">
     <div class="mask"></div>
-    <section class="contain" v-if="showQrCode">
+    <section class="contain" v-if="!showQrCode">
       <div class="banner">
         <div>手机号验证</div>
       </div>

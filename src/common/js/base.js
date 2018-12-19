@@ -77,12 +77,12 @@ const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'
   : DEV_URL
 // 智店rq-code
 const IMG_TEST_URL = {
-  zd: '/zd-img/join/zhidian-qrcode-net.png', // 智店铺授权
-  zdMeEra: '/zd-img/join/me-qr-code-net.jpg' // me时代智店
+  zd: '/join/zhidian-qrcode-net.png', // 智店铺授权
+  zdMeEra: '/join/me-qr-code-net.jpg' // me时代智店
 }
 const IMG_PROD_URL = {
-  zd: '/zd-img/join/zhidian-qrcode.jpg', // 智店铺授权
-  zdMeEra: '/zd-img/join/me-qr-code.jpg' // me时代智店
+  zd: '/join/zhidian-qrcode.jpg', // 智店铺授权
+  zdMeEra: '/join/me-qr-code.jpg' // me时代智店
 }
 export const ZD_QR_CODE_URL = env.NODE_ENV === 'production' ? IMG_PROD_URL : IMG_TEST_URL
 // '/zd-img/join/zhidian-qrcode-net.png', // 智店测试

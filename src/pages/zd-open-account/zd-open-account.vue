@@ -133,7 +133,7 @@
       },
       _getParams() {
         const search = getSearch()
-        let type = search.type
+        let type = search.type.replace(/\//g, '')
         let host = URLS[type] || URLS.zdOauth
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {

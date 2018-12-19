@@ -51,6 +51,7 @@
   import Toast from 'base/toast/toast'
   import URLS from 'common/js/base'
   import { swiper, swiperSlide } from 'vue-awesome-swiper'
+  import {getSearch} from 'common/js/util'
 
   const vw = document.documentElement.clientWidth / 100
   const sliderInfo = [{
@@ -131,9 +132,12 @@
         this.$router.push(`/zd-captain`)
       },
       _getParams() {
+        const search = getSearch()
+        let type = search.type
+        let host = URLS[type] || URLS.zdOauth
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `${URLS.zdOauth}/wechat/oauth?type=${this.accountInfo.user_type}`
+          window.location.href = `${host}/wechat/oauth?type=${this.accountInfo.user_type}`
         }
       }
     }

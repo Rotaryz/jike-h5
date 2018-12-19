@@ -22,6 +22,7 @@
   import Loading from 'base/loading-css/loading-css'
   import { getMerchantInfo } from 'api/zd-open-account'
   import { ERR_OK } from 'api/config'
+  import {getSearch} from 'common/js/util'
 
   export default {
     components: {
@@ -58,9 +59,12 @@
         this.$router.push(`/zd-staff`)
       },
       _getParams() {
+        const search = getSearch()
+        let type = search.type
+        let host = URLS[type] || URLS.zdOauth
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `${URLS.zdOauth}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
+          window.location.href = `${host}/wechat/oauth?type=${this.accountInfo.user_type}&merchant_id=${this.accountInfo.merchant_id}`
         }
       },
       _showToast(msg) {

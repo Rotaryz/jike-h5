@@ -5,7 +5,7 @@
       <div class="container">
         <div class="title">常见问题</div>
         <div class="list-wrapper">
-          <router-link tag="div" :to="{path: '/legal-right/' + index}" class="list-item border-bottom-1px"
+          <router-link tag="div" :to="{path: '/legal-right/' + index + '?app=' + app}" class="list-item border-bottom-1px"
                        v-for="(item, index) in list" :key="index">
             <p class="content">{{item}}</p>
             <i class="arrow-right"></i>
@@ -34,8 +34,12 @@
     name: COMPONENT_NAME,
     data() {
       return {
-        list: LIST
+        list: LIST,
+        app: ''
       }
+    },
+    created() {
+      this.app = this.$route.query.app
     },
     methods: {
       customFn() {

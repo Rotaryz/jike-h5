@@ -94,7 +94,7 @@
         </div>
       </div>
       <div class="platform-weixin">
-        <p class="content">平台客服微信：zanboweixin2018</p>
+        <p class="content">平台客服微信：{{weixin}}</p>
         <div class="copy" v-clipboard:copy="weixin" v-clipboard:success="copy">复制</div>
       </div>
       <toast ref="toast"></toast>
@@ -132,9 +132,20 @@
     },
     created() {
       this.id = Number(this.$route.params.id)
-      console.log(this.id)
+      this.app = this.$route.query.app
+      this._setPlatformNumber()
     },
     methods: {
+      _setPlatformNumber() {
+        switch (this.app) {
+          case 'sibu':
+            this.weixin = 'YuDan0203'
+            break
+          default:
+            this.weixin = 'zanboweixin2018'
+            break
+        }
+      },
       customFn() {
         this.$router.back()
       },

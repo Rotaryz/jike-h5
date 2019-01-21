@@ -132,6 +132,10 @@
           color: #1F1F1F
           line-height: 1.4
     .btn-wrapper
+      padding :0 5px
+      overflow :hidden
+      white-space :nowrap
+      text-overflow :ellipsis
       position: fixed
       bottom: 35px
       left: 15px

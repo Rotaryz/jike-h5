@@ -272,6 +272,10 @@
       justify-content: center
       align-items: center
       z-index: 120
+      padding :0 5px
+      overflow :hidden
+      white-space :nowrap
+      text-overflow :ellipsis
       .btn
         display: block
         height: 13.33vw

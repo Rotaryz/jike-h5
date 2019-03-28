@@ -20,6 +20,7 @@ const ZdOPenStore = () => import('pages/zd-open-account/zd-open-store')
 const ZdStore = () => import('pages/zd-open-account/zd-store')
 const LegalRights = () => import('pages/legal-rights/legal-rights')
 const LegalRight = () => import('pages/legal-right/legal-right')
+const ZdAi = () => import('pages/zd-ai/zd-ai')
 
 export default new Router({
   routes: [
@@ -42,6 +43,12 @@ export default new Router({
       name: 'QrCode',
       meta: {title: '加好友，聊天购物'},
       component: QrCode
+    },
+    {
+      path: '/zd-ai',
+      name: 'zd-ai',
+      meta: {title: '智店ai...'},
+      component: ZdAi
     },
     {
       path: '/ws-qr-code',

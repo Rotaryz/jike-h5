@@ -87,8 +87,7 @@
           }
           window.location.herf = this.url + res.data.token
         }).catch(e => {
-          console.error(e)
-          alert(JSON.stringify(e))
+          alert('系统异常：' + JSON.stringify(e))
         })
       },
       getCode() {

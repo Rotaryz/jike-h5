@@ -81,7 +81,6 @@
         })
         zdAiUltra(data).then(res => {
           this._hideLoading()
-          console.log(res)
           if (res.error !== ERR_OK) {
             this._showToast(res.message)
             return

@@ -1,7 +1,7 @@
 <template>
   <div class="zd-captain">
     <div class="mask">
-      <img class="img" src="http://5b0988e595225.cdn.sohucs.com/images/20180714/089696d1a0cd43d7ab3965d8652cd2ef.png" alt="">
+      <img class="img" src="https://5b0988e595225.cdn.sohucs.com/images/20180714/089696d1a0cd43d7ab3965d8652cd2ef.png" alt="">
     </div>
     <section class="contain" v-if="!showQrCode">
       <div class="banner">

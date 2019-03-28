@@ -81,13 +81,18 @@
         })
         zdAiUltra(data).then(res => {
           this._hideLoading()
+          console.log(res)
           if (res.error !== ERR_OK) {
             this._showToast(res.message)
             return
           }
-          window.location.herf = this.url + res.data.token
+          if (!res.data.access_token) {
+            this._showToast('返回token失败:' + res.data.access_token)
+            return
+          }
+          window.location.href = this.url + res.data.access_token
         }).catch(e => {
-          alert('系统异常：' + JSON.stringify(e))
+          // alert('系统异常：' + JSON.stringify(e))
         })
       },
       getCode() {

@@ -38,7 +38,7 @@ const DEV_URL = {
   zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.net', // sass平台
   zdMeEra: 'https://zhidian-me-api.jerryf.cn', // me时代智店
-  zdAiUltra: 'https://zhidian-radar.jkweixin.net' // 智店ai越权
+  zdAiUltra: 'https://zhidian-api.jkweixin.net' // 智店ai越权
 }
 
 /**
@@ -55,7 +55,7 @@ const TEST_URL = {
   zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.net', // sass平台
   zdMeEra: 'https://zhidian-me-era-api.jkweixin.net', // me时代智店
-  zdAiUltra: 'https://zhidian-radar.jkweixin.net' // 智店ai越权
+  zdAiUltra: 'https://zhidian-api.jkweixin.net' // 智店ai越权
 }
 
 /**
@@ -72,7 +72,7 @@ const PROD_URL = {
   zdOauth: 'https://zhidian-api.jkweixin.com', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.com', // sass平台
   zdMeEra: 'https://zhidian-me-era-api.jkweixin.com', // me时代智店
-  zdAiUltra: 'https://zhidian-radar.jkweixin.com' // 智店ai越权
+  zdAiUltra: 'https://zhidian-api.jkweixin.com' // 智店ai越权
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'

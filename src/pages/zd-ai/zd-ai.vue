@@ -88,6 +88,7 @@
           window.location.herf = this.url + res.data.token
         }).catch(e => {
           console.error(e)
+          alert(JSON.stringify(e))
         })
       },
       getCode() {

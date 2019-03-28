@@ -60,7 +60,7 @@
     },
     created() {
       this._getParams()
-      this.url = this.host + `/oauth?access_token=8961208ae3bb1cc68bb8405b0d5a4e7b869cb1e8`
+      this.url = this.host + `/oauth?access_token=`
     },
     methods: {
       _showToast(msg) {
@@ -89,6 +89,8 @@
             this._showToast('返回token失败:' + res.data.access_token)
             return
           }
+          console.log(res)
+          alert(this.url + res.data.access_token)
           window.location.href = this.url + res.data.access_token
         }).catch(e => {
           // alert('系统异常：' + JSON.stringify(e))

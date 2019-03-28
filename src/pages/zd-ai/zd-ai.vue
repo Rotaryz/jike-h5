@@ -45,15 +45,15 @@
     },
     data() {
       return {
-        phoneNumber: '15197865308',
-        authCode: '234689',
+        phoneNumber: '',
+        authCode: '',
         allowGetCode: true,
         codeSeconds: 59,
         timer: null,
         showQrCode: false,
         accountInfo: {},
-        codeStyle: true,
-        btnStyle: true,
+        codeStyle: false,
+        btnStyle: false,
         host: /(com)/.test(window.location.host) ? `https://zhidian-radar.jkweixin.com/#` : `https://zhidian-radar.jkweixin.net/#`,
         url: ''
       }
@@ -89,8 +89,6 @@
             this._showToast('返回token失败:' + res.data.access_token)
             return
           }
-          console.log(res)
-          alert(this.url + res.data.access_token)
           window.location.href = this.url + res.data.access_token
         }).catch(e => {
           // alert('系统异常：' + JSON.stringify(e))

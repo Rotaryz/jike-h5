@@ -63,15 +63,15 @@
         let type = search.type.replace(/\//g, '')
         let host = URLS[type] || URLS.zdOauth
         this.accountInfo = this.$route.query
-        console.log(this.accountInfo, '------------------------')
-        // if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-        //   console.log(`${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`)
-        //   window.location.href = `${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`
-        // }
-        if (window.location.href.length < 100) {
+        // console.log(this.accountInfo, '------------------------')
+        if (!this.accountInfo.unionid || !this.accountInfo.openid) {
           console.log(`${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`)
           window.location.href = `${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`
         }
+        // if (window.location.href.length < 100) {
+        //   console.log(`${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`)
+        //   window.location.href = `${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`
+        // }
       },
       _showToast(msg) {
         msg && this.$refs.toast && this.$refs.toast.show(msg)

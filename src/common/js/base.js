@@ -75,7 +75,7 @@ const PROD_URL = {
   sass: 'https://ws-service-api.jkweixin.com', // sass平台
   zdMeEra: 'https://zhidian-me-era-api.jkweixin.com', // me时代智店
   zdAiUltra: 'https://zhidian-api.jkweixin.com', // 智店ai越权
-  mall: 'https://zhidian-mall-api.jkweixin.net' // 赞播-商城
+  mall: 'https://zhidian-mall-api.jkweixin.com' // 赞播-商城
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'

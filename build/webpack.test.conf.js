@@ -113,11 +113,6 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       },
       {
-        from: path.resolve(__dirname, '../static/yylm'),
-        to: config.build.assetsSubDirectory,
-        ignore: ['.*']
-      },
-      {
         from: path.resolve(__dirname, '../static/oauth'),
         to: path.resolve(__dirname, '../dist')
       }

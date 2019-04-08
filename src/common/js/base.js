@@ -38,7 +38,8 @@ const DEV_URL = {
   zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.net', // sass平台
   zdMeEra: 'https://zhidian-me-api.jerryf.cn', // me时代智店
-  zdAiUltra: 'https://zhidian-api.jkweixin.net' // 智店ai越权
+  zdAiUltra: 'https://zhidian-api.jkweixin.net', // 智店ai越权
+  mall: 'https://zhidian-mall-api.jkweixin.net' // 赞播-商城
 }
 
 /**
@@ -55,7 +56,8 @@ const TEST_URL = {
   zdOauth: 'https://zhidian-api.jkweixin.net', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.net', // sass平台
   zdMeEra: 'https://zhidian-me-era-api.jkweixin.net', // me时代智店
-  zdAiUltra: 'https://zhidian-api.jkweixin.net' // 智店ai越权
+  zdAiUltra: 'https://zhidian-api.jkweixin.net', // 智店ai越权
+  mall: 'https://zhidian-mall-api.jkweixin.net' // 赞播-商城
 }
 
 /**
@@ -72,7 +74,8 @@ const PROD_URL = {
   zdOauth: 'https://zhidian-api.jkweixin.com', // 智店铺授权
   sass: 'https://ws-service-api.jkweixin.com', // sass平台
   zdMeEra: 'https://zhidian-me-era-api.jkweixin.com', // me时代智店
-  zdAiUltra: 'https://zhidian-api.jkweixin.com' // 智店ai越权
+  zdAiUltra: 'https://zhidian-api.jkweixin.com', // 智店ai越权
+  mall: 'https://zhidian-mall-api.jkweixin.net' // 赞播-商城
 }
 
 const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'
@@ -81,11 +84,13 @@ const URLS = env.NODE_ENV === 'production' ? PROD_URL : env.NODE_ENV === 'test'
 // 智店rq-code
 const IMG_TEST_URL = {
   zd: '/join/zhidian-qrcode-net.png', // 智店铺授权
-  zdMeEra: '/join/me-qr-code-net.jpg' // me时代智店
+  zdMeEra: '/join/me-qr-code-net.jpg', // me时代智店
+  mall: '/join/mall-qr-code' // 商城
 }
 const IMG_PROD_URL = {
   zd: '/join/zhidian-qrcode.jpg', // 智店铺授权
-  zdMeEra: '/join/me-qr-code.jpg' // me时代智店
+  zdMeEra: '/join/me-qr-code.jpg', // me时代智店
+  mall: '/join/mall-qr-code' // 商城
 }
 export const ZD_QR_CODE_URL = env.NODE_ENV === 'production' ? IMG_PROD_URL : IMG_TEST_URL
 // '/zd-img/join/zhidian-qrcode-net.png', // 智店测试

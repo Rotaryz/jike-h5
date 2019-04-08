@@ -62,9 +62,10 @@
         const search = getSearch()
         let type = search.type.replace(/\//g, '')
         let host = URLS[type] || URLS.zdOauth
+        console.log(host, URLS[type])
         this.accountInfo = this.$route.query
         if (!this.accountInfo.unionid || !this.accountInfo.openid) {
-          window.location.href = `${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`
+          // window.location.href = `${host}/wechat/oauth?merchant_id=${this.accountInfo.merchant_id}&type=store`
         }
       },
       _showToast(msg) {
